@@ -88,7 +88,7 @@ function _e() {
 function yt(t) {
   pt(t == null ? void 0 : t.zIndex);
 }
-const Mt = "https://github.com/dongls/xWindow", Ot = "0.0.1", Lt = "onUpdate:visible", St = "onBeforeUnmount", Z = Symbol(), p = Object.freeze({
+const Mt = "https://github.com/dongls/xWindow", Ot = "0.0.2", Lt = "onUpdate:visible", St = "onBeforeUnmount", Z = Symbol(), p = Object.freeze({
   INIT: 0,
   LAYOUT: 1,
   MOUNTED: 2,

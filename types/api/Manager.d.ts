@@ -1,0 +1,25 @@
+import { Ref } from 'vue';
+import { AbstractWindow, UID, WindowProxy } from '../model';
+export declare function initWindowManager(): void;
+export declare function destroyWindowManager(): void;
+export declare function isMounted(): boolean;
+export declare function getZIndex(): number;
+export declare function getTopZIndex(): number;
+export declare function setZIndex(num: unknown): void;
+export declare function registerWindow(uid: UID, proxy: WindowProxy): void;
+export declare function removeWindow(uid: UID): void;
+export declare function closeTopWindow(): void;
+export declare function getAbstractWindow(uid: UID): AbstractWindow;
+export declare function createWindow(abstractWindow: AbstractWindow): UID;
+export declare function getWindowProxy(uid: UID): WindowProxy;
+export declare function useGhostWindow(): Ref<UID[]>;
+export declare function setFocusedWindow(uid: UID): void;
+export declare function focusTopWindow(): void;
+export declare function findTopWindow(): WindowProxy;
+export declare function useWindowManager(): {
+    closeTopWindow: typeof closeTopWindow;
+    getTopZIndex: typeof getTopZIndex;
+    getWindowProxy: typeof getWindowProxy;
+    getZIndex: typeof getZIndex;
+    setFocusedWindow: typeof setFocusedWindow;
+};
