@@ -1,4 +1,4 @@
-import { VNodeProps, Ref } from 'vue';
+import { VNodeProps, Ref, VNode, VNodeArrayChildren } from 'vue';
 import { ON_BEFORE_UNMOUNT, ON_UPDATE_VISIBLE, WindowCommonProps, WindowSplitPosition } from './Constant';
 import { UID } from './Window';
 /** @deprecated */
@@ -47,9 +47,13 @@ type ExtractDefaultPropTypes<O> = O extends object ? {
     [K in keyof O]: InferPropType<O[K]>;
 } : {};
 type WindowCommonPropsType = ExtractDefaultPropTypes<Omit<Partial<typeof WindowCommonProps>, 'visible'>>;
+export type WindowBody = string | number | boolean | VNode | VNodeArrayChildren | (() => any);
 export type UseWindowParams = WindowCommonPropsType & {
-    body?: any;
+    /** 窗口的内容，可以是`VNode`或者一个返回`VNode`的函数 */
+    body: WindowBody;
+    /** 关闭后销毁窗口，默认为`true` */
     unmountAfterClose?: boolean;
+    /** 创建后立即显示窗口，默认为`true` */
     displayAfterCreate?: boolean;
 };
 export type AbstractWindowParams = Omit<UseWindowParams, "unmountAfterClose" | "displayAfterCreate"> & {

@@ -20,28 +20,36 @@ export declare const enum ResizeProps {
     RIGHT_BOTTOM = 7
 }
 export declare const WindowCommonProps: {
+    /** 窗口的标题 */
     title: StringConstructor;
+    /** 窗口的id */
     id: StringConstructor;
+    /** 是否显示窗口 */
     visible: {
         type: BooleanConstructor;
         default: boolean;
     };
+    /** 窗口宽度，参照`CSS`的`width`语法 */
     width: {
         type: StringConstructor;
         default: string;
     };
+    /** 是否插入到`body`中，默认为`true` */
     appendToBody: {
         type: BooleanConstructor;
         default: boolean;
     };
+    /** 是否可拖拽，默认为`true` */
     draggable: {
         type: BooleanConstructor;
         default: boolean;
     };
+    /** 是否可改变窗口大小，默认为`true` */
     resizable: {
         type: BooleanConstructor;
         default: boolean;
     };
+    /** 是否可关闭窗口，默认为`true` */
     closeable: {
         type: BooleanConstructor;
         default: boolean;
