@@ -1,3 +1,6 @@
+/*! @dongls/xWindow v0.0.5 https://github.com/dongls/xWindow
+Copyright 2023-present dongls
+Released under the MIT License */
 var st = Object.defineProperty;
 var lt = (t, e, i) => e in t ? st(t, e, { enumerable: !0, configurable: !0, writable: !0, value: i }) : t[e] = i;
 var T = (t, e, i) => (lt(t, typeof e != "symbol" ? e + "" : e, i), i);
