@@ -54,6 +54,10 @@ export declare const WindowCommonProps: {
         type: BooleanConstructor;
         default: boolean;
     };
+    mask: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
 };
 export declare const WindowSplitPosition: Readonly<{
     NONE: "none";
