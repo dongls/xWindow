@@ -29,8 +29,23 @@ export declare const WindowCommonProps: {
         type: BooleanConstructor;
         default: boolean;
     };
-    /** 窗口宽度，参照`CSS`的`width`语法 */
+    /** 窗口初始宽度，参照`CSS`的`width`语法 */
     width: {
+        type: StringConstructor;
+        default: string;
+    };
+    /** 窗口初始高度，参照`CSS`的`height`语法 */
+    height: {
+        type: StringConstructor;
+        default: any;
+    };
+    /** 窗口初始位置，参照`CSS`的`left`语法 */
+    left: {
+        type: StringConstructor;
+        default: any;
+    };
+    /** 窗口初始位置，参照`CSS`的`top`语法 */
+    top: {
         type: StringConstructor;
         default: string;
     };

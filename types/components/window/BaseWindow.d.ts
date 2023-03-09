@@ -18,6 +18,18 @@ export declare const BaseWindow: import("vue").DefineComponent<{
         type: StringConstructor;
         default: string;
     };
+    height: {
+        type: StringConstructor;
+        default: any;
+    };
+    left: {
+        type: StringConstructor;
+        default: any;
+    };
+    top: {
+        type: StringConstructor;
+        default: string;
+    };
     appendToBody: {
         type: BooleanConstructor;
         default: boolean;
@@ -58,6 +70,18 @@ export declare const BaseWindow: import("vue").DefineComponent<{
         type: StringConstructor;
         default: string;
     };
+    height: {
+        type: StringConstructor;
+        default: any;
+    };
+    left: {
+        type: StringConstructor;
+        default: any;
+    };
+    top: {
+        type: StringConstructor;
+        default: string;
+    };
     appendToBody: {
         type: BooleanConstructor;
         default: boolean;
@@ -84,6 +108,9 @@ export declare const BaseWindow: import("vue").DefineComponent<{
 }, {
     visible: boolean;
     width: string;
+    height: string;
+    left: string;
+    top: string;
     appendToBody: boolean;
     draggable: boolean;
     resizable: boolean;
