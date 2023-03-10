@@ -1,2 +1,2 @@
-import { SimpleWindow } from './SimpleWindow';
-export { SimpleWindow };
+export { SimpleWindow } from './SimpleWindow';
+export { BlankWindow } from './BlankWindow';

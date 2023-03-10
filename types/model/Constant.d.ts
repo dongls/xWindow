@@ -2,6 +2,7 @@ export declare const HOME_PAGE: string;
 export declare const VERSION: string;
 export declare const ON_UPDATE_VISIBLE = "onUpdate:visible";
 export declare const ON_BEFORE_UNMOUNT = "onBeforeUnmount";
+export declare const ON_UNMOUNT = "onUnmount";
 export declare const INJECTION_WINDOW_PROXY: unique symbol;
 export declare const ComponentStates: Readonly<{
     INIT: 0;

@@ -29,6 +29,7 @@ export type WindowProxy = {
     get windowState(): WindowState;
     exitSplitMode: () => void;
     close: () => void;
+    getMenus: () => any;
 };
 type InferPropType<T> = [
     T
@@ -49,12 +50,15 @@ type ExtractDefaultPropTypes<O> = O extends object ? {
 type WindowCommonPropsType = ExtractDefaultPropTypes<Omit<Partial<typeof WindowCommonProps>, 'visible'>>;
 export type WindowBody = string | number | boolean | VNode | VNodeArrayChildren | (() => any);
 export type UseWindowParams = WindowCommonPropsType & {
+    type?: string;
     /** 窗口的内容，可以是`VNode`或者一个返回`VNode`的函数 */
     body: WindowBody;
     /** 关闭后销毁窗口，默认为`true` */
     unmountAfterClose?: boolean;
     /** 创建后立即显示窗口，默认为`true` */
     displayAfterCreate?: boolean;
+    /** 窗口销毁后 */
+    afterUnmount?: () => void;
 };
 export type AbstractWindowParams = Omit<UseWindowParams, "unmountAfterClose" | "displayAfterCreate"> & {
     visible: Ref<boolean>;

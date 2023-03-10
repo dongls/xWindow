@@ -1,13 +1,4 @@
-import { VNode } from 'vue';
-import { UID } from '../../model';
-export declare const BaseWindow: import("vue").DefineComponent<{
-    uid: {
-        type: typeof UID;
-        required: true;
-    };
-    body: {
-        default: any;
-    };
+export declare const BlankWindow: import("vue").DefineComponent<{
     title: StringConstructor;
     id: StringConstructor;
     visible: {
@@ -50,16 +41,7 @@ export declare const BaseWindow: import("vue").DefineComponent<{
         type: BooleanConstructor;
         default: boolean;
     };
-}, () => VNode<import("vue").RendererNode, import("vue").RendererElement, {
-    [key: string]: any;
-}>, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("beforeUnmount" | "update:visible" | "unmount")[], "beforeUnmount" | "update:visible" | "unmount", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
-    uid: {
-        type: typeof UID;
-        required: true;
-    };
-    body: {
-        default: any;
-    };
+}, () => JSX.Element, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
     title: StringConstructor;
     id: StringConstructor;
     visible: {
@@ -102,11 +84,7 @@ export declare const BaseWindow: import("vue").DefineComponent<{
         type: BooleanConstructor;
         default: boolean;
     };
-}>> & {
-    "onUpdate:visible"?: (...args: any[]) => any;
-    onBeforeUnmount?: (...args: any[]) => any;
-    onUnmount?: (...args: any[]) => any;
-}, {
+}>>, {
     visible: boolean;
     width: string;
     height: string;
@@ -117,5 +95,4 @@ export declare const BaseWindow: import("vue").DefineComponent<{
     resizable: boolean;
     closeable: boolean;
     mask: boolean;
-    body: any;
 }>;
