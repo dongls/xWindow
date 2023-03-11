@@ -16,6 +16,7 @@ export declare function useGhostWindow(): Ref<UID[]>;
 export declare function setFocusedWindow(uid: UID): void;
 export declare function focusTopWindow(): void;
 export declare function findTopWindow(): WindowProxy;
+export declare function preSplitWindow(event: MouseEvent): void;
 export declare function useWindowManager(): {
     closeTopWindow: typeof closeTopWindow;
     getTopZIndex: typeof getTopZIndex;

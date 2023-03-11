@@ -6,9 +6,8 @@ export declare const ON_UNMOUNT = "onUnmount";
 export declare const INJECTION_WINDOW_PROXY: unique symbol;
 export declare const ComponentStates: Readonly<{
     INIT: 0;
-    LAYOUT: 1;
-    MOUNTED: 2;
-    UNMOUNTED: 3;
+    MOUNTED: 1;
+    UNMOUNTED: 2;
 }>;
 export declare const enum ResizeProps {
     TOP = 0,
@@ -50,6 +49,11 @@ export declare const WindowCommonProps: {
         type: StringConstructor;
         default: string;
     };
+    /** 窗口的固定层级, 参照`CSS`的`zIndex`语法 */
+    zIndex: {
+        type: NumberConstructor;
+        default: number;
+    };
     /** 是否插入到`body`中，默认为`true` */
     appendToBody: {
         type: BooleanConstructor;
@@ -79,4 +83,20 @@ export declare const WindowSplitPosition: Readonly<{
     NONE: "none";
     LEFT: "left";
     RIGHT: "right";
+}>;
+export declare const POSITION_FLAGS: Readonly<{
+    NULL: 0;
+    TOP: 1;
+    RIGHT: number;
+    BOTTOM: number;
+    LEFT: number;
+}>;
+export declare const SPLIT_MODES: Readonly<{
+    TOP: 1;
+    LEFT: number;
+    RIGHT: number;
+    TOP_LEFT: number;
+    TOP_RIGHT: number;
+    BOTTOM_LEFT: number;
+    BOTTOM_RIGHT: number;
 }>;

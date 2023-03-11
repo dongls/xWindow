@@ -17,7 +17,6 @@ export type WindowState = {
     height: number;
     left: number;
     top: number;
-    zIndex: number;
     fullscreen: boolean;
     focused: boolean;
     pinned: boolean;
@@ -27,9 +26,11 @@ export type WindowProxy = {
     get uid(): UID;
     get visible(): boolean;
     get windowState(): WindowState;
+    get zIndex(): number;
+    set zIndex(v: number);
+    get menus(): any;
     exitSplitMode: () => void;
     close: () => void;
-    getMenus: () => any;
 };
 type InferPropType<T> = [
     T

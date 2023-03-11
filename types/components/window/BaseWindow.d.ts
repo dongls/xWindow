@@ -30,6 +30,10 @@ export declare const BaseWindow: import("vue").DefineComponent<{
         type: StringConstructor;
         default: string;
     };
+    zIndex: {
+        type: NumberConstructor;
+        default: number;
+    };
     appendToBody: {
         type: BooleanConstructor;
         default: boolean;
@@ -82,6 +86,10 @@ export declare const BaseWindow: import("vue").DefineComponent<{
         type: StringConstructor;
         default: string;
     };
+    zIndex: {
+        type: NumberConstructor;
+        default: number;
+    };
     appendToBody: {
         type: BooleanConstructor;
         default: boolean;
@@ -112,6 +120,7 @@ export declare const BaseWindow: import("vue").DefineComponent<{
     height: string;
     left: string;
     top: string;
+    zIndex: number;
     appendToBody: boolean;
     draggable: boolean;
     resizable: boolean;
