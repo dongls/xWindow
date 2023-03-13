@@ -1,3 +1,3 @@
-import { WindowProxy } from '../model';
+import { WindowApi } from '../model';
 export declare function useConfig(options?: any): void;
-export declare function useWindowProxy(): WindowProxy;
+export declare function useWindowApi(): WindowApi;

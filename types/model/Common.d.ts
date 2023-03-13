@@ -1,5 +1,5 @@
 import { VNodeProps, Ref, VNode, VNodeArrayChildren } from 'vue';
-import { ON_BEFORE_UNMOUNT, ON_UPDATE_VISIBLE, WindowCommonProps, WindowSplitPosition } from './Constant';
+import { ON_BEFORE_UNMOUNT, ON_UPDATE_VISIBLE, SPLIT_MODES, WindowCommonProps } from './Constant';
 import { UID } from './Window';
 /** @deprecated */
 export type RawProps = VNodeProps & Record<string, any>;
@@ -17,20 +17,20 @@ export type WindowState = {
     height: number;
     left: number;
     top: number;
-    fullscreen: boolean;
     focused: boolean;
     pinned: boolean;
-    splitPosition: InferValue<typeof WindowSplitPosition>;
+    splitMode: InferValue<typeof SPLIT_MODES>;
 };
-export type WindowProxy = {
+export type WindowApi = {
+    get menus(): any;
     get uid(): UID;
     get visible(): boolean;
     get windowState(): WindowState;
     get zIndex(): number;
     set zIndex(v: number);
-    get menus(): any;
-    exitSplitMode: () => void;
     close: () => void;
+    exitSplitMode: (event: MouseEvent) => void;
+    saveWindowState: () => void;
 };
 type InferPropType<T> = [
     T

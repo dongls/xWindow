@@ -79,20 +79,16 @@ export declare const WindowCommonProps: {
         default: boolean;
     };
 };
-export declare const WindowSplitPosition: Readonly<{
-    NONE: "none";
-    LEFT: "left";
-    RIGHT: "right";
-}>;
 export declare const POSITION_FLAGS: Readonly<{
-    NULL: 0;
+    NONE: 0;
     TOP: 1;
     RIGHT: number;
     BOTTOM: number;
     LEFT: number;
 }>;
 export declare const SPLIT_MODES: Readonly<{
-    TOP: 1;
+    NONE: 0;
+    FULLSCREEN: 1;
     LEFT: number;
     RIGHT: number;
     TOP_LEFT: number;

@@ -1,5 +1,5 @@
 import { App } from 'vue';
-import { SimpleWindow } from './components/window';
+import { SimpleWindow, BlankWindow } from './components/window';
 import { WindowManager } from './components/manger';
 declare function install(app: App, options?: any): void;
 declare const version: string;
@@ -9,4 +9,4 @@ declare const xWindow: {
 };
 export * from './api/Exports';
 export * from './model/Exports';
-export { SimpleWindow, WindowManager, install, version, xWindow as default, xWindow, };
+export { SimpleWindow, BlankWindow, WindowManager, install, version, xWindow as default, xWindow, };
