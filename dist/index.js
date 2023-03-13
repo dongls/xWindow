@@ -4,7 +4,7 @@ Released under the MIT License */
 var yt = Object.defineProperty;
 var Nt = (t, e, n) => e in t ? yt(t, e, { enumerable: !0, configurable: !0, writable: !0, value: n }) : t[e] = n;
 var E = (t, e, n) => (Nt(t, typeof e != "symbol" ? e + "" : e, n), n);
-import { shallowRef as zt, ref as z, inject as A, getCurrentInstance as tt, h as G, createVNode as g, defineComponent as I, reactive as It, computed as N, watch as Bt, onBeforeUnmount as et, onUnmounted as Wt, provide as xt, Teleport as nt, isVNode as C, nextTick as H, mergeProps as Rt, Transition as Ct } from "vue";
+import { shallowRef as It, ref as I, inject as A, getCurrentInstance as tt, h as G, createVNode as g, defineComponent as z, reactive as zt, computed as N, watch as Bt, onBeforeUnmount as et, onUnmounted as Wt, provide as xt, Teleport as nt, isVNode as C, nextTick as H, mergeProps as Rt, Transition as Ct } from "vue";
 const Ft = "https://github.com/dongls/xWindow", kt = "0.0.5", Ht = "onUpdate:visible", Ut = "onBeforeUnmount", Gt = "onUnmount", P = Symbol(), b = Object.freeze({
   INIT: 0,
   MOUNTED: 1,
@@ -134,10 +134,10 @@ const c = {
   isMounted: !1,
   zIndex: 1e3,
   stack: /* @__PURE__ */ new Map(),
-  ghost: zt([]),
+  ghost: It([]),
   options: /* @__PURE__ */ new Map(),
   topWindow: null,
-  splitMode: z(f.NONE)
+  splitMode: I(f.NONE)
 };
 function Yt() {
   c.isMounted = !0;
@@ -236,7 +236,7 @@ function ne(t) {
 function qe() {
   return A(P);
 }
-const oe = "_window_d2gsu_7", ie = "_dragging_d2gsu_17", se = "_resizing_d2gsu_17", le = "_fullscreen_d2gsu_21", ue = "_focused_d2gsu_31", re = "_header_d2gsu_34", ce = "_main_d2gsu_38", de = "_init_d2gsu_45", ae = "_title_d2gsu_63", fe = "_menus_d2gsu_73", we = "_body_d2gsu_79", ge = "_footer_d2gsu_84", he = "_menu_d2gsu_73", pe = "_closeMenu_d2gsu_135 _menu_d2gsu_73", _e = "_pinMenu_d2gsu_146 _menu_d2gsu_73", Te = "_logo_d2gsu_153", me = "_resize_d2gsu_165", Me = "_resizeBar_d2gsu_169", Oe = "_resizeTop_d2gsu_174 _resizeBar_d2gsu_169", ve = "_resizeBottom_d2gsu_175 _resizeBar_d2gsu_169", Ee = "_resizeRight_d2gsu_191 _resizeBar_d2gsu_169", be = "_resizeLeft_d2gsu_192 _resizeBar_d2gsu_169", Se = "_resizeLeftTop_d2gsu_208 _resizeBar_d2gsu_169", Le = "_resizeLeftBottom_d2gsu_209 _resizeBar_d2gsu_169", ye = "_resizeRightTop_d2gsu_210 _resizeBar_d2gsu_169", Ne = "_resizeRightBottom_d2gsu_211 _resizeBar_d2gsu_169", ze = "_mask_d2gsu_241", a = {
+const oe = "_window_d2gsu_7", ie = "_dragging_d2gsu_17", se = "_resizing_d2gsu_17", le = "_fullscreen_d2gsu_21", ue = "_focused_d2gsu_31", re = "_header_d2gsu_34", ce = "_main_d2gsu_38", de = "_init_d2gsu_45", ae = "_title_d2gsu_63", fe = "_menus_d2gsu_73", we = "_body_d2gsu_79", ge = "_footer_d2gsu_84", he = "_menu_d2gsu_73", pe = "_closeMenu_d2gsu_135 _menu_d2gsu_73", _e = "_pinMenu_d2gsu_146 _menu_d2gsu_73", Te = "_logo_d2gsu_153", me = "_resize_d2gsu_165", Me = "_resizeBar_d2gsu_169", Oe = "_resizeTop_d2gsu_174 _resizeBar_d2gsu_169", ve = "_resizeBottom_d2gsu_175 _resizeBar_d2gsu_169", Ee = "_resizeRight_d2gsu_191 _resizeBar_d2gsu_169", be = "_resizeLeft_d2gsu_192 _resizeBar_d2gsu_169", Se = "_resizeLeftTop_d2gsu_208 _resizeBar_d2gsu_169", Le = "_resizeLeftBottom_d2gsu_209 _resizeBar_d2gsu_169", ye = "_resizeRightTop_d2gsu_210 _resizeBar_d2gsu_169", Ne = "_resizeRightBottom_d2gsu_211 _resizeBar_d2gsu_169", Ie = "_mask_d2gsu_241", a = {
   window: oe,
   dragging: ie,
   resizing: se,
@@ -263,7 +263,7 @@ const oe = "_window_d2gsu_7", ie = "_dragging_d2gsu_17", se = "_resizing_d2gsu_1
   resizeLeftBottom: Le,
   resizeRightTop: ye,
   resizeRightBottom: Ne,
-  mask: ze
+  mask: Ie
 }, at = '<svg width="64" height="64" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M590.265 511.987l305.521-305.468c21.617-21.589 21.617-56.636.027-78.252-21.616-21.617-56.663-21.617-78.279 0L512.012 433.735 206.544 128.213c-21.617-21.617-56.635-21.617-78.252 0-21.616 21.589-21.616 56.635-.027 78.252L433.76 511.987 128.211 817.482c-21.617 21.59-21.617 56.635 0 78.251 10.808 10.81 24.967 16.213 39.125 16.213 14.159 0 28.318-5.403 39.126-16.213l305.522-305.468L817.48 895.788C828.289 906.597 842.447 912 856.606 912s28.317-5.403 39.125-16.212c21.618-21.59 21.618-56.636.028-78.252L590.265 511.987z"/></svg>', ft = '<svg width="64" height="64" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M928.7 135.8H99.8c-21.15 0-37.8 17.55-37.8 35.1v685.35c0 17.55 17.1 31.5 37.8 31.5h828.45c21.15 0 33.3-14.4 33.3-31.5v-684.9c.45-17.55-12.15-35.55-32.85-35.55zm-53.1 666.9H147.5V222.2h728.1v580.5z"/></svg>', wt = '<svg width="64" height="64" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M38.794 124.791v778.495h946.412V124.791H38.794zm896.678 728.033H89.292v-460.9h846.18v460.9z"/></svg>', gt = '<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="64" height="64"><path d="M738.793 681.382v-48.331l88.242-88.243a298.676 298.676 0 00156.712-83.482 38.836 38.836 0 000-54.923l-366.15-366.15a38.836 38.836 0 00-54.923 0 298.52 298.52 0 00-83.519 156.749l-88.169 88.169h-48.332a411.145 411.145 0 00-292.59 121.232c-15.16 15.159-15.16 39.764 0 54.923L278.906 690.17 86.642 882.436a38.836 38.836 0 1054.922 54.922l192.23-192.229 228.844 228.845a38.836 38.836 0 0054.922 0 411.042 411.042 0 00121.233-292.592zM134.02 435.44a333.473 333.473 0 01208.56-72.571l64.406.037a38.836 38.836 0 0027.461-11.351L544.292 241.71a38.68 38.68 0 0011.351-27.462 180.096 180.096 0 0136.798-89.01L898.8 431.593a180.925 180.925 0 01-89.12 36.835 38.836 38.836 0 00-27.462 11.35L672.373 589.626c-7.287 7.286-11.387 17.173-11.35 27.461l.036 64.406a333.318 333.318 0 01-72.608 208.596L134.021 435.44z"/></svg>';
 function Je() {
   return {
@@ -348,7 +348,7 @@ function J(t, e, n) {
   }
   return null;
 }
-function Ie(t) {
+function ze(t) {
   const e = tt(), n = [[a.resizeTop, p.TOP], [a.resizeBottom, p.BOTTOM], [a.resizeLeft, p.LEFT], [a.resizeRight, p.RIGHT], [a.resizeLeftTop, p.LEFT_TOP], [a.resizeLeftBottom, p.LEFT_BOTTOM], [a.resizeRightTop, p.RIGHT_TOP], [a.resizeRightBottom, p.RIGHT_BOTTOM]], u = {
     init: !1,
     direction: -1,
@@ -414,7 +414,7 @@ function Be(t) {
   }
   return { dragStart: u };
 }
-const We = /* @__PURE__ */ I({
+const We = /* @__PURE__ */ z({
   name: "WindowBody",
   props: {
     uid: M,
@@ -444,7 +444,7 @@ function Ce() {
     splitMode: f.NONE
   };
 }
-const ht = /* @__PURE__ */ I({
+const ht = /* @__PURE__ */ z({
   name: "BaseWindow",
   props: {
     ...X,
@@ -462,10 +462,10 @@ const ht = /* @__PURE__ */ I({
     expose: n,
     slots: u
   }) {
-    const r = M.create(t.uid), s = z(b.INIT), i = z(0), o = It(Ce()), l = {
+    const r = M.create(t.uid), s = I(b.INIT), i = I(0), o = zt(Ce()), l = {
       width: 0,
       height: 0
-    }, w = N(() => t.draggable && t.resizable), _ = N(() => typeof t.zIndex == "number" && t.zIndex > 0 ? t.zIndex : (o.pinned ? Re : 0) + i.value), m = Object.freeze({
+    }, w = N(() => t.draggable && t.resizable), _ = N(() => typeof t.zIndex == "number" && t.zIndex > 0 ? t.zIndex : (o.pinned ? Re : 0) + i.value), m = {
       get uid() {
         return r;
       },
@@ -478,16 +478,16 @@ const ht = /* @__PURE__ */ I({
       get zIndex() {
         return _.value;
       },
-      set zIndex(d) {
-        i.value = d;
-      },
       get menus() {
         return D();
+      },
+      set zIndex(d) {
+        i.value = d;
       },
       exitSplitMode: bt,
       close: F,
       saveWindowState: j
-    }), S = t.draggable ? Be(m) : null, pt = w.value ? Ie(m) : null, _t = N(() => {
+    }, S = t.draggable ? Be(m) : null, pt = w.value ? ze(m) : null, _t = N(() => {
       const d = [a.window];
       return s.value == b.INIT && d.push(a.init), o.splitMode == f.FULLSCREEN && d.push(a.fullscreen), o.focused && d.push(a.focused), d;
     }), Tt = N(() => {
@@ -627,7 +627,7 @@ const ht = /* @__PURE__ */ I({
 function Fe(t) {
   return typeof t == "function" || Object.prototype.toString.call(t) === "[object Object]" && !C(t);
 }
-const U = /* @__PURE__ */ I({
+const U = /* @__PURE__ */ z({
   name: "SimpleWindow",
   props: {
     ...X
@@ -639,7 +639,7 @@ const U = /* @__PURE__ */ I({
     const {
       uid: u,
       ...r
-    } = n, s = M.create(n.uid), i = z(null);
+    } = n, s = M.create(n.uid), i = I(null);
     function o(w) {
       w.preventDefault();
       const _ = i.value;
@@ -679,7 +679,7 @@ const U = /* @__PURE__ */ I({
 function ke(t) {
   return typeof t == "function" || Object.prototype.toString.call(t) === "[object Object]" && !C(t);
 }
-const R = /* @__PURE__ */ I({
+const R = /* @__PURE__ */ z({
   name: "BlankWindow",
   props: {
     ...X
@@ -717,7 +717,7 @@ const He = "_splitWindowMask_7hn9w_1", Ue = "_fullscreen_7hn9w_9", Ge = "_splitL
 function Xe(t) {
   return typeof t == "function" || Object.prototype.toString.call(t) === "[object Object]" && !C(t);
 }
-const Q = /* @__PURE__ */ I({
+const Q = /* @__PURE__ */ z({
   name: "WindowManager",
   setup() {
     const t = ut(), e = ee();
@@ -809,7 +809,7 @@ function je(t) {
     return console.error("[xWindow] 需要先创建`WindowManager`组件，见文档 " + Ft + " 。"), null;
   const { displayAfterCreate: e, unmountAfterClose: n, afterUnmount: u, ...r } = t, s = {
     uid: null,
-    visible: z(e !== !1),
+    visible: I(e !== !1),
     isUnmounted: !1
   }, i = () => s.visible.value = !0, o = () => {
     s.visible.value = !1, n !== !1 && l();
