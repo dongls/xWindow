@@ -19,18 +19,24 @@ export type WindowState = {
     top: number;
     focused: boolean;
     pinned: boolean;
-    splitMode: InferValue<typeof SPLIT_MODES>;
+};
+export type SplitState = {
+    mode: InferValue<typeof SPLIT_MODES>;
+    width: number;
+    height: number;
 };
 export type WindowApi = {
     get menus(): any;
     get uid(): UID;
     get visible(): boolean;
     get windowState(): WindowState;
+    get splitState(): SplitState;
     get zIndex(): number;
     set zIndex(v: number);
     close: () => void;
     exitSplitMode: (event: MouseEvent) => void;
     saveWindowState: () => void;
+    getWindowEl: () => HTMLElement;
 };
 type InferPropType<T> = [
     T

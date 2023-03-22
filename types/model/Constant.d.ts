@@ -9,16 +9,6 @@ export declare const ComponentStates: Readonly<{
     MOUNTED: 1;
     UNMOUNTED: 2;
 }>;
-export declare const enum ResizeProps {
-    TOP = 0,
-    BOTTOM = 1,
-    LEFT = 2,
-    RIGHT = 3,
-    LEFT_TOP = 4,
-    LEFT_BOTTOM = 5,
-    RIGHT_TOP = 6,
-    RIGHT_BOTTOM = 7
-}
 export declare const WindowCommonProps: {
     /** 窗口的标题 */
     title: StringConstructor;
@@ -81,14 +71,24 @@ export declare const WindowCommonProps: {
 };
 export declare const POSITION_FLAGS: Readonly<{
     NONE: 0;
-    TOP: 1;
-    RIGHT: number;
+    TOP: number;
     BOTTOM: number;
     LEFT: number;
+    RIGHT: number;
+}>;
+export declare const RESIZE_POOPS: Readonly<{
+    TOP: number;
+    BOTTOM: number;
+    LEFT: number;
+    RIGHT: number;
+    TOP_LEFT: number;
+    TOP_RIGHT: number;
+    BOTTOM_LEFT: number;
+    BOTTOM_RIGHT: number;
 }>;
 export declare const SPLIT_MODES: Readonly<{
     NONE: 0;
-    FULLSCREEN: 1;
+    FULLSCREEN: number;
     LEFT: number;
     RIGHT: number;
     TOP_LEFT: number;

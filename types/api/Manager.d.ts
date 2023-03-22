@@ -18,9 +18,18 @@ export declare function useGhostWindow(): Ref<UID[]>;
 export declare function setFocusedWindow(uid: UID): void;
 export declare function focusTopWindow(): void;
 export declare function findTopWindow(): WindowApi;
-export declare function previewSplitWindow(event: MouseEvent): 0;
+export declare function previewSplitWindow(event: MouseEvent): {
+    mode: number;
+    width: number;
+    relatedWindow: WindowApi;
+};
 export declare function resetSplitMode(): 0;
-export declare function useSplitMode(): Ref<number>;
+export declare function usePreviewState(): {
+    mode: number;
+    width: number;
+    height: number;
+};
+export declare function findTopSplitWindow(mode: number): WindowApi;
 export declare function useWindowManager(): {
     closeTopWindow: typeof closeTopWindow;
     getTopZIndex: typeof getTopZIndex;
