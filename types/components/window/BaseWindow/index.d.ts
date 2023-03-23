@@ -1,5 +1,5 @@
 import { VNode } from 'vue';
-import { UID } from '../../model';
+import { UID } from '../../../model';
 export declare const BaseWindow: import("vue").DefineComponent<{
     uid: {
         type: typeof UID;
