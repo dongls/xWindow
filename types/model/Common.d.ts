@@ -25,8 +25,10 @@ export type SplitState = {
     width: number;
     height: number;
 };
+export type UseMenuOptions = {
+    custom?: boolean;
+};
 export type WindowApi = {
-    get menus(): any;
     get uid(): UID;
     get visible(): boolean;
     get windowState(): WindowState;
@@ -35,8 +37,9 @@ export type WindowApi = {
     set zIndex(v: number);
     close: () => void;
     exitSplitMode: (event: MouseEvent) => void;
-    saveWindowState: () => void;
     getWindowEl: () => HTMLElement;
+    saveWindowState: () => void;
+    useMenus: (options?: UseMenuOptions) => any;
 };
 type InferPropType<T> = [
     T
@@ -54,7 +57,7 @@ type InferPropType<T> = [
 type ExtractDefaultPropTypes<O> = O extends object ? {
     [K in keyof O]: InferPropType<O[K]>;
 } : {};
-type WindowCommonPropsType = ExtractDefaultPropTypes<Omit<Partial<typeof WindowCommonProps>, 'visible'>>;
+export type WindowCommonPropsType = ExtractDefaultPropTypes<Omit<Partial<typeof WindowCommonProps>, 'visible'>>;
 export type WindowBody = string | number | boolean | VNode | VNodeArrayChildren | (() => any);
 export type UseWindowParams = WindowCommonPropsType & {
     type?: string;
