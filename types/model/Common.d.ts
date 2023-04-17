@@ -39,6 +39,7 @@ export type WindowApi = {
     exitSplitMode: (event: MouseEvent) => void;
     getWindowEl: () => HTMLElement;
     saveWindowState: () => void;
+    useCssClass: () => any;
     useMenus: (options?: UseMenuOptions) => any;
 };
 type InferPropType<T> = [
