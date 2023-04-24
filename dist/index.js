@@ -1,11 +1,11 @@
-/*! @dongls/xWindow v0.0.5 https://github.com/dongls/xWindow
+/*! @dongls/xWindow v0.0.6 https://github.com/dongls/xWindow
 Copyright 2023-present dongls
 Released under the MIT License */
 var Pt = Object.defineProperty;
 var Gt = (t, n, e) => n in t ? Pt(t, n, { enumerable: !0, configurable: !0, writable: !0, value: e }) : t[n] = e;
 var b = (t, n, e) => (Gt(t, typeof n != "symbol" ? n + "" : n, e), e);
 import { shallowRef as xt, reactive as U, inject as ut, getCurrentInstance as Y, h as Z, createVNode as _, defineComponent as F, ref as H, computed as W, watch as Ct, onBeforeUnmount as dt, onUnmounted as kt, provide as qt, Teleport as ct, isVNode as x, nextTick as j, mergeProps as Ut, Transition as jt } from "vue";
-const Dt = "https://github.com/dongls/xWindow", Xt = "0.0.5", Yt = "onUpdate:visible", Zt = "onBeforeUnmount", Vt = "onUnmount", V = Symbol(), B = Object.freeze({
+const Dt = "https://github.com/dongls/xWindow", Xt = "0.0.6", Yt = "onUpdate:visible", Zt = "onBeforeUnmount", Vt = "onUnmount", V = Symbol(), B = Object.freeze({
   INIT: 0,
   MOUNTED: 1,
   UNMOUNTED: 2
