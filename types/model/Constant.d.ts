@@ -64,6 +64,7 @@ export declare const WindowCommonProps: {
         type: BooleanConstructor;
         default: boolean;
     };
+    /** 是否包含遮罩层，默认为`false` */
     mask: {
         type: BooleanConstructor;
         default: boolean;

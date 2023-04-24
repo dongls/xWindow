@@ -2,7 +2,7 @@ import { Ref } from 'vue';
 import { AbstractWindow, UID, WindowApi } from '../model';
 export declare function initWindowManager(): void;
 export declare function destroyWindowManager(): void;
-export declare function isMounted(): boolean;
+export declare function isInitWindowManager(): boolean;
 export declare function getZIndex(): number;
 export declare function getTopZIndex(): number;
 export declare function getTopWindowZIndex(): number;
