@@ -35,7 +35,7 @@ export type WindowApi = {
     get splitState(): SplitState;
     get zIndex(): number;
     set zIndex(v: number);
-    close: () => void;
+    close: (forced?: boolean) => void;
     exitSplitMode: (event: MouseEvent) => void;
     getWindowEl: () => HTMLElement;
     saveWindowState: () => void;

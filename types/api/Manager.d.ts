@@ -30,10 +30,12 @@ export declare function usePreviewState(): {
     height: number;
 };
 export declare function findTopSplitWindow(mode: number): WindowApi;
+export declare function getWindowCount(): number;
 export declare function useWindowManager(): {
     closeTopWindow: typeof closeTopWindow;
     getTopZIndex: typeof getTopZIndex;
     getWindowApi: typeof getWindowApi;
     getZIndex: typeof getZIndex;
     setFocusedWindow: typeof setFocusedWindow;
+    getWindowCount: typeof getWindowCount;
 };

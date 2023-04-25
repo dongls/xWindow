@@ -44,6 +44,11 @@ export declare const WindowCommonProps: {
         type: NumberConstructor;
         default: number;
     };
+    /** 窗口初始全屏状态，默认为`false` */
+    fullscreen: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
     /** 是否插入到`body`中，默认为`true` */
     appendToBody: {
         type: BooleanConstructor;

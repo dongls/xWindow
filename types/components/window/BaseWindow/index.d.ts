@@ -34,6 +34,10 @@ export declare const BaseWindow: import("vue").DefineComponent<{
         type: NumberConstructor;
         default: number;
     };
+    fullscreen: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
     appendToBody: {
         type: BooleanConstructor;
         default: boolean;
@@ -90,6 +94,10 @@ export declare const BaseWindow: import("vue").DefineComponent<{
         type: NumberConstructor;
         default: number;
     };
+    fullscreen: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
     appendToBody: {
         type: BooleanConstructor;
         default: boolean;
@@ -121,6 +129,7 @@ export declare const BaseWindow: import("vue").DefineComponent<{
     left: string;
     top: string;
     zIndex: number;
+    fullscreen: boolean;
     appendToBody: boolean;
     draggable: boolean;
     resizable: boolean;
