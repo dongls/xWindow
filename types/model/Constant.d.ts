@@ -74,6 +74,11 @@ export declare const WindowCommonProps: {
         type: BooleanConstructor;
         default: boolean;
     };
+    /** 是否允许固定窗口 */
+    pinnable: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
 };
 export declare const POSITION_FLAGS: Readonly<{
     NONE: 0;

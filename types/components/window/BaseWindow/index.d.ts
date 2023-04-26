@@ -58,6 +58,10 @@ export declare const BaseWindow: import("vue").DefineComponent<{
         type: BooleanConstructor;
         default: boolean;
     };
+    pinnable: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
 }, () => VNode<import("vue").RendererNode, import("vue").RendererElement, {
     [key: string]: any;
 }>, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("beforeUnmount" | "update:visible" | "unmount")[], "beforeUnmount" | "update:visible" | "unmount", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
@@ -118,6 +122,10 @@ export declare const BaseWindow: import("vue").DefineComponent<{
         type: BooleanConstructor;
         default: boolean;
     };
+    pinnable: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
 }>> & {
     "onUpdate:visible"?: (...args: any[]) => any;
     onBeforeUnmount?: (...args: any[]) => any;
@@ -135,5 +143,6 @@ export declare const BaseWindow: import("vue").DefineComponent<{
     resizable: boolean;
     closeable: boolean;
     mask: boolean;
+    pinnable: boolean;
     body: any;
 }>;

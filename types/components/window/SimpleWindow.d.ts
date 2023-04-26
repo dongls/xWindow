@@ -49,6 +49,10 @@ export declare const SimpleWindow: import("vue").DefineComponent<{
         type: BooleanConstructor;
         default: boolean;
     };
+    pinnable: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
 }, () => JSX.Element, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
     title: StringConstructor;
     id: StringConstructor;
@@ -100,6 +104,10 @@ export declare const SimpleWindow: import("vue").DefineComponent<{
         type: BooleanConstructor;
         default: boolean;
     };
+    pinnable: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
 }>>, {
     visible: boolean;
     width: string;
@@ -113,4 +121,5 @@ export declare const SimpleWindow: import("vue").DefineComponent<{
     resizable: boolean;
     closeable: boolean;
     mask: boolean;
+    pinnable: boolean;
 }>;
