@@ -35,6 +35,10 @@ export type WindowApi = {
     get splitState(): SplitState;
     get zIndex(): number;
     set zIndex(v: number);
+    /** 窗口是否允许调整大小 */
+    get resizable(): boolean;
+    /** 窗口是否允许拖拽 */
+    get draggable(): boolean;
     close: (forced?: boolean) => void;
     exitSplitMode: (event: MouseEvent) => void;
     getWindowEl: () => HTMLElement;

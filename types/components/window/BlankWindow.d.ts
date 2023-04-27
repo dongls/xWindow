@@ -37,9 +37,9 @@ export declare const BlankWindow: import("vue").DefineComponent<{
         type: BooleanConstructor;
         default: boolean;
     };
-    resizable: {
-        type: BooleanConstructor;
-        default: boolean;
+    resizeMode: {
+        type: NumberConstructor;
+        default: 1;
     };
     closeable: {
         type: BooleanConstructor;
@@ -92,9 +92,9 @@ export declare const BlankWindow: import("vue").DefineComponent<{
         type: BooleanConstructor;
         default: boolean;
     };
-    resizable: {
-        type: BooleanConstructor;
-        default: boolean;
+    resizeMode: {
+        type: NumberConstructor;
+        default: 1;
     };
     closeable: {
         type: BooleanConstructor;
@@ -118,7 +118,7 @@ export declare const BlankWindow: import("vue").DefineComponent<{
     fullscreen: boolean;
     appendToBody: boolean;
     draggable: boolean;
-    resizable: boolean;
+    resizeMode: number;
     closeable: boolean;
     mask: boolean;
     pinnable: boolean;

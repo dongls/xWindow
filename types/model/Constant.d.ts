@@ -1,12 +1,51 @@
 export declare const HOME_PAGE: string;
 export declare const VERSION: string;
+export declare const INJECTION_WINDOW_PROXY: unique symbol;
 export declare const ON_UPDATE_VISIBLE = "onUpdate:visible";
 export declare const ON_BEFORE_UNMOUNT = "onBeforeUnmount";
 export declare const ON_UNMOUNT = "onUnmount";
-export declare const INJECTION_WINDOW_PROXY: unique symbol;
-export declare const ComponentStates: Readonly<{
+export declare const POSITION_FLAGS: Readonly<{
+    NONE: 0;
+    TOP: number;
+    BOTTOM: number;
+    LEFT: number;
+    RIGHT: number;
+}>;
+export declare const RESIZE_POOPS: Readonly<{
+    TOP: number;
+    BOTTOM: number;
+    LEFT: number;
+    RIGHT: number;
+    TOP_LEFT: number;
+    TOP_RIGHT: number;
+    BOTTOM_LEFT: number;
+    BOTTOM_RIGHT: number;
+}>;
+export declare const SPLIT_MODES: Readonly<{
+    NONE: 0;
+    FULLSCREEN: number;
+    LEFT: number;
+    RIGHT: number;
+    TOP_LEFT: number;
+    TOP_RIGHT: number;
+    BOTTOM_LEFT: number;
+    BOTTOM_RIGHT: number;
+}>;
+/** 窗口调整模式 */
+export declare const RESIZE_MODE: Readonly<{
+    /** 禁止调整窗口大小 */
+    NONE: 0;
+    /** 允许调整窗口大小，允许全屏（默认）*/
+    RESIZE: 1;
+    /** 只允许调整窗口大小 */
+    RESIZE_ONLY: 2;
+}>;
+export declare const WINDOW_STATES: Readonly<{
+    /** 窗口初始化，不显示 */
     INIT: 0;
+    /** 窗口初始化完成，并展示 */
     MOUNTED: 1;
+    /** 窗口已销毁 */
     UNMOUNTED: 2;
 }>;
 export declare const WindowCommonProps: {
@@ -59,10 +98,10 @@ export declare const WindowCommonProps: {
         type: BooleanConstructor;
         default: boolean;
     };
-    /** 是否可改变窗口大小，默认为`true` */
-    resizable: {
-        type: BooleanConstructor;
-        default: boolean;
+    /** 窗口调整模式，默认为`RESIZE_MODE.REISZE` */
+    resizeMode: {
+        type: NumberConstructor;
+        default: 1;
     };
     /** 是否可关闭窗口，默认为`true` */
     closeable: {
@@ -80,30 +119,3 @@ export declare const WindowCommonProps: {
         default: boolean;
     };
 };
-export declare const POSITION_FLAGS: Readonly<{
-    NONE: 0;
-    TOP: number;
-    BOTTOM: number;
-    LEFT: number;
-    RIGHT: number;
-}>;
-export declare const RESIZE_POOPS: Readonly<{
-    TOP: number;
-    BOTTOM: number;
-    LEFT: number;
-    RIGHT: number;
-    TOP_LEFT: number;
-    TOP_RIGHT: number;
-    BOTTOM_LEFT: number;
-    BOTTOM_RIGHT: number;
-}>;
-export declare const SPLIT_MODES: Readonly<{
-    NONE: 0;
-    FULLSCREEN: number;
-    LEFT: number;
-    RIGHT: number;
-    TOP_LEFT: number;
-    TOP_RIGHT: number;
-    BOTTOM_LEFT: number;
-    BOTTOM_RIGHT: number;
-}>;

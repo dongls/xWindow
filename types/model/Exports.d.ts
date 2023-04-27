@@ -1,4 +1,2 @@
-import { ComponentStates } from './Constant';
-import { WindowInstance } from './Common';
-export type { WindowInstance };
-export { ComponentStates };
+export { WINDOW_STATES, RESIZE_MODE } from './Constant';
+export type { WindowInstance } from './Common';

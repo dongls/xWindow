@@ -1,11 +1,11 @@
 import { Ref } from 'vue';
 import { AbstractWindowParams } from './Common';
 export declare class UID {
-    value: number;
+    readonly value: number;
     get wid(): string;
     /** 统一使用`UID.create`方法创建 */
     constructor();
-    static create(raw: UID | void): Readonly<UID>;
+    static create(raw: UID | void): UID;
 }
 export declare class AbstractWindow {
     readonly uid: UID;
