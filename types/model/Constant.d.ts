@@ -1,3 +1,4 @@
+import { PropType, VNode } from 'vue';
 export declare const HOME_PAGE: string;
 export declare const VERSION: string;
 export declare const INJECTION_WINDOW_PROXY: unique symbol;
@@ -48,40 +49,52 @@ export declare const WINDOW_STATES: Readonly<{
     /** 窗口已销毁 */
     UNMOUNTED: 2;
 }>;
-export declare const WindowCommonProps: {
-    /** 窗口的标题 */
-    title: StringConstructor;
+export declare const BaseWindowProps: {
     /** 窗口的id */
     id: StringConstructor;
+    /** 窗口的标题 */
+    title: StringConstructor;
     /** 是否显示窗口 */
     visible: {
         type: BooleanConstructor;
         default: boolean;
     };
+    /** 窗口的`CSS`类名 */
+    className: StringConstructor;
     /** 窗口初始宽度，参照`CSS`的`width`语法 */
     width: {
         type: StringConstructor;
         default: string;
     };
+    /** 窗口最小宽度, 最小为0，单位像素 */
+    minWidth: {
+        type: NumberConstructor;
+        default: number;
+    };
+    /** TODO: 窗口最大宽度，默认不限制，单位像素 */
+    maxWidth: NumberConstructor;
     /** 窗口初始高度，参照`CSS`的`height`语法 */
     height: {
         type: StringConstructor;
-        default: any;
     };
+    /** 窗口最小高度, 最小为0，单位像素 */
+    minHeight: {
+        type: NumberConstructor;
+        default: number;
+    };
+    /** TODO: 窗口最大高度，默认不限制，单位像素 */
+    maxHeight: NumberConstructor;
     /** 窗口初始位置，参照`CSS`的`left`语法 */
     left: {
         type: StringConstructor;
-        default: any;
     };
     /** 窗口初始位置，参照`CSS`的`top`语法 */
     top: {
         type: StringConstructor;
-        default: string;
     };
     /** 窗口的固定层级, 参照`CSS`的`zIndex`语法 */
     zIndex: {
         type: NumberConstructor;
-        default: number;
     };
     /** 窗口初始全屏状态，默认为`false` */
     fullscreen: {
@@ -119,3 +132,11 @@ export declare const WindowCommonProps: {
         default: boolean;
     };
 };
+type IconFunc = () => VNode;
+export declare const SimpleWindowProps: {
+    /** 窗口图标 */
+    icon: PropType<string | VNode<import("vue").RendererNode, import("vue").RendererElement, {
+        [key: string]: any;
+    }> | IconFunc>;
+};
+export {};

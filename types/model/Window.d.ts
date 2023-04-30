@@ -13,6 +13,8 @@ export declare class AbstractWindow {
     visible: Ref<Boolean>;
     others: object;
     body: any;
+    /** 清理组件相关内容 */
+    cleanup: () => void;
     constructor(params: AbstractWindowParams);
     static create(params: AbstractWindow | AbstractWindowParams): AbstractWindow;
     get id(): string;

@@ -1,29 +1,41 @@
 export declare const SimpleWindow: import("vue").DefineComponent<{
-    title: StringConstructor;
+    icon: import("vue").PropType<string | import("vue").VNode<import("vue").RendererNode, import("vue").RendererElement, {
+        [key: string]: any;
+    }> | (() => import("vue").VNode<import("vue").RendererNode, import("vue").RendererElement, {
+        [key: string]: any;
+    }>)>;
     id: StringConstructor;
+    title: StringConstructor;
     visible: {
         type: BooleanConstructor;
         default: boolean;
     };
+    className: StringConstructor;
     width: {
         type: StringConstructor;
         default: string;
     };
+    minWidth: {
+        type: NumberConstructor;
+        default: number;
+    };
+    maxWidth: NumberConstructor;
     height: {
         type: StringConstructor;
-        default: any;
     };
+    minHeight: {
+        type: NumberConstructor;
+        default: number;
+    };
+    maxHeight: NumberConstructor;
     left: {
         type: StringConstructor;
-        default: any;
     };
     top: {
         type: StringConstructor;
-        default: string;
     };
     zIndex: {
         type: NumberConstructor;
-        default: number;
     };
     fullscreen: {
         type: BooleanConstructor;
@@ -54,31 +66,43 @@ export declare const SimpleWindow: import("vue").DefineComponent<{
         default: boolean;
     };
 }, () => JSX.Element, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
-    title: StringConstructor;
+    icon: import("vue").PropType<string | import("vue").VNode<import("vue").RendererNode, import("vue").RendererElement, {
+        [key: string]: any;
+    }> | (() => import("vue").VNode<import("vue").RendererNode, import("vue").RendererElement, {
+        [key: string]: any;
+    }>)>;
     id: StringConstructor;
+    title: StringConstructor;
     visible: {
         type: BooleanConstructor;
         default: boolean;
     };
+    className: StringConstructor;
     width: {
         type: StringConstructor;
         default: string;
     };
+    minWidth: {
+        type: NumberConstructor;
+        default: number;
+    };
+    maxWidth: NumberConstructor;
     height: {
         type: StringConstructor;
-        default: any;
     };
+    minHeight: {
+        type: NumberConstructor;
+        default: number;
+    };
+    maxHeight: NumberConstructor;
     left: {
         type: StringConstructor;
-        default: any;
     };
     top: {
         type: StringConstructor;
-        default: string;
     };
     zIndex: {
         type: NumberConstructor;
-        default: number;
     };
     fullscreen: {
         type: BooleanConstructor;
@@ -111,10 +135,8 @@ export declare const SimpleWindow: import("vue").DefineComponent<{
 }>>, {
     visible: boolean;
     width: string;
-    height: string;
-    left: string;
-    top: string;
-    zIndex: number;
+    minWidth: number;
+    minHeight: number;
     fullscreen: boolean;
     appendToBody: boolean;
     draggable: boolean;

@@ -1,8 +1,6 @@
-import { VNodeProps, Ref, VNode, VNodeArrayChildren } from 'vue';
-import { ON_BEFORE_UNMOUNT, ON_UPDATE_VISIBLE, SPLIT_MODES, WindowCommonProps } from './Constant';
+import { Ref, VNode, VNodeArrayChildren, ExtractPropTypes, ComponentInternalInstance } from 'vue';
+import { ON_BEFORE_UNMOUNT, ON_UPDATE_VISIBLE, SPLIT_MODES, BaseWindowProps, SimpleWindowProps } from './Constant';
 import { UID } from './Window';
-/** @deprecated */
-export type RawProps = VNodeProps & Record<string, any>;
 export type InferValue<T> = T[keyof T];
 export type WindowInstance = {
     uid: UID;
@@ -39,32 +37,19 @@ export type WindowApi = {
     get resizable(): boolean;
     /** 窗口是否允许拖拽 */
     get draggable(): boolean;
+    get props(): BaseWindowPropsType;
     close: (forced?: boolean) => void;
     exitSplitMode: (event: MouseEvent) => void;
     getWindowEl: () => HTMLElement;
+    /** 获取窗口组件实例 */
+    getWindow: () => ComponentInternalInstance;
     saveWindowState: () => void;
     useCssClass: () => any;
     useMenus: (options?: UseMenuOptions) => any;
 };
-type InferPropType<T> = [
-    T
-] extends [null] ? any : [T] extends [{
-    type: null | true;
-}] ? any : [T] extends [ObjectConstructor | {
-    type: ObjectConstructor;
-}] ? Record<string, any> : [T] extends [BooleanConstructor | {
-    type: BooleanConstructor;
-}] ? boolean : [T] extends [StringConstructor | {
-    type: StringConstructor;
-}] ? string : [T] extends [DateConstructor | {
-    type: DateConstructor;
-}] ? Date : unknown;
-type ExtractDefaultPropTypes<O> = O extends object ? {
-    [K in keyof O]: InferPropType<O[K]>;
-} : {};
-export type WindowCommonPropsType = ExtractDefaultPropTypes<Omit<Partial<typeof WindowCommonProps>, 'visible'>>;
 export type WindowBody = string | number | boolean | VNode | VNodeArrayChildren | (() => any);
-export type UseWindowParams = WindowCommonPropsType & {
+export type BaseWindowPropsType = ExtractPropTypes<Omit<Partial<typeof BaseWindowProps>, 'visible'>>;
+export type UseBaseWindowParams = BaseWindowPropsType & {
     type?: string;
     /** 窗口的内容，可以是`VNode`或者一个返回`VNode`的函数 */
     body: WindowBody;
@@ -75,9 +60,11 @@ export type UseWindowParams = WindowCommonPropsType & {
     /** 窗口销毁后 */
     afterUnmount?: () => void;
 };
+export type UseBlankWindowParams = UseBaseWindowParams;
+export type UseSimpleWindowParams = UseBaseWindowParams & Partial<typeof SimpleWindowProps>;
+export type UseWindowParams = UseBaseWindowParams | UseBlankWindowParams | UseSimpleWindowParams;
 export type AbstractWindowParams = Omit<UseWindowParams, "unmountAfterClose" | "displayAfterCreate"> & {
     visible: Ref<boolean>;
     [ON_UPDATE_VISIBLE]: Function;
     [ON_BEFORE_UNMOUNT]: Function;
 };
-export {};

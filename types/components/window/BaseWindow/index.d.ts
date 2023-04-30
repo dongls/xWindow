@@ -8,31 +8,38 @@ export declare const BaseWindow: import("vue").DefineComponent<{
     body: {
         default: any;
     };
-    title: StringConstructor;
     id: StringConstructor;
+    title: StringConstructor;
     visible: {
         type: BooleanConstructor;
         default: boolean;
     };
+    className: StringConstructor;
     width: {
         type: StringConstructor;
         default: string;
     };
+    minWidth: {
+        type: NumberConstructor;
+        default: number;
+    };
+    maxWidth: NumberConstructor;
     height: {
         type: StringConstructor;
-        default: any;
     };
+    minHeight: {
+        type: NumberConstructor;
+        default: number;
+    };
+    maxHeight: NumberConstructor;
     left: {
         type: StringConstructor;
-        default: any;
     };
     top: {
         type: StringConstructor;
-        default: string;
     };
     zIndex: {
         type: NumberConstructor;
-        default: number;
     };
     fullscreen: {
         type: BooleanConstructor;
@@ -72,31 +79,38 @@ export declare const BaseWindow: import("vue").DefineComponent<{
     body: {
         default: any;
     };
-    title: StringConstructor;
     id: StringConstructor;
+    title: StringConstructor;
     visible: {
         type: BooleanConstructor;
         default: boolean;
     };
+    className: StringConstructor;
     width: {
         type: StringConstructor;
         default: string;
     };
+    minWidth: {
+        type: NumberConstructor;
+        default: number;
+    };
+    maxWidth: NumberConstructor;
     height: {
         type: StringConstructor;
-        default: any;
     };
+    minHeight: {
+        type: NumberConstructor;
+        default: number;
+    };
+    maxHeight: NumberConstructor;
     left: {
         type: StringConstructor;
-        default: any;
     };
     top: {
         type: StringConstructor;
-        default: string;
     };
     zIndex: {
         type: NumberConstructor;
-        default: number;
     };
     fullscreen: {
         type: BooleanConstructor;
@@ -133,10 +147,8 @@ export declare const BaseWindow: import("vue").DefineComponent<{
 }, {
     visible: boolean;
     width: string;
-    height: string;
-    left: string;
-    top: string;
-    zIndex: number;
+    minWidth: number;
+    minHeight: number;
     fullscreen: boolean;
     appendToBody: boolean;
     draggable: boolean;
