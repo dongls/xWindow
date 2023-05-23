@@ -12,7 +12,7 @@ export declare const POSITION_FLAGS: Readonly<{
     LEFT: number;
     RIGHT: number;
 }>;
-export declare const RESIZE_POOPS: Readonly<{
+export declare const RESIZE_PROPS: Readonly<{
     TOP: number;
     BOTTOM: number;
     LEFT: number;
