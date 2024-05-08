@@ -505,7 +505,7 @@ function ut(n) {
 }
 function dt(n) {
   if (n.key == "Escape")
-    return wt({ pressEsc: !0 });
+    return wt({ pressEsc: !0, forced: !1 });
 }
 function Oe() {
   a.isMounted = !0;
@@ -900,7 +900,7 @@ const P = class P extends F {
   /** 取消并关闭窗口 */
   cancel(t = !0) {
     return this.callHandle("cancel").then((i) => {
-      this.dispatch(this.createEvent("cancel", i)), this.close(t);
+      this.close(t) && this.dispatch(this.createEvent("cancel", i));
     });
   }
 };
