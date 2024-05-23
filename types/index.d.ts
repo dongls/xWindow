@@ -46,8 +46,8 @@ export declare class AbstractWindow extends Emitter<AbstractWindow> {
     get allowDrag(): boolean;
     /** 顶部可拖拽区域，默认只有顶部32px以内可以拖动 */
     get allowDragArea(): number;
-    /** 窗口是否已全屏 */
-    get isFullscreen(): boolean;
+    /** 窗口是否已最大化 */
+    get isMaximize(): boolean;
     private createOptions;
     createEvent(type: EventType, data?: any): WindowEvent<this, any>;
     private initDraggable;
@@ -72,12 +72,10 @@ export declare class AbstractWindow extends Emitter<AbstractWindow> {
     /** 窗口聚焦 */
     focus(): void;
     private startTransition;
-    /** 窗口全屏 */
-    requestFullscreen(): void;
-    /** 退出全屏 */
-    exitFullscreen(): void;
-    /** 切换窗口全屏状态 */
-    toggleFullscreen(): void;
+    private requestMaximize;
+    private exitMaximize;
+    /** 切换窗口最大化 */
+    toggleMaximize(): void;
     /** 固定窗口 */
     pin(): void;
     /** 取消窗口固定 */
@@ -105,7 +103,7 @@ required: true;
 };
 }>>, {}, {}>;
 
-declare type ChangeEventType = 'fullscreenChange';
+declare type ChangeEventType = 'maximizeChange';
 
 export declare function cleanup(): void;
 
@@ -193,7 +191,7 @@ export declare const RENDER_STATES: Readonly<{
 export declare const RESIZE_MODE: Readonly<{
     /** 禁止调整窗口大小 */
     DISABLED: 0;
-    /** 允许调整窗口大小，允许全屏（默认）*/
+    /** 允许调整窗口大小，允许最大化（默认）*/
     RESIZE: 1;
     /** 只允许调整窗口大小 */
     RESIZE_ONLY: 2;
@@ -217,7 +215,7 @@ required: true;
 
 export declare const SPLIT_MODES: Readonly<{
     NONE: 0;
-    FULLSCREEN: number;
+    MAXIMIZE: number;
     LEFT: number;
     RIGHT: number;
     TOP_LEFT: number;
@@ -359,8 +357,8 @@ declare interface WindowOptions {
      * 窗口的固定层级, 参照`CSS`的`zIndex`语法
      */
     zIndex?: number;
-    /** 窗口初始全屏状态,默认为`false` */
-    fullscreen: boolean;
+    /** 窗口最大化,默认为`false` */
+    maximize: boolean;
     /** 窗口插入的位置,默认为`body`,值为`false`禁用此行为 */
     teleport: string | false;
     /** 是否可拖拽, 默认为`true`, 如果值为数字, 则用于指定`header`的高度 */

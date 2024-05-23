@@ -1,14 +1,18 @@
 /*! @dongls/xWindow v0.1.0 https://github.com/dongls/xWindow
 Copyright 2023-present dongls
 Released under the MIT License */
-var Wt = Object.defineProperty;
-var Nt = (n, e, t) => e in n ? Wt(n, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : n[e] = t;
-var r = (n, e, t) => (Nt(n, typeof e != "symbol" ? e + "" : e, t), t);
-import { defineComponent as B, computed as N, h as D, shallowRef as zt, reactive as tt, ref as et, provide as Mt, createVNode as T, Teleport as nt, isVNode as k, nextTick as J, render as K, inject as Pt, onBeforeUnmount as yt, Transition as xt } from "vue";
-const St = "0.1.0", it = Symbol(), x = Object.freeze({
+var vt = Object.defineProperty;
+var Lt = (n, e, t) => e in n ? vt(n, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : n[e] = t;
+var r = (n, e, t) => (Lt(n, typeof e != "symbol" ? e + "" : e, t), t);
+import { defineComponent as D, computed as x, h as A, shallowRef as xt, reactive as tt, ref as et, provide as Wt, createVNode as T, Teleport as nt, isVNode as k, nextTick as K, render as J, inject as yt, onBeforeUnmount as Pt, Transition as Nt } from "vue";
+const St = "0.1.0", it = Symbol(), L = Object.freeze({
   WINDOW: "x-window",
   TRANSITION: "x-window-is-transition",
-  MENU: "x-window-is-menu"
+  MENU: "x-window-is-menu",
+  FOCUSED: "x-window-is-focused",
+  MAXIMIZE: "x-window-is-maximize",
+  HEADER: "x-window-header",
+  BODY: "x-window-body"
 }), u = Object.freeze({
   NONE: 0,
   TOP: 1,
@@ -26,35 +30,35 @@ const St = "0.1.0", it = Symbol(), x = Object.freeze({
   BOTTOM_RIGHT: u.BOTTOM | u.RIGHT
 }), o = Object.freeze({
   NONE: u.NONE,
-  FULLSCREEN: u.TOP,
+  MAXIMIZE: u.TOP,
   LEFT: u.LEFT,
   RIGHT: u.RIGHT,
   TOP_LEFT: u.TOP | u.LEFT,
   TOP_RIGHT: u.TOP | u.RIGHT,
   BOTTOM_LEFT: u.BOTTOM | u.LEFT,
   BOTTOM_RIGHT: u.BOTTOM | u.RIGHT
-}), z = Object.freeze({
+}), W = Object.freeze({
   /** 禁止调整窗口大小 */
   DISABLED: 0,
-  /** 允许调整窗口大小，允许全屏（默认）*/
+  /** 允许调整窗口大小，允许最大化（默认）*/
   RESIZE: 1,
   /** 只允许调整窗口大小 */
   RESIZE_ONLY: 2
-}), M = Object.freeze({
+}), y = Object.freeze({
   /** 窗口初始化，不显示 */
   INIT: 0,
   /** 窗口初始化完成，并展示 */
   MOUNTED: 1,
   /** 窗口已销毁 */
   UNMOUNTED: 2
-}), Ct = Object.freeze({
+}), _t = Object.freeze({
   SIMPLE_WINDOW: "SimpleWindow",
   BLANK_WINDOW: "BlankWindow"
-}), L = Object.freeze({
+}), O = Object.freeze({
   /** 关闭按钮 */
   CLOSE: 0,
-  /** 全屏按钮 */
-  FULLSCREEN: 1,
+  /** 最大化按钮 */
+  MAXIMIZE: 1,
   /** 恢复按钮 */
   RESTORE: 2,
   /** 固定按钮 */
@@ -62,7 +66,7 @@ const St = "0.1.0", it = Symbol(), x = Object.freeze({
   /** 取消固定按钮 */
   UNPIN: 4
 });
-class V {
+class Z {
   constructor(e, t, i) {
     /** 事件类型 */
     r(this, "type");
@@ -85,7 +89,7 @@ class V {
     this.defaultPrevented = !0;
   }
 }
-class F {
+class H {
   constructor() {
     r(this, "ALL_EVENTS", /* @__PURE__ */ new Map());
   }
@@ -108,8 +112,8 @@ class F {
     const s = this.ALL_EVENTS.get(e);
     if (s == null)
       return this;
-    const l = s.indexOf(t);
-    return l < 0 ? this : (i ? s.splice(l, 1, F.NOOP) : s.splice(l, 1), this);
+    const a = s.indexOf(t);
+    return a < 0 ? this : (i ? s.splice(a, 1, H.NOOP) : s.splice(a, 1), this);
   }
   /** 触发一个事件 */
   dispatch(e) {
@@ -119,7 +123,7 @@ class F {
     for (const s of t)
       if (typeof s == "function" && s(e), e.stopped)
         break;
-    const i = t.filter((s) => s != F.NOOP);
+    const i = t.filter((s) => s != H.NOOP);
     return this.ALL_EVENTS.set(e.type, i), e;
   }
   /** 清空所有事件监听函数 */
@@ -127,38 +131,38 @@ class F {
     this.ALL_EVENTS.clear();
   }
 }
-function O(n, e, t) {
+function I(n, e, t) {
   return e != null && Number.isFinite(e) && n < e ? e : t != null && Number.isFinite(t) && n > t ? t : n;
 }
 function q(n) {
   return n == null || typeof n != "string" ? !0 : n.length == 0;
 }
-function _t(n) {
+function Ct(n) {
   return n == null || typeof n != "string" ? !1 : n.length != 0;
 }
-function Ft(n) {
+function Ht(n) {
   n.stopPropagation();
 }
-const Ht = {
+const Bt = {
   top: "offsetTop",
   left: "offsetLeft",
   width: "offsetWidth",
   height: "offsetHeight"
 };
-class Bt {
+class Dt {
   constructor(e) {
     r(this, "init", !1);
     r(this, "defaultPrevented", !1);
     r(this, "originalEvent");
     r(this, "target");
     r(this, "direction");
-    this.originalEvent = e, this.target = e.target, this.direction = Reflect.get(this.target, A.PROP);
+    this.originalEvent = e, this.target = e.target, this.direction = Reflect.get(this.target, F.PROP);
   }
   createEvent(e, t) {
-    return new V(e, t, this);
+    return new Z(e, t, this);
   }
 }
-class A {
+class F {
   constructor(e) {
     r(this, "context");
     r(this, "window");
@@ -168,7 +172,7 @@ class A {
   }
   resizestart(e) {
     e.stopPropagation(), e.preventDefault();
-    const t = new Bt(e);
+    const t = new Dt(e);
     this.context = t, this.onResizing = this.resizing.bind(this), this.onResizeend = this.resizeend.bind(this), window.addEventListener("pointermove", this.onResizing), window.addEventListener("pointerup", this.onResizeend);
   }
   resizing(e) {
@@ -187,8 +191,8 @@ class A {
       Reflect.set(s.style, f, h + "px");
     }
     t.originalEvent = e;
-    const l = this.context.createEvent("resizing", this.window);
-    this.window.dispatch(l);
+    const a = this.context.createEvent("resizing", this.window);
+    this.window.dispatch(a);
   }
   resizeend(e) {
     if (this.context == null)
@@ -205,47 +209,47 @@ class A {
     this.onResizing && window.removeEventListener("pointermove", this.onResizing), this.onResizeend && window.removeEventListener("pointerup", this.onResizeend), this.onResizing = void 0, this.onResizeend = void 0, this.context = void 0;
   }
   calcWindowState(e) {
-    const t = this.context, i = this.window.options, s = typeof i.minWidth == "number" && i.minWidth >= 0 ? i.minWidth : 360, l = typeof i.minHeight == "number" && i.minHeight >= 0 ? i.minHeight : 32, f = this.window.getElement().getBoundingClientRect(), h = document.documentElement.getBoundingClientRect(), w = {};
+    const t = this.context, i = this.window.options, s = typeof i.minWidth == "number" && i.minWidth >= 0 ? i.minWidth : 360, a = typeof i.minHeight == "number" && i.minHeight >= 0 ? i.minHeight : 32, f = this.window.getElement().getBoundingClientRect(), h = document.documentElement.getBoundingClientRect(), p = {};
     if (t.direction & u.TOP) {
-      const g = O(f.bottom - O(e.clientY, 0), l), m = O(e.clientY - h.top, 0, window.innerHeight - g);
-      w.height = g, w.top = m;
+      const g = I(f.bottom - I(e.clientY, 0), a), m = I(e.clientY - h.top, 0, window.innerHeight - g);
+      p.height = g, p.top = m;
     }
     if (t.direction & u.BOTTOM) {
-      const g = O(O(e.clientY, 0, window.innerHeight) - f.top, l), m = O(e.clientY - g - h.top, 0, window.innerHeight - g);
-      w.height = g, w.top = m;
+      const g = I(I(e.clientY, 0, window.innerHeight) - f.top, a), m = I(e.clientY - g - h.top, 0, window.innerHeight - g);
+      p.height = g, p.top = m;
     }
     if (t.direction & u.LEFT) {
-      const g = O(f.right - O(e.clientX, 0), s, window.innerWidth), m = O(e.clientX - h.left, 0, window.innerWidth - g);
-      w.width = g, w.left = m;
+      const g = I(f.right - I(e.clientX, 0), s, window.innerWidth), m = I(e.clientX - h.left, 0, window.innerWidth - g);
+      p.width = g, p.left = m;
     }
     if (t.direction & u.RIGHT) {
-      const g = O(O(e.clientX, 0) - f.left, s, window.innerWidth), m = O(e.clientX - g - h.left, 0, window.innerWidth - g - 0);
-      w.width = g, w.left = m;
+      const g = I(I(e.clientX, 0) - f.left, s, window.innerWidth), m = I(e.clientX - g - h.left, 0, window.innerWidth - g - 0);
+      p.width = g, p.left = m;
     }
-    return w;
+    return p;
   }
   patchWindowState(e) {
     const t = this.window.state;
     for (const i in e) {
-      const s = Math.round(e[i]), l = Ht[i];
-      l != null && Reflect.set(t, l, s);
+      const s = Math.round(e[i]), a = Bt[i];
+      a != null && Reflect.set(t, a, s);
     }
   }
 }
-r(A, "PROP", "__xwindow_resize_prop__");
-const Dt = "_1T2rhwiL", kt = "yi9w1sZD", At = "Ja2o9U31", Gt = "vD5RQghg", Ut = "_3czvPpS2", Vt = "GiVk7T8N", Xt = "VuG4WNig x-window-is-menu", Yt = "yBPezU8e", jt = "xbuRK23n", Zt = "_9t1NJBZM", Jt = "shyxrRzw", Kt = "nkEGqTFw", qt = "pk12TusX", $t = "noixF94i", Qt = "ifXDegN1 VuG4WNig x-window-is-menu", te = "X5A6roxN VuG4WNig x-window-is-menu", ee = "PPmfTMRL", ne = "v8UGXgKi PPmfTMRL", ie = "_74VJ9GNt PPmfTMRL", oe = "gg9Mcwey PPmfTMRL", se = "Tw7sCaLt PPmfTMRL", re = "CPuApFyD PPmfTMRL", ce = "VBRi4FWg PPmfTMRL", le = "gCRpuZdB PPmfTMRL", ae = "iRYpNoUT PPmfTMRL", ue = "xTcKGSVA", p = {
-  window: Dt,
+r(F, "PROP", "__xwindow_resize_prop__");
+const At = "_1T2rhwiL", kt = "yi9w1sZD", Ft = "Ja2o9U31", Gt = "_1eMSsKoB", Xt = "_3czvPpS2", Zt = "GiVk7T8N", Vt = "VuG4WNig x-window-is-menu", Yt = "yBPezU8e", jt = "xbuRK23n", Ut = "_9t1NJBZM", Kt = "shyxrRzw", Jt = "nkEGqTFw", qt = "pk12TusX", $t = "noixF94i", Qt = "ifXDegN1 VuG4WNig x-window-is-menu", te = "X5A6roxN VuG4WNig x-window-is-menu", ee = "PPmfTMRL", ne = "v8UGXgKi PPmfTMRL", ie = "_74VJ9GNt PPmfTMRL", oe = "gg9Mcwey PPmfTMRL", se = "Tw7sCaLt PPmfTMRL", re = "CPuApFyD PPmfTMRL", ce = "VBRi4FWg PPmfTMRL", ae = "gCRpuZdB PPmfTMRL", le = "iRYpNoUT PPmfTMRL", ue = "xTcKGSVA", w = {
+  window: At,
   dragging: kt,
-  resizing: At,
-  fullscreen: Gt,
-  focused: Ut,
-  header: Vt,
-  menu: Xt,
+  resizing: Ft,
+  maximize: Gt,
+  focused: Xt,
+  header: Zt,
+  menu: Vt,
   logo: Yt,
   main: jt,
-  init: Zt,
-  title: Jt,
-  menus: Kt,
+  init: Ut,
+  title: Kt,
+  menus: Jt,
   body: qt,
   footer: $t,
   closeMenu: Qt,
@@ -257,10 +261,10 @@ const Dt = "_1T2rhwiL", kt = "yi9w1sZD", At = "Ja2o9U31", Gt = "vD5RQghg", Ut = 
   resizeLeft: se,
   resizeTopLeft: re,
   resizeBottomLeft: ce,
-  resizeTopRight: le,
-  resizeBottomRight: ae,
+  resizeTopRight: ae,
+  resizeBottomRight: le,
   mask: ue
-}, de = /* @__PURE__ */ B({
+}, de = /* @__PURE__ */ D({
   name: "WindowBody",
   props: {
     wid: String,
@@ -293,30 +297,30 @@ function he() {
     splitMode: o.NONE
   };
 }
-const pe = [[p.resizeTop, b.TOP], [p.resizeBottom, b.BOTTOM], [p.resizeLeft, b.LEFT], [p.resizeRight, b.RIGHT], [p.resizeTopLeft, b.TOP_LEFT], [p.resizeTopRight, b.TOP_RIGHT], [p.resizeBottomLeft, b.BOTTOM_LEFT], [p.resizeBottomRight, b.BOTTOM_RIGHT]];
-function we(n, e, t, i) {
-  return N(() => {
+const we = [[w.resizeTop, b.TOP], [w.resizeBottom, b.BOTTOM], [w.resizeLeft, b.LEFT], [w.resizeRight, b.RIGHT], [w.resizeTopLeft, b.TOP_LEFT], [w.resizeTopRight, b.TOP_RIGHT], [w.resizeBottomLeft, b.BOTTOM_LEFT], [w.resizeBottomRight, b.BOTTOM_RIGHT]];
+function pe(n, e, t, i) {
+  return x(() => {
     const s = n.options;
-    if (e.value == M.INIT)
+    if (e.value == y.INIT)
       return {
         width: s.width,
         height: s.height,
         left: s.left,
         top: s.top
       };
-    const l = s.mask ? null : i.value;
+    const a = s.mask ? null : i.value;
     return {
       top: t.offsetTop + "px",
       left: t.offsetLeft + "px",
       width: t.offsetWidth + "px",
-      height: e.value == M.INIT ? void 0 : t.offsetHeight + "px",
-      zIndex: l
+      height: e.value == y.INIT ? void 0 : t.offsetHeight + "px",
+      zIndex: a
     };
   });
 }
 function ge(n, e) {
-  return n == z.DISABLED ? null : pe.map((t) => D("div", {
-    ["." + A.PROP]: t[1],
+  return n == W.DISABLED ? null : we.map((t) => A("div", {
+    ["." + F.PROP]: t[1],
     className: t[0],
     onPointerdown: e
   }));
@@ -324,7 +328,7 @@ function ge(n, e) {
 function Te(n) {
   return typeof n == "function" || Object.prototype.toString.call(n) === "[object Object]" && !k(n);
 }
-const y = /* @__PURE__ */ B({
+const N = /* @__PURE__ */ D({
   name: "BlankWindow",
   props: {
     abstractWindow: {
@@ -335,23 +339,23 @@ const y = /* @__PURE__ */ B({
   setup(n, {
     slots: e
   }) {
-    const t = zt(), i = tt(he()), s = et(M.INIT), l = N(() => {
+    const t = xt(), i = tt(he()), s = et(y.INIT), a = x(() => {
       const c = n.abstractWindow.options;
       return typeof c.zIndex == "number" && c.zIndex > 0;
-    }), f = N(() => {
+    }), f = x(() => {
       const c = n.abstractWindow.options;
-      return l.value ? c.zIndex : (i.pinned ? fe : 0) + i.zIndex;
-    }), h = we(n.abstractWindow, s, i, f), w = N(() => {
-      const c = [x.WINDOW, p.window], d = n.abstractWindow;
-      return s.value == M.INIT && c.push(p.init), i.splitMode == o.FULLSCREEN && c.push(p.fullscreen), i.focused && c.push(p.focused), _t(d.options.className) && c.push(d.options.className), c;
-    }), g = N(() => {
+      return a.value ? c.zIndex : (i.pinned ? fe : 0) + i.zIndex;
+    }), h = pe(n.abstractWindow, s, i, f), p = x(() => {
+      const c = [L.WINDOW, w.window], d = n.abstractWindow;
+      return s.value == y.INIT && c.push(w.init), i.splitMode == o.MAXIMIZE && c.push(w.maximize, L.MAXIMIZE), i.focused && c.push(w.focused, L.FOCUSED), Ct(d.options.className) && c.push(d.options.className), c;
+    }), g = x(() => {
       const c = [], E = n.abstractWindow.options;
-      return E.pinnable && E.mask !== !0 && l.value !== !0 && c.push(i.pinned ? L.PIN : L.UNPIN), E.resizeMode == z.RESIZE && c.push(i.splitMode == o.FULLSCREEN ? L.RESTORE : L.FULLSCREEN), E.closeable && c.push(L.CLOSE), c;
+      return E.pinnable && E.mask !== !0 && a.value !== !0 && c.push(i.pinned ? O.PIN : O.UNPIN), E.resizeMode == W.RESIZE && c.push(i.splitMode == o.MAXIMIZE ? O.RESTORE : O.MAXIMIZE), E.closeable && c.push(O.CLOSE), c;
     }), m = {
       getElement: S,
       getRenderState: Tt,
       useCssClass: Et,
-      useMenus: Ot
+      useMenus: It
     };
     function S() {
       return t.value;
@@ -360,98 +364,98 @@ const y = /* @__PURE__ */ B({
       return s.value;
     }
     function Et() {
-      return p;
+      return w;
     }
-    async function Z(c) {
-      c == null || c.preventDefault(), n.abstractWindow.toggleFullscreen();
+    async function U(c) {
+      c == null || c.preventDefault(), n.abstractWindow.toggleMaximize();
     }
     function mt() {
       JSON.parse(JSON.stringify(i));
     }
-    function Ot() {
+    function It() {
       return g;
     }
-    function Lt(c) {
+    function Ot(c) {
       const d = Array.from(c.querySelectorAll("[autofocus]"));
       for (const E of d)
         if (E instanceof HTMLElement && E.autofocus)
           return E.focus();
     }
-    async function Rt(c) {
-      await J();
-      const d = n.abstractWindow, E = d.options, C = c.el, v = C.getBoundingClientRect();
-      if (s.value == M.INIT) {
-        let _ = Math.round(v.left), R = Math.round(v.top);
-        q(E.left) && (_ = Math.floor((window.innerWidth - v.width) / 2)), q(E.top) && (R = Math.floor((window.innerHeight - v.height) / 2)), i.offsetWidth = v.width, i.offsetHeight = v.height, i.offsetLeft = _, i.offsetTop = R, E.fullscreen && Z(), s.value = M.MOUNTED, mt(), J(() => {
+    async function Mt(c) {
+      await K();
+      const d = n.abstractWindow, E = d.options, _ = c.el, z = _.getBoundingClientRect();
+      if (s.value == y.INIT) {
+        let C = Math.round(z.left), M = Math.round(z.top);
+        q(E.left) && (C = Math.floor((window.innerWidth - z.width) / 2)), q(E.top) && (M = Math.floor((window.innerHeight - z.height) / 2)), i.offsetWidth = z.width, i.offsetHeight = z.height, i.offsetLeft = C, i.offsetTop = M, E.maximize && U(), s.value = y.MOUNTED, mt(), K(() => {
           const G = d.createEvent("show");
-          d.dispatch(G), Lt(C);
+          d.dispatch(G), Ot(_);
         });
       }
       d.focus();
     }
-    function It(c) {
+    function Rt(c) {
       const d = n.abstractWindow;
-      d.focus(), !(!d.allowDrag || d.isFullscreen) && d.dragstart(c);
+      d.focus(), !(!d.allowDrag || d.isMaximize) && d.dragstart(c);
     }
-    function vt(c) {
+    function zt(c) {
       const d = S();
       if (d == null)
         return;
       const E = d.getBoundingClientRect();
-      c.clientY - E.top > n.abstractWindow.allowDragArea || Z(c);
+      c.clientY - E.top > n.abstractWindow.allowDragArea || U(c);
     }
     function bt() {
       const c = n.abstractWindow;
-      c.component = m, c.state = i, Ie(c.id, c);
+      c.component = m, c.state = i, Re(c.id, c);
       const d = c.createEvent("created");
       c.dispatch(d);
     }
-    return Mt(it, n.abstractWindow), bt(), function() {
+    return Wt(it, n.abstractWindow), bt(), function() {
       const c = n.abstractWindow, d = c.options;
       if (i.visible !== !0)
         return null;
-      const E = typeof e.header == "function" ? e.header(m) : null, C = T("div", {
-        class: p.main,
-        onDblclick: vt
+      const E = typeof e.header == "function" ? e.header(m) : null, _ = T("div", {
+        class: w.main,
+        onDblclick: zt
       }, [E, T("div", {
-        class: [p.body, d.bodyClassName]
+        class: [w.body, L.BODY, d.bodyClassName]
       }, [T(de, {
         body: c.body,
         abstractWindow: n.abstractWindow,
         key: c.wid
-      }, null)])]), v = {
+      }, null)])]), z = {
         ref: t,
         id: c.wid,
-        onVnodeMounted: Rt,
-        onPointerdown: It,
-        class: w.value,
+        onVnodeMounted: Mt,
+        onPointerdown: Rt,
+        class: p.value,
         style: h.value
-      }, _ = ge(d.resizeMode, c.resizestart);
-      let R = D("div", v, [C, _]);
+      }, C = ge(d.resizeMode, c.resizestart);
+      let M = A("div", z, [_, C]);
       if (d.mask === !0) {
         const G = {
           zIndex: f.value
         };
-        R = T("div", {
-          class: p.mask,
+        M = T("div", {
+          class: w.mask,
           style: G
-        }, [R]);
+        }, [M]);
       }
-      return d.teleport === !1 ? R : T(nt, {
+      return d.teleport === !1 ? M : T(nt, {
         to: d.teleport
-      }, Te(R) ? R : {
-        default: () => [R]
+      }, Te(M) ? M : {
+        default: () => [M]
       });
     };
   }
-}), ot = '<svg width="64" height="64" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M590.265 511.987l305.521-305.468c21.617-21.589 21.617-56.636.027-78.252-21.616-21.617-56.663-21.617-78.279 0L512.012 433.735 206.544 128.213c-21.617-21.617-56.635-21.617-78.252 0-21.616 21.589-21.616 56.635-.027 78.252L433.76 511.987 128.211 817.482c-21.617 21.59-21.617 56.635 0 78.251 10.808 10.81 24.967 16.213 39.125 16.213 14.159 0 28.318-5.403 39.126-16.213l305.522-305.468L817.48 895.788C828.289 906.597 842.447 912 856.606 912s28.317-5.403 39.125-16.212c21.618-21.59 21.618-56.636.028-78.252L590.265 511.987z"/></svg>', st = '<svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5228" width="64" height="64"><path d="M97.74775349 97.74775349h828.50449302v828.50449302H97.74775349V97.74775349z m103.56306133 103.56306133v621.37837036h621.37837036V201.31081482H201.31081482z" fill="currentColor"></path></svg>', rt = '<svg width="64" height="64" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M38.794 124.791v778.495h946.412V124.791H38.794zm896.678 728.033H89.292v-460.9h846.18v460.9z"/></svg>', ct = '<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="64" height="64"><path d="M738.793 681.382v-48.331l88.242-88.243a298.676 298.676 0 00156.712-83.482 38.836 38.836 0 000-54.923l-366.15-366.15a38.836 38.836 0 00-54.923 0 298.52 298.52 0 00-83.519 156.749l-88.169 88.169h-48.332a411.145 411.145 0 00-292.59 121.232c-15.16 15.159-15.16 39.764 0 54.923L278.906 690.17 86.642 882.436a38.836 38.836 0 1054.922 54.922l192.23-192.229 228.844 228.845a38.836 38.836 0 0054.922 0 411.042 411.042 0 00121.233-292.592zM134.02 435.44a333.473 333.473 0 01208.56-72.571l64.406.037a38.836 38.836 0 0027.461-11.351L544.292 241.71a38.68 38.68 0 0011.351-27.462 180.096 180.096 0 0136.798-89.01L898.8 431.593a180.925 180.925 0 01-89.12 36.835 38.836 38.836 0 00-27.462 11.35L672.373 589.626c-7.287 7.286-11.387 17.173-11.35 27.461l.036 64.406a333.318 333.318 0 01-72.608 208.596L134.021 435.44z"/></svg>', lt = '<svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="64" height="64"><path d="M845.40952426 212.52063539H65.21904746v702.17142826h780.1904768V212.52063539z m-702.17142933 624.1523808V290.53968285h624.1523808v546.13333334H143.23809493z" fill="currentColor"></path><path d="M981.53650809 76.3936505H201.34603129v78.01904746h702.17142933v624.15238187h78.01904747V76.3936505z" fill="currentColor"></path></svg>';
+}), ot = '<svg width="64" height="64" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M590.265 511.987l305.521-305.468c21.617-21.589 21.617-56.636.027-78.252-21.616-21.617-56.663-21.617-78.279 0L512.012 433.735 206.544 128.213c-21.617-21.617-56.635-21.617-78.252 0-21.616 21.589-21.616 56.635-.027 78.252L433.76 511.987 128.211 817.482c-21.617 21.59-21.617 56.635 0 78.251 10.808 10.81 24.967 16.213 39.125 16.213 14.159 0 28.318-5.403 39.126-16.213l305.522-305.468L817.48 895.788C828.289 906.597 842.447 912 856.606 912s28.317-5.403 39.125-16.212c21.618-21.59 21.618-56.636.028-78.252L590.265 511.987z"/></svg>', st = '<svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5228" width="64" height="64"><path d="M97.74775349 97.74775349h828.50449302v828.50449302H97.74775349V97.74775349z m103.56306133 103.56306133v621.37837036h621.37837036V201.31081482H201.31081482z" fill="currentColor"></path></svg>', rt = '<svg width="64" height="64" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M38.794 124.791v778.495h946.412V124.791H38.794zm896.678 728.033H89.292v-460.9h846.18v460.9z"/></svg>', ct = '<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="64" height="64"><path d="M738.793 681.382v-48.331l88.242-88.243a298.676 298.676 0 00156.712-83.482 38.836 38.836 0 000-54.923l-366.15-366.15a38.836 38.836 0 00-54.923 0 298.52 298.52 0 00-83.519 156.749l-88.169 88.169h-48.332a411.145 411.145 0 00-292.59 121.232c-15.16 15.159-15.16 39.764 0 54.923L278.906 690.17 86.642 882.436a38.836 38.836 0 1054.922 54.922l192.23-192.229 228.844 228.845a38.836 38.836 0 0054.922 0 411.042 411.042 0 00121.233-292.592zM134.02 435.44a333.473 333.473 0 01208.56-72.571l64.406.037a38.836 38.836 0 0027.461-11.351L544.292 241.71a38.68 38.68 0 0011.351-27.462 180.096 180.096 0 0136.798-89.01L898.8 431.593a180.925 180.925 0 01-89.12 36.835 38.836 38.836 0 00-27.462 11.35L672.373 589.626c-7.287 7.286-11.387 17.173-11.35 27.461l.036 64.406a333.318 333.318 0 01-72.608 208.596L134.021 435.44z"/></svg>', at = '<svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="64" height="64"><path d="M845.40952426 212.52063539H65.21904746v702.17142826h780.1904768V212.52063539z m-702.17142933 624.1523808V290.53968285h624.1523808v546.13333334H143.23809493z" fill="currentColor"></path><path d="M981.53650809 76.3936505H201.34603129v78.01904746h702.17142933v624.15238187h78.01904747V76.3936505z" fill="currentColor"></path></svg>';
 function sn() {
   return {
     IconClose: ot,
     IconMax: st,
     IconPin: ct,
     IconWindow: rt,
-    IconRestore: lt
+    IconRestore: at
   };
 }
 function Ee(n) {
@@ -460,13 +464,13 @@ function Ee(n) {
 function me(n) {
   const e = n.options.icon;
   return typeof e == "string" ? T("i", {
-    class: [p.logo, "icon", e]
+    class: [w.logo, "icon", e]
   }, null) : k(e) ? e : typeof e == "function" ? e(n) : T("i", {
-    class: p.logo,
+    class: w.logo,
     innerHTML: rt
   }, null);
 }
-const H = /* @__PURE__ */ B({
+const B = /* @__PURE__ */ D({
   name: "SimpleWindow",
   props: {
     abstractWindow: {
@@ -479,108 +483,108 @@ const H = /* @__PURE__ */ B({
       header() {
         const i = e.useMenus();
         return T("div", {
-          class: p.header
+          class: w.header
         }, [me(e), T("div", {
-          class: p.title
+          class: w.title
         }, [e.options.title ?? "新窗口"]), T("div", {
-          class: p.menus,
-          onMousedown: Ft
+          class: w.menus,
+          onMousedown: Ht
         }, [i.value.map((s) => gt(e, s))])]);
       }
     };
     return function() {
-      return T(y, {
+      return T(N, {
         abstractWindow: n.abstractWindow
       }, Ee(t) ? t : {
         default: () => [t]
       });
     };
   }
-}), at = Object.freeze({
-  SIMPLE_WINDOW: H.name,
-  BLANK_WINDOW: y.name
+}), lt = Object.freeze({
+  SIMPLE_WINDOW: B.name,
+  BLANK_WINDOW: N.name
 });
 function ut(n) {
-  return n == y.name ? y : H;
+  return n == N.name ? N : B;
 }
 function dt(n) {
   if (n.key == "Escape")
-    return wt({ pressEsc: !0, forced: !1 });
+    return pt({ pressEsc: !0, forced: !1 });
 }
-function Oe() {
-  a.isMounted = !0;
+function Ie() {
+  l.isMounted = !0;
 }
 function ft() {
-  a.isMounted = !1, a.topWindow = null, a.ids.value = [], a.stack.clear();
+  l.isMounted = !1, l.topWindow = null, l.ids.value = [], l.stack.clear();
 }
 function ht() {
-  return a.zIndex;
+  return l.zIndex;
 }
-function pt() {
-  return a.zIndex += 1;
+function wt() {
+  return l.zIndex += 1;
 }
-function Le() {
-  const n = a.topWindow;
+function Oe() {
+  const n = l.topWindow;
   return n ? n.state.zIndex : 1;
 }
-function Re() {
-  return a.topWindow;
+function Me() {
+  return l.topWindow;
 }
-function Ie(n, e) {
-  a.stack.set(n, e);
+function Re(n, e) {
+  l.stack.set(n, e);
 }
-function ve(n) {
-  if (console.log("[xWindow]: remove window", n), !a.stack.has(n) || (a.stack.delete(n), !a.isMounted))
+function ze(n) {
+  if (console.log("[xWindow]: remove window", n), !l.stack.has(n) || (l.stack.delete(n), !l.isMounted))
     return;
-  const e = a.ids.value.indexOf(n);
+  const e = l.ids.value.indexOf(n);
   if (e < 0)
     return;
-  a.ids.value.splice(e, 1);
+  l.ids.value.splice(e, 1);
 }
-function wt(n) {
-  if (a.stack.size == 0 || a.topWindow == null)
+function pt(n) {
+  if (l.stack.size == 0 || l.topWindow == null)
     return;
-  const e = a.topWindow;
-  (n == null ? void 0 : n.pressEsc) === !0 && e.options.closeOnPressEsc !== !0 || a.topWindow.cancel(n == null ? void 0 : n.forced);
+  const e = l.topWindow;
+  (n == null ? void 0 : n.pressEsc) === !0 && e.options.closeOnPressEsc !== !0 || l.topWindow.cancel(n == null ? void 0 : n.forced);
 }
 function be(n) {
-  const e = document.createDocumentFragment(), t = ut(n.type), i = D(t, { abstractWindow: n });
-  i.appContext = a.appContext, K(i, e), document.body.appendChild(e), n.on("beforeDestroy", () => {
-    K(null, e);
+  const e = document.createDocumentFragment(), t = ut(n.type), i = A(t, { abstractWindow: n });
+  i.appContext = l.appContext, J(i, e), document.body.appendChild(e), n.on("beforeDestroy", () => {
+    J(null, e);
   });
 }
-function We(n) {
-  const e = U.create(n);
-  return a.isMounted ? (a.ids.value.push(e.id), a.stack.set(e.id, e), e) : (be(e), e);
+function ve(n) {
+  const e = X.create(n);
+  return l.isMounted ? (l.ids.value.push(e.id), l.stack.set(e.id, e), e) : (be(e), e);
 }
-function Ne(n) {
-  return a.stack.get(n);
+function Le(n) {
+  return l.stack.get(n);
 }
-function ze() {
-  return a.ids;
+function xe() {
+  return l.ids;
 }
-function X(n) {
-  if (a.topWindow = n, n != null) {
-    for (const e of a.stack.values()) {
+function V(n) {
+  if (l.topWindow = n, n != null) {
+    for (const e of l.stack.values()) {
       const t = e.state;
       t != null && (t.focused = e === n);
     }
-    n.state != null && n.state.zIndex < ht() && (n.state.zIndex = pt());
+    n.state != null && n.state.zIndex < ht() && (n.state.zIndex = wt());
   }
 }
-function Me(n) {
-  const e = a.stack.get(n);
-  X(e);
-}
-function Pe() {
-  const n = ye();
-  X(n);
+function We(n) {
+  const e = l.stack.get(n);
+  V(e);
 }
 function ye() {
-  if (a.stack.size == 0)
+  const n = Pe();
+  V(n);
+}
+function Pe() {
+  if (l.stack.size == 0)
     return;
   let n;
-  for (const e of a.stack.values())
+  for (const e of l.stack.values())
     if (!(e.state == null || e.state.visible !== !0)) {
       if (n == null) {
         n = e;
@@ -590,33 +594,33 @@ function ye() {
     }
   return n;
 }
-function xe() {
-  return a.previewState;
+function Ne() {
+  return l.previewState;
 }
 function Se() {
-  return a.stack.size;
+  return l.stack.size;
 }
-function Ce() {
+function _e() {
   window.addEventListener("keydown", dt, !0);
 }
-function _e(n) {
-  a.appContext = n._context;
+function Ce(n) {
+  l.appContext = n._context;
 }
-function Fe() {
-  a.appContext = null, ft(), window.removeEventListener("keydown", dt, !0);
+function He() {
+  l.appContext = null, ft(), window.removeEventListener("keydown", dt, !0);
 }
 function rn() {
   return {
-    closeTopWindow: wt,
-    getTopWindow: Re,
-    getTopZIndex: pt,
+    closeTopWindow: pt,
+    getTopWindow: Me,
+    getTopZIndex: wt,
     getWindowCount: Se,
     getZIndex: ht,
-    setFocusedWindow: X,
-    cleanup: Fe
+    setFocusedWindow: V,
+    cleanup: He
   };
 }
-class He {
+class Be {
   constructor(e, t) {
     r(this, "moved", !1);
     r(this, "originalEvent");
@@ -637,10 +641,10 @@ class He {
     return !(this.moved || Math.abs(e.clientX - this.initialX) > 4 || Math.abs(e.clientY - this.initialY) > 4);
   }
   createEvent(e, t) {
-    return new V(e, t, this);
+    return new Z(e, t, this);
   }
 }
-class Be {
+class De {
   constructor(e) {
     r(this, "window");
     r(this, "context");
@@ -667,23 +671,23 @@ class Be {
     if (e.button !== 0)
       return;
     const t = e.target;
-    if (t instanceof Element && t.closest("." + x.MENU))
+    if (t instanceof Element && t.closest("." + L.MENU))
       return;
     const i = this.window.getElement();
     if (i == null)
       return;
     const s = i.getBoundingClientRect();
-    e.clientY - s.top > this.window.allowDragArea || (e.preventDefault(), e.stopPropagation(), this.context = new He(i, e), this.context.left = this.window.state.offsetLeft, this.context.top = this.window.state.offsetTop, this.onDragging = this.dragging.bind(this), this.onDragend = this.dragend.bind(this), window.addEventListener("pointermove", this.onDragging), window.addEventListener("pointerup", this.onDragend));
+    e.clientY - s.top > this.window.allowDragArea || (e.preventDefault(), e.stopPropagation(), this.context = new Be(i, e), this.context.left = this.window.state.offsetLeft, this.context.top = this.window.state.offsetTop, this.onDragging = this.dragging.bind(this), this.onDragend = this.dragend.bind(this), window.addEventListener("pointermove", this.onDragging), window.addEventListener("pointerup", this.onDragend));
   }
   dragging(e) {
-    var l;
+    var a;
     if (this.context == null)
       return;
     const t = this.context;
     if (!t.moved) {
       if (this.window.dispatch(this.context.createEvent("dragStart", this.window)).defaultPrevented)
         return this.cleanup();
-      const h = (l = this.window.component) == null ? void 0 : l.useCssClass();
+      const h = (a = this.window.component) == null ? void 0 : a.useCssClass();
       h != null && h.dragging && t.target.classList.add(h.dragging), t.target.setPointerCapture(e.pointerId), t.moved = !0;
     }
     if (t.preventDragEvent(e))
@@ -709,7 +713,7 @@ class Be {
     e != null && e.dragging && ((i = this.context) == null || i.target.classList.remove(e.dragging)), this.onDragging && window.removeEventListener("pointermove", this.onDragging), this.onDragend && window.removeEventListener("pointerup", this.onDragend), this.onDragging = void 0, this.onDragend = void 0, this.context = void 0;
   }
 }
-const P = class P extends F {
+const P = class P extends H {
   constructor(t) {
     super();
     r(this, "CREATE_RESOLVE");
@@ -736,7 +740,7 @@ const P = class P extends F {
     r(this, "handles", {});
     r(this, "dragstart");
     r(this, "resizestart");
-    this.type = t.type ?? Ct.SIMPLE_WINDOW, this.options = this.createOptions(t), this.body = t.body, Reflect.defineProperty(this, "id", { enumerable: !0, configurable: !1, writable: !1, value: P.seed++ }), this.initDraggable(), this.initResizable(), this.initHooks();
+    this.type = t.type ?? _t.SIMPLE_WINDOW, this.options = this.createOptions(t), this.body = t.body, Reflect.defineProperty(this, "id", { enumerable: !0, configurable: !1, writable: !1, value: P.seed++ }), this.initDraggable(), this.initResizable(), this.initHooks();
   }
   static create(t) {
     return t instanceof P ? t : new P(t);
@@ -757,12 +761,12 @@ const P = class P extends F {
   /** 顶部可拖拽区域，默认只有顶部32px以内可以拖动 */
   get allowDragArea() {
     const t = this.options.draggable;
-    return typeof t == "number" && t > 0 ? t : I.draggaleHeight;
+    return typeof t == "number" && t > 0 ? t : R.draggaleHeight;
   }
-  /** 窗口是否已全屏 */
-  get isFullscreen() {
+  /** 窗口是否已最大化 */
+  get isMaximize() {
     var t;
-    return ((t = this.state) == null ? void 0 : t.splitMode) === o.FULLSCREEN;
+    return ((t = this.state) == null ? void 0 : t.splitMode) === o.MAXIMIZE;
   }
   createOptions(t) {
     return {
@@ -779,10 +783,10 @@ const P = class P extends F {
       top: t.top,
       left: t.left,
       zIndex: t.zIndex,
-      fullscreen: t.fullscreen === !0,
+      maximize: t.maximize === !0,
       teleport: t.teleport ?? "body",
       draggable: t.draggable == null ? !0 : t.draggable,
-      resizeMode: t.resizeMode ?? z.RESIZE,
+      resizeMode: t.resizeMode ?? W.RESIZE,
       closeable: t.closeable !== !1,
       mask: t.mask === !0,
       pinnable: t.pinnable !== !1,
@@ -792,13 +796,13 @@ const P = class P extends F {
     };
   }
   createEvent(t, i) {
-    return new V(t, this, i);
+    return new Z(t, this, i);
   }
   initDraggable() {
-    this.draggable = new Be(this), this.dragstart = this.draggable.dragstart.bind(this.draggable);
+    this.draggable = new De(this), this.dragstart = this.draggable.dragstart.bind(this.draggable);
   }
   initResizable() {
-    this.resizable = new A(this), this.resizestart = this.resizable.resizestart.bind(this.resizable);
+    this.resizable = new F(this), this.resizestart = this.resizable.resizestart.bind(this.resizable);
   }
   initHooks() {
     this.once("created", () => {
@@ -823,7 +827,7 @@ const P = class P extends F {
     if (this.state == null || this.options.closeable === !1 && t !== !0)
       return !1;
     const i = this.dispatch(this.createEvent("beforeClose"));
-    return t !== !0 && i.defaultPrevented ? !1 : (this.state.visible = !1, this.dispatch(this.createEvent("close")), this.state.focused && setTimeout(Pe), !this.destroyed && this.options.destroyAfterClose !== !1 && this.destroy(), !0);
+    return t !== !0 && i.defaultPrevented ? !1 : (this.state.visible = !1, this.dispatch(this.createEvent("close")), this.state.focused && setTimeout(ye), !this.destroyed && this.options.destroyAfterClose !== !1 && this.destroy(), !0);
   }
   cleanup() {
     super.cleanup(), this.dragstart = void 0, this.resizestart = void 0, this.component = void 0, this.state = void 0, this.handles = {};
@@ -831,7 +835,7 @@ const P = class P extends F {
   /** 销毁窗口 */
   destroy() {
     var t;
-    this.destroyed = !0, ((t = this.state) == null ? void 0 : t.visible) === !0 && this.close(), this.dispatch(this.createEvent("beforeDestroy")), ve(this.id), this.cleanup();
+    this.destroyed = !0, ((t = this.state) == null ? void 0 : t.visible) === !0 && this.close(), this.dispatch(this.createEvent("beforeDestroy")), ze(this.id), setTimeout(() => this.cleanup(), 100);
   }
   /** 获取窗口根元素 */
   getElement() {
@@ -844,28 +848,26 @@ const P = class P extends F {
   }
   /** 窗口聚焦 */
   focus() {
-    this.state == null || this.state.focused || Me(this.id);
+    this.state == null || this.state.focused || We(this.id);
   }
   startTransition() {
     const t = document.documentElement, i = function(s) {
-      s.target.matches("." + x.WINDOW) && (t.classList.remove(x.TRANSITION), t.removeEventListener("transitionend", i));
+      s.target.matches("." + L.WINDOW) && (t.classList.remove(L.TRANSITION), t.removeEventListener("transitionend", i));
     };
-    t.classList.add(x.TRANSITION), t.addEventListener("transitionend", i);
+    t.classList.add(L.TRANSITION), t.addEventListener("transitionend", i);
   }
-  /** 窗口全屏 */
-  requestFullscreen() {
+  requestMaximize() {
     const t = this.state;
-    t == null || this.options.resizeMode !== z.RESIZE || (t.splitMode = o.FULLSCREEN, this.startTransition(), this.dispatch(this.createEvent("fullscreenChange")));
+    t == null || this.options.resizeMode !== W.RESIZE || (t.splitMode = o.MAXIMIZE, this.startTransition(), this.dispatch(this.createEvent("maximizeChange")));
   }
-  /** 退出全屏 */
-  exitFullscreen() {
+  exitMaximize() {
     const t = this.state;
-    t == null || this.options.resizeMode !== z.RESIZE || (t.splitMode = o.NONE, this.startTransition(), this.dispatch(this.createEvent("fullscreenChange")));
+    t == null || this.options.resizeMode !== W.RESIZE || (t.splitMode = o.NONE, this.startTransition(), this.dispatch(this.createEvent("maximizeChange")));
   }
-  /** 切换窗口全屏状态 */
-  toggleFullscreen() {
+  /** 切换窗口最大化 */
+  toggleMaximize() {
     const t = this.state;
-    t == null || this.options.resizeMode !== z.RESIZE || (t.splitMode === o.FULLSCREEN ? this.exitFullscreen() : this.requestFullscreen());
+    t == null || this.options.resizeMode !== W.RESIZE || (t.splitMode === o.MAXIMIZE ? this.exitMaximize() : this.requestMaximize());
   }
   /** 固定窗口 */
   pin() {
@@ -900,26 +902,27 @@ const P = class P extends F {
   /** 取消并关闭窗口 */
   cancel(t = !0) {
     return this.callHandle("cancel").then((i) => {
-      this.close(t) && this.dispatch(this.createEvent("cancel", i));
+      const s = this.close(t);
+      console.log(s), s && this.dispatch(this.createEvent("cancel", i));
     });
   }
 };
 r(P, "seed", 1e3);
-let U = P;
-const $ = 1e3, I = {}, a = Ae();
-function De(n) {
+let X = P;
+const $ = 1e3, R = {}, l = Fe();
+function Ae(n) {
   return typeof n != "number" || !Number.isFinite(n) ? $ : Math.floor(n);
 }
 function ke(n) {
-  I.zIndex = De(n == null ? void 0 : n.zIndex), I.draggaleHeight = (n == null ? void 0 : n.draggaleHeight) ?? 32, I.size = (n == null ? void 0 : n.size) ?? {}, a.zIndex = I.zIndex;
+  R.zIndex = Ae(n == null ? void 0 : n.zIndex), R.draggaleHeight = (n == null ? void 0 : n.draggaleHeight) ?? 32, R.size = (n == null ? void 0 : n.size) ?? {}, l.zIndex = R.zIndex;
 }
 function cn(n, e) {
-  I.size == null && (I.size = {}), I.size[n] = e;
+  R.size == null && (R.size = {}), R.size[n] = e;
 }
-function ln() {
-  return Pt(it);
+function an() {
+  return yt(it);
 }
-function Ae() {
+function Fe() {
   return {
     appContext: null,
     isMounted: !1,
@@ -940,14 +943,14 @@ function gt(n, e) {
   function s() {
     n.cancel();
   }
-  function l() {
+  function a() {
     n.togglePin();
   }
-  function f(w) {
-    w.preventDefault(), n.toggleFullscreen();
+  function f(p) {
+    p.preventDefault(), n.toggleMaximize();
   }
   switch (e) {
-    case L.CLOSE:
+    case O.CLOSE:
       return T("button", {
         onClick: s,
         type: "button",
@@ -955,19 +958,19 @@ function gt(n, e) {
         class: i.closeMenu,
         title: "关闭"
       }, null);
-    case L.PIN:
-    case L.UNPIN:
-      const w = t.pinned ? "取消固定" : "固定", g = t.pinned ? i.pinMenu : i.menu;
+    case O.PIN:
+    case O.UNPIN:
+      const p = t.pinned ? "取消固定" : "固定", g = t.pinned ? i.pinMenu : i.menu;
       return T("button", {
-        onClick: l,
+        onClick: a,
         type: "button",
         innerHTML: ct,
         class: g,
-        title: w
+        title: p
       }, null);
-    case L.FULLSCREEN:
-    case L.RESTORE:
-      const m = t.splitMode == o.FULLSCREEN ? lt : st, S = t.splitMode == o.FULLSCREEN ? "还原" : "最大化";
+    case O.MAXIMIZE:
+    case O.RESTORE:
+      const m = t.splitMode == o.MAXIMIZE ? at : st, S = t.splitMode == o.MAXIMIZE ? "还原" : "最大化";
       return T("button", {
         onClick: f,
         type: "button",
@@ -978,34 +981,34 @@ function gt(n, e) {
   }
   return null;
 }
-const Ge = "Ycke6mYQ", Ue = "_3QsmrztJ", Ve = "UkryRM5g", Xe = "U5LZXLJZ", Ye = "_2rffDKab", je = "vcVMeNrL", Ze = "koc15mYi", Je = "_4VxfFKcG", W = {
+const Ge = "Ycke6mYQ", Xe = "esgrGyhH", Ze = "UkryRM5g", Ve = "U5LZXLJZ", Ye = "_2rffDKab", je = "vcVMeNrL", Ue = "koc15mYi", Ke = "_4VxfFKcG", v = {
   splitWindowMask: Ge,
-  fullscreen: Ue,
-  splitLeft: Ve,
-  splitRight: Xe,
+  maximize: Xe,
+  splitLeft: Ze,
+  splitRight: Ve,
   splitTopLeft: Ye,
   splitTopRight: je,
-  splitBottomLeft: Ze,
-  splitBottomRight: Je
+  splitBottomLeft: Ue,
+  splitBottomRight: Ke
 };
-function Ke(n) {
+function Je(n) {
   return typeof n == "function" || Object.prototype.toString.call(n) === "[object Object]" && !k(n);
 }
 const qe = {
-  [o.FULLSCREEN]: W.fullscreen,
-  [o.LEFT]: W.splitLeft,
-  [o.RIGHT]: W.splitRight,
-  [o.TOP_LEFT]: W.splitTopLeft,
-  [o.TOP_RIGHT]: W.splitTopRight,
-  [o.BOTTOM_LEFT]: W.splitBottomLeft,
-  [o.BOTTOM_RIGHT]: W.splitBottomRight
+  [o.MAXIMIZE]: v.maximize,
+  [o.LEFT]: v.splitLeft,
+  [o.RIGHT]: v.splitRight,
+  [o.TOP_LEFT]: v.splitTopLeft,
+  [o.TOP_RIGHT]: v.splitTopRight,
+  [o.BOTTOM_LEFT]: v.splitBottomLeft,
+  [o.BOTTOM_RIGHT]: v.splitBottomRight
 }, $e = {
   ArrowUp: {
     [o.BOTTOM_LEFT]: o.LEFT,
     [o.BOTTOM_RIGHT]: o.RIGHT,
     [o.LEFT]: o.TOP_LEFT,
     [o.RIGHT]: o.TOP_RIGHT,
-    fallback: o.FULLSCREEN
+    fallback: o.MAXIMIZE
   },
   ArrowDown: {
     [o.TOP_LEFT]: o.LEFT,
@@ -1028,29 +1031,29 @@ const qe = {
     [o.BOTTOM_RIGHT]: o.BOTTOM_LEFT,
     fallback: o.RIGHT
   }
-}, Q = /* @__PURE__ */ B({
+}, Q = /* @__PURE__ */ D({
   name: "WindowManager",
   setup() {
-    const n = ze(), e = xe();
-    function t(l) {
-      const f = l.key;
-      l.ctrlKey && f in $e;
+    const n = xe(), e = Ne();
+    function t(a) {
+      const f = a.key;
+      a.ctrlKey && f in $e;
     }
-    Oe(), window.addEventListener("keydown", t, !0), yt(() => {
+    Ie(), window.addEventListener("keydown", t, !0), Pt(() => {
       ft(), window.removeEventListener("keydown", t, !0);
     });
-    const i = N(() => {
-      const l = [W.splitWindowMask], f = qe[e.mode];
-      return f != null && l.push(f), l;
+    const i = x(() => {
+      const a = [v.splitWindowMask], f = qe[e.mode];
+      return f != null && a.push(f), a;
     });
     function s() {
-      let l = null;
+      let a = null;
       if (e.mode != o.NONE) {
         const h = {
-          zIndex: Le() + 1,
+          zIndex: Oe() + 1,
           width: e.width ? e.width - 20 + "px" : void 0
         };
-        l = T("div", {
+        a = T("div", {
           class: i.value,
           style: h
         }, null);
@@ -1058,20 +1061,20 @@ const qe = {
       return T(nt, {
         to: "body"
       }, {
-        default: () => [T(xt, {
+        default: () => [T(Nt, {
           name: "fade"
-        }, Ke(l) ? l : {
-          default: () => [l]
+        }, Je(a) ? a : {
+          default: () => [a]
         })]
       });
     }
     return function() {
       return [...n.value.map((f) => {
-        const h = Ne(f);
+        const h = Le(f);
         if (h == null)
           return null;
-        const w = ut(h.type);
-        return D(w, {
+        const p = ut(h.type);
+        return A(p, {
           abstractWindow: h,
           key: h.wid
         });
@@ -1097,23 +1100,23 @@ function Qe(n) {
   return null;
 }
 function Y(n) {
-  const e = Qe(n) ?? {}, t = typeof e.size == "string" ? Reflect.get(I.size, e.size) : null;
+  const e = Qe(n) ?? {}, t = typeof e.size == "string" ? Reflect.get(R.size, e.size) : null;
   return t != null && (e.width = t.width, e.height = t.height, e.top = t.top, e.left = t.left), e;
 }
-function an(...n) {
+function ln(...n) {
   const e = Y(n) ?? {};
   return j(e);
 }
 function un(...n) {
   const e = Y(n) ?? {};
-  return e.type = at.BLANK_WINDOW, j(e);
+  return e.type = lt.BLANK_WINDOW, j(e);
 }
 function dn(...n) {
   const e = Y(n) ?? {};
-  return e.type = at.SIMPLE_WINDOW, j(e);
+  return e.type = lt.SIMPLE_WINDOW, j(e);
 }
 function j(n) {
-  const e = We(n);
+  const e = ve(n);
   return e.ready().then(() => {
     n.displayAfterCreate !== !1 && e.show();
   }), e;
@@ -1122,27 +1125,27 @@ const fn = Object.freeze({
   renderMenu: gt
 });
 function tn(n, e) {
-  n.component(H.name, H), n.component(y.name, y), n.component(Q.name, Q), ke(e), Ce(), _e(n);
+  n.component(B.name, B), n.component(N.name, N), n.component(Q.name, Q), ke(e), _e(), Ce(n);
 }
 const en = St, hn = { install: tn, version: en };
 export {
-  U as AbstractWindow,
-  y as BlankWindow,
-  M as RENDER_STATES,
-  z as RESIZE_MODE,
+  X as AbstractWindow,
+  N as BlankWindow,
+  y as RENDER_STATES,
+  W as RESIZE_MODE,
   fn as Render,
   o as SPLIT_MODES,
-  H as SimpleWindow,
-  He as WindowDragContext,
+  B as SimpleWindow,
+  Be as WindowDragContext,
   Q as WindowManager,
-  Fe as cleanup,
+  He as cleanup,
   hn as default,
   tn as install,
   un as useBlankWindow,
   sn as useIcons,
   dn as useSimpleWindow,
-  an as useWindow,
-  ln as useWindowApi,
+  ln as useWindow,
+  an as useWindowApi,
   rn as useWindowManager,
   cn as useWindowSize,
   en as version,
