@@ -18,7 +18,7 @@ npm i @dongls/xwindow
 
 ## License
 
-本项目无任何限制，你**可以做任何事**。  
+本项目无任何限制。  
 You just **DO WHAT THE FUCK YOU WANT TO**.
 
 [vue]: https://github.com/vuejs/core
