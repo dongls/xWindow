@@ -157,16 +157,16 @@ class X {
   }
 }
 r(X, "PROP", "__xwindow_resize_prop__");
-const p = { window: "_1T2rhwiL", dragging: "yi9w1sZD", resizing: "Ja2o9U31", maximize: "_1eMSsKoB", focused: "_3czvPpS2", header: "GiVk7T8N", menu: "VuG4WNig x-window-is-menu", logo: "yBPezU8e", main: "xbuRK23n", init: "_9t1NJBZM", title: "shyxrRzw", menus: "nkEGqTFw", body: "pk12TusX", footer: "noixF94i", closeMenu: "ifXDegN1 VuG4WNig x-window-is-menu", pinMenu: "X5A6roxN VuG4WNig x-window-is-menu", resizeBar: "PPmfTMRL", resizeTop: "v8UGXgKi PPmfTMRL", resizeBottom: "_74VJ9GNt PPmfTMRL", resizeRight: "gg9Mcwey PPmfTMRL", resizeLeft: "Tw7sCaLt PPmfTMRL", resizeTopLeft: "CPuApFyD PPmfTMRL", resizeBottomLeft: "VBRi4FWg PPmfTMRL", resizeTopRight: "gCRpuZdB PPmfTMRL", resizeBottomRight: "iRYpNoUT PPmfTMRL", mask: "xTcKGSVA" }, Ct = G({ name: "WindowBody", props: { wid: String, body: { type: [Object, Function, String, Number], default: null }, abstractWindow: { type: Object, required: !0 } }, setup: (i) => function() {
+const p = { window: "_1T2rhwiL", dragging: "yi9w1sZD", resizing: "Ja2o9U31", maximize: "_1eMSsKoB", focused: "_3czvPpS2", header: "GiVk7T8N", menu: "VuG4WNig x-window-is-menu", logo: "yBPezU8e", main: "xbuRK23n", init: "_9t1NJBZM", title: "shyxrRzw", menus: "nkEGqTFw", body: "pk12TusX", footer: "noixF94i", closeMenu: "ifXDegN1 VuG4WNig x-window-is-menu", pinMenu: "X5A6roxN VuG4WNig x-window-is-menu", resizeBar: "PPmfTMRL", resizeTop: "v8UGXgKi PPmfTMRL", resizeBottom: "_74VJ9GNt PPmfTMRL", resizeRight: "gg9Mcwey PPmfTMRL", resizeLeft: "Tw7sCaLt PPmfTMRL", resizeTopLeft: "CPuApFyD PPmfTMRL", resizeBottomLeft: "VBRi4FWg PPmfTMRL", resizeTopRight: "gCRpuZdB PPmfTMRL", resizeBottomRight: "iRYpNoUT PPmfTMRL", mask: "xTcKGSVA" }, _t = G({ name: "WindowBody", props: { wid: String, body: { type: [Object, Function, String, Number], default: null }, abstractWindow: { type: Object, required: !0 } }, setup: (i) => function() {
   const e = typeof i.body == "function" ? i.body(i.abstractWindow) : i.body;
   return e == null && console.warn("[xWindow] 请指定窗体内容:", i.abstractWindow.options.title), e;
-} }), _t = Math.floor(Number.MAX_SAFE_INTEGER / 10) - 1e4, Ht = [[p.resizeTop, L.TOP], [p.resizeBottom, L.BOTTOM], [p.resizeLeft, L.LEFT], [p.resizeRight, L.RIGHT], [p.resizeTopLeft, L.TOP_LEFT], [p.resizeTopRight, L.TOP_RIGHT], [p.resizeBottomLeft, L.BOTTOM_LEFT], [p.resizeBottomRight, L.BOTTOM_RIGHT]], _ = G({ name: "BlankWindow", props: { abstractWindow: { type: Object, required: !0 } }, setup(i, { slots: e }) {
+} }), Ct = Math.floor(Number.MAX_SAFE_INTEGER / 10) - 1e4, Ht = [[p.resizeTop, L.TOP], [p.resizeBottom, L.BOTTOM], [p.resizeLeft, L.LEFT], [p.resizeRight, L.RIGHT], [p.resizeTopLeft, L.TOP_LEFT], [p.resizeTopRight, L.TOP_RIGHT], [p.resizeBottomLeft, L.BOTTOM_LEFT], [p.resizeBottomRight, L.BOTTOM_RIGHT]], C = G({ name: "BlankWindow", props: { abstractWindow: { type: Object, required: !0 } }, setup(i, { slots: e }) {
   const t = bt(), n = nt({ visible: !1, offsetWidth: 0, offsetHeight: 0, offsetTop: 0, offsetLeft: 0, focused: !1, pinned: !1, zIndex: 0, splitMode: o.NONE }), s = it(P.INIT), a = W(() => {
     const c = i.abstractWindow.options;
     return typeof c.zIndex == "number" && c.zIndex > 0;
   }), d = W(() => {
     const c = i.abstractWindow.options;
-    return a.value ? c.zIndex : (n.pinned ? _t : 0) + n.zIndex;
+    return a.value ? c.zIndex : (n.pinned ? Ct : 0) + n.zIndex;
   }), T = function(c, u, f, b) {
     return W(() => {
       const m = c.options;
@@ -233,7 +233,7 @@ const p = { window: "_1T2rhwiL", dragging: "yi9w1sZD", resizing: "Ja2o9U31", max
     const c = i.abstractWindow, u = c.options;
     if (n.visible !== !0)
       return null;
-    const f = typeof e.header == "function" ? e.header(O) : null, b = w("div", { class: p.main, onDblclick: Ot }, [f, w("div", { class: [p.body, x.BODY, u.bodyClassName] }, [w(Ct, { body: c.body, abstractWindow: i.abstractWindow, key: c.wid }, null)])]), m = { ref: t, id: c.wid, onVnodeMounted: mt, onPointerdown: vt, class: E.value, style: T.value }, y = (H = u.resizeMode, B = c.resizestart, H == N.DISABLED ? null : Ht.map((R) => D("div", { ["." + X.PROP]: R[1], className: R[0], onPointerdown: B })));
+    const f = typeof e.header == "function" ? e.header(O) : null, b = w("div", { class: p.main, onDblclick: Ot }, [f, w("div", { class: [p.body, x.BODY, u.bodyClassName] }, [w(_t, { body: c.body, abstractWindow: i.abstractWindow, key: c.wid }, null)])]), m = { ref: t, id: c.wid, onVnodeMounted: mt, onPointerdown: vt, class: E.value, style: T.value }, y = (H = u.resizeMode, B = c.resizestart, H == N.DISABLED ? null : Ht.map((R) => D("div", { ["." + X.PROP]: R[1], className: R[0], onPointerdown: B })));
     var H, B;
     let z = D("div", m, [b, y]);
     if (u.mask === !0) {
@@ -257,12 +257,12 @@ const F = G({ name: "SimpleWindow", props: { abstractWindow: { type: Object, req
     return w("div", { class: p.header }, [St(e), w("div", { class: p.title }, [e.options.title ?? "新窗口"]), w("div", { class: p.menus, onMousedown: Pt }, [n.value.map((s) => Et(e, s))])]);
   } };
   return function() {
-    return w(_, { abstractWindow: i.abstractWindow }, typeof (n = t) == "function" || Object.prototype.toString.call(n) === "[object Object]" && !k(n) ? t : { default: () => [t] });
+    return w(C, { abstractWindow: i.abstractWindow }, typeof (n = t) == "function" || Object.prototype.toString.call(n) === "[object Object]" && !k(n) ? t : { default: () => [t] });
     var n;
   };
-} }), ut = Object.freeze({ SIMPLE_WINDOW: F.name, BLANK_WINDOW: _.name });
+} }), ut = Object.freeze({ SIMPLE_WINDOW: F.name, BLANK_WINDOW: C.name });
 function ht(i) {
-  return i == _.name ? _ : F;
+  return i == C.name ? C : F;
 }
 function pt(i) {
   if (i.key == "Escape")
@@ -337,7 +337,7 @@ class kt {
     r(this, "prevClientX");
     r(this, "prevClientY");
     const n = e.getBoundingClientRect();
-    this.originalEvent = t, this.target = e, this.deltaX = n.left - t.clientX, this.deltaY = n.top - t.clientY, this.initialX = t.clientX, this.initialY = t.clientY, this.prevClientX = t.clientX, this.prevClientY = t.clientY;
+    this.originalEvent = t, this.target = e, this.deltaX = Math.round(n.left - t.clientX), this.deltaY = Math.round(n.top - t.clientY), this.initialX = t.clientX, this.initialY = t.clientY, this.prevClientX = t.clientX, this.prevClientY = t.clientY;
   }
   preventDragEvent(e) {
     return !this.moved && !(Math.abs(e.clientX - this.initialX) > 4) && !(Math.abs(e.clientY - this.initialY) > 4);
@@ -386,7 +386,7 @@ class Xt {
     }
     if (t.preventDragEvent(e))
       return;
-    e.preventDefault(), e.stopPropagation(), t.originalEvent = e, t.left = Math.round(t.left + e.clientX - t.prevClientX), t.top = Math.round(t.top + e.clientY - t.prevClientY), t.prevClientX = e.clientX, t.prevClientY = e.clientY;
+    e.preventDefault(), e.stopPropagation(), t.originalEvent = e, t.left = Math.round(e.clientX + t.deltaX), t.top = Math.round(e.clientY + t.deltaY), t.prevClientX = e.clientX, t.prevClientY = e.clientY;
     const n = t.target;
     n.style.left = t.left + "px", n.style.top = t.top + "px";
     const s = this.context.createEvent("dragging", this.window);
@@ -407,7 +407,7 @@ class Xt {
     e != null && e.dragging && ((n = this.context) == null || n.target.classList.remove(e.dragging)), this.onDragging && window.removeEventListener("pointermove", this.onDragging), this.onDragend && window.removeEventListener("pointerup", this.onDragend), this.onDragging = void 0, this.onDragend = void 0, this.context = void 0;
   }
 }
-const C = class C extends A {
+const _ = class _ extends A {
   constructor(t) {
     super();
     r(this, "CREATE_RESOLVE");
@@ -425,10 +425,10 @@ const C = class C extends A {
     r(this, "handles", {});
     r(this, "dragstart");
     r(this, "resizestart");
-    this.type = t.type ?? yt.SIMPLE_WINDOW, this.options = this.createOptions(t), this.body = t.body, Reflect.defineProperty(this, "id", { enumerable: !0, configurable: !1, writable: !1, value: C.seed++ }), this.initDraggable(), this.initResizable(), this.initHooks();
+    this.type = t.type ?? yt.SIMPLE_WINDOW, this.options = this.createOptions(t), this.body = t.body, Reflect.defineProperty(this, "id", { enumerable: !0, configurable: !1, writable: !1, value: _.seed++ }), this.initDraggable(), this.initResizable(), this.initHooks();
   }
   static create(t) {
-    return t instanceof C ? t : new C(t);
+    return t instanceof _ ? t : new _(t);
   }
   get wid() {
     return "window--" + this.id;
@@ -552,8 +552,8 @@ const C = class C extends A {
     });
   }
 };
-r(C, "seed", 1e3);
-let V = C;
+r(_, "seed", 1e3);
+let V = _;
 const tt = 1e3, I = {}, l = { appContext: null, isMounted: !1, zIndex: 1e3, stack: /* @__PURE__ */ new Map(), ids: it([]), topWindow: null, previewState: nt({ mode: o.NONE, width: 0, height: 0 }) };
 function Vt(i) {
   var e;
@@ -665,14 +665,14 @@ function U(i) {
 }
 const ue = Object.freeze({ renderMenu: Et });
 function te(i, e) {
-  i.component(F.name, F), i.component(_.name, _), i.component(et.name, et), Vt(e), window.addEventListener("keydown", pt, !0), function(t) {
+  i.component(F.name, F), i.component(C.name, C), i.component(et.name, et), Vt(e), window.addEventListener("keydown", pt, !0), function(t) {
     l.appContext = t._context;
   }(i);
 }
 const ee = "0.1.0", he = { install: te, version: ee };
 export {
   V as AbstractWindow,
-  _ as BlankWindow,
+  C as BlankWindow,
   P as RENDER_STATES,
   N as RESIZE_MODE,
   ue as Render,

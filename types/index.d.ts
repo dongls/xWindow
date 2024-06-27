@@ -3,6 +3,7 @@ import { ComponentOptionsMixin } from 'vue';
 import { ComputedRef } from 'vue';
 import { DefineComponent } from 'vue';
 import { ExtractPropTypes } from 'vue';
+import { JSX } from 'vue/jsx-runtime';
 import { PropType } from 'vue';
 import { PublicProps } from 'vue';
 import { RendererElement } from 'vue';
@@ -153,7 +154,7 @@ abstractWindow: {
 type: PropType<AbstractWindow>;
 required: true;
 };
-}, () => any, unknown, {}, {}, ComponentOptionsMixin, ComponentOptionsMixin, {}, string, PublicProps, Readonly<ExtractPropTypes<    {
+}, () => JSX.Element, unknown, {}, {}, ComponentOptionsMixin, ComponentOptionsMixin, {}, string, PublicProps, Readonly<ExtractPropTypes<    {
 abstractWindow: {
 type: PropType<AbstractWindow>;
 required: true;
