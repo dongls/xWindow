@@ -386,7 +386,7 @@ class Xt {
     }
     if (t.preventDragEvent(e))
       return;
-    e.preventDefault(), e.stopPropagation(), t.originalEvent = e, t.left = Math.round(e.clientX + t.deltaX), t.top = Math.round(e.clientY + t.deltaY), t.prevClientX = e.clientX, t.prevClientY = e.clientY;
+    e.preventDefault(), e.stopPropagation(), t.originalEvent = e, t.left = e.clientX + t.deltaX, t.top = e.clientY + t.deltaY, t.prevClientX = e.clientX, t.prevClientY = e.clientY;
     const n = t.target;
     n.style.left = t.left + "px", n.style.top = t.top + "px";
     const s = this.context.createEvent("dragging", this.window);
