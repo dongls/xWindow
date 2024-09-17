@@ -1,4 +1,4 @@
-/*! @dongls/xWindow v0.1.0 https://github.com/dongls/xWindow
+/*! @dongls/xWindow v0.1.1 https://github.com/dongls/xWindow
 Copyright 2023-present dongls
 Released under the MIT License */
 var Mt = Object.defineProperty;
@@ -669,7 +669,7 @@ function te(i, e) {
     l.appContext = t._context;
   }(i);
 }
-const ee = "0.1.0", he = { install: te, version: ee };
+const ee = "0.1.1", he = { install: te, version: ee };
 export {
   V as AbstractWindow,
   C as BlankWindow,
