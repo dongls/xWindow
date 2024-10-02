@@ -57,8 +57,11 @@ export declare class AbstractWindow extends Emitter<AbstractWindow> {
     togglePin(): void;
     useHandle(type: HandlerType, callback: Function): void;
     private callHandle;
-    confirm(): Promise<void>;
-    cancel(forced?: boolean): Promise<void>;
+    onConfirm(): Promise<void>;
+    confirm(data?: any): void;
+    onCancel(): Promise<void>;
+    cancel(forced?: boolean, data?: any): void;
+    promise<T = any>(): Promise<T>;
 }
 
 export declare const BlankWindow: DefineComponent<    {

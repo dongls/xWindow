@@ -1,10 +1,10 @@
-/*! @dongls/xWindow v0.1.4 https://github.com/dongls/xWindow
+/*! @dongls/xWindow v0.2.0 https://github.com/dongls/xWindow
 Copyright 2023-present dongls
 Released under the MIT License */
 var zt = Object.defineProperty;
 var Rt = (i, e, t) => e in i ? zt(i, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : i[e] = t;
 var r = (i, e, t) => (Rt(i, typeof e != "symbol" ? e + "" : e, t), t);
-import { defineComponent as k, computed as N, h as A, shallowRef as xt, reactive as it, ref as st, provide as yt, createVNode as g, Teleport as ot, isVNode as X, nextTick as Q, render as $, inject as Wt, onBeforeUnmount as Pt, Transition as Nt } from "vue";
+import { defineComponent as k, computed as N, h as A, shallowRef as xt, reactive as it, ref as st, provide as yt, createVNode as w, Teleport as ot, isVNode as X, nextTick as Q, render as $, inject as Wt, onBeforeUnmount as Pt, Transition as Nt } from "vue";
 const rt = Symbol(), I = Object.freeze({ WINDOW: "x-window", SIMPLE_WINDOW: "x-simple-window", TRANSITION: "x-window-is-transition", MENU: "x-window-is-menu", FOCUSED: "x-window-is-focused", MAXIMIZE: "x-window-is-maximize", HEADER: "x-window-header", BODY: "x-window-body" }), h = Object.freeze({ NONE: 0, TOP: 1, BOTTOM: 2, LEFT: 4, RIGHT: 8 }), x = Object.freeze({ TOP: h.TOP, BOTTOM: h.BOTTOM, LEFT: h.LEFT, RIGHT: h.RIGHT, TOP_LEFT: h.TOP | h.LEFT, TOP_RIGHT: h.TOP | h.RIGHT, BOTTOM_LEFT: h.BOTTOM | h.LEFT, BOTTOM_RIGHT: h.BOTTOM | h.RIGHT }), o = Object.freeze({ NONE: h.NONE, MAXIMIZE: h.TOP, LEFT: h.LEFT, RIGHT: h.RIGHT, TOP_LEFT: h.TOP | h.LEFT, TOP_RIGHT: h.TOP | h.RIGHT, BOTTOM_LEFT: h.BOTTOM | h.LEFT, BOTTOM_RIGHT: h.BOTTOM | h.RIGHT }), _ = Object.freeze({ DISABLED: 0, RESIZE: 1, RESIZE_ONLY: 2 }), P = Object.freeze({ INIT: 0, MOUNTED: 1, UNMOUNTED: 2 }), at = Object.freeze({ SIMPLE_WINDOW: "SimpleWindow", BLANK_WINDOW: "BlankWindow" }), M = Object.freeze({ CLOSE: 0, MAXIMIZE: 1, RESTORE: 2, PIN: 3, UNPIN: 4 });
 class Y {
   constructor(e, t, n) {
@@ -131,20 +131,20 @@ class V {
   calcWindowState(e) {
     const t = this.context, n = this.window.options, s = typeof n.minWidth == "number" && n.minWidth >= 0 ? n.minWidth : 360, a = typeof n.minHeight == "number" && n.minHeight >= 0 ? n.minHeight : 32, d = this.window.getElement().getBoundingClientRect(), T = document.documentElement.getBoundingClientRect(), E = {};
     if (t.direction & h.TOP) {
-      const w = v(d.bottom - v(e.clientY, 0), a), O = v(e.clientY - T.top, 0, window.innerHeight - w);
-      E.height = w, E.top = O;
+      const g = v(d.bottom - v(e.clientY, 0), a), O = v(e.clientY - T.top, 0, window.innerHeight - g);
+      E.height = g, E.top = O;
     }
     if (t.direction & h.BOTTOM) {
-      const w = v(v(e.clientY, 0, window.innerHeight) - d.top, a), O = v(e.clientY - w - T.top, 0, window.innerHeight - w);
-      E.height = w, E.top = O;
+      const g = v(v(e.clientY, 0, window.innerHeight) - d.top, a), O = v(e.clientY - g - T.top, 0, window.innerHeight - g);
+      E.height = g, E.top = O;
     }
     if (t.direction & h.LEFT) {
-      const w = v(d.right - v(e.clientX, 0), s, window.innerWidth), O = v(e.clientX - T.left, 0, window.innerWidth - w);
-      E.width = w, E.left = O;
+      const g = v(d.right - v(e.clientX, 0), s, window.innerWidth), O = v(e.clientX - T.left, 0, window.innerWidth - g);
+      E.width = g, E.left = O;
     }
     if (t.direction & h.RIGHT) {
-      const w = v(v(e.clientX, 0) - d.left, s, window.innerWidth), O = v(e.clientX - w - T.left, 0, window.innerWidth - w - 0);
-      E.width = w, E.left = O;
+      const g = v(v(e.clientX, 0) - d.left, s, window.innerWidth), O = v(e.clientX - g - T.left, 0, window.innerWidth - g - 0);
+      E.width = g, E.left = O;
     }
     return E;
   }
@@ -179,7 +179,7 @@ const p = { window: "_1T2rhwiL", dragging: "yi9w1sZD", resizing: "Ja2o9U31", max
     const c = [I.WINDOW, p.window], u = i.abstractWindow;
     var f;
     return u.type === at.SIMPLE_WINDOW && c.push(I.SIMPLE_WINDOW), s.value == P.INIT && c.push(p.init), n.splitMode == o.MAXIMIZE && c.push(p.maximize, I.MAXIMIZE), n.focused && c.push(p.focused, I.FOCUSED), (f = u.options.className) != null && typeof f == "string" && f.length != 0 && c.push(u.options.className), c;
-  }), w = N(() => {
+  }), g = N(() => {
     const c = [], u = i.abstractWindow.options;
     return u.pinnable && u.mask !== !0 && a.value !== !0 && c.push(n.pinned ? M.PIN : M.UNPIN), u.resizeMode == _.RESIZE && c.push(n.splitMode == o.MAXIMIZE ? M.RESTORE : M.MAXIMIZE), u.closeable && c.push(M.CLOSE), c;
   }), O = { getElement: J, getRenderState: function() {
@@ -187,7 +187,7 @@ const p = { window: "_1T2rhwiL", dragging: "yi9w1sZD", resizing: "Ja2o9U31", max
   }, useCssClass: function() {
     return p;
   }, useMenus: function() {
-    return w;
+    return g;
   } };
   function J() {
     return t.value;
@@ -235,15 +235,15 @@ const p = { window: "_1T2rhwiL", dragging: "yi9w1sZD", resizing: "Ja2o9U31", max
       return null;
     const f = typeof e.header == "function" ? e.header(O) : null, L = typeof e.body == "function" ? e.body(O) : function() {
       const R = i.abstractWindow, Lt = R.options;
-      return g(ct, { class: Lt.bodyClassName, body: R.body, abstractWindow: i.abstractWindow, key: R.wid }, null);
-    }(), m = g("div", { class: p.main, onDblclick: bt }, [f, L]), W = { ref: t, id: c.wid, onVnodeMounted: Mt, onPointerdown: It, class: E.value, style: T.value }, S = (B = u.resizeMode, D = c.resizestart, B == _.DISABLED ? null : Bt.map((R) => A("div", { ["." + V.PROP]: R[1], className: R[0], onPointerdown: D })));
+      return w(ct, { class: Lt.bodyClassName, body: R.body, abstractWindow: i.abstractWindow, key: R.wid }, null);
+    }(), m = w("div", { class: p.main, onDblclick: bt }, [f, L]), W = { ref: t, id: c.wid, onVnodeMounted: Mt, onPointerdown: It, class: E.value, style: T.value }, S = (B = u.resizeMode, D = c.resizestart, B == _.DISABLED ? null : Bt.map((R) => A("div", { ["." + V.PROP]: R[1], className: R[0], onPointerdown: D })));
     var B, D;
     let z = A("div", W, [m, S]);
     if (u.mask === !0) {
       const R = { zIndex: d.value };
-      z = g("div", { class: p.mask, style: R }, [z]);
+      z = w("div", { class: p.mask, style: R }, [z]);
     }
-    return u.teleport === !1 ? z : g(ot, { to: u.teleport }, typeof (y = z) == "function" || Object.prototype.toString.call(y) === "[object Object]" && !X(y) ? z : { default: () => [z] });
+    return u.teleport === !1 ? z : w(ot, { to: u.teleport }, typeof (y = z) == "function" || Object.prototype.toString.call(y) === "[object Object]" && !X(y) ? z : { default: () => [z] });
     var y;
   };
 } }), lt = '<svg width="64" height="64" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M590.265 511.987l305.521-305.468c21.617-21.589 21.617-56.636.027-78.252-21.616-21.617-56.663-21.617-78.279 0L512.012 433.735 206.544 128.213c-21.617-21.617-56.635-21.617-78.252 0-21.616 21.589-21.616 56.635-.027 78.252L433.76 511.987 128.211 817.482c-21.617 21.59-21.617 56.635 0 78.251 10.808 10.81 24.967 16.213 39.125 16.213 14.159 0 28.318-5.403 39.126-16.213l305.522-305.468L817.48 895.788C828.289 906.597 842.447 912 856.606 912s28.317-5.403 39.125-16.212c21.618-21.59 21.618-56.636.028-78.252L590.265 511.987z"/></svg>', dt = '<svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5228" width="64" height="64"><path d="M97.74775349 97.74775349h828.50449302v828.50449302H97.74775349V97.74775349z m103.56306133 103.56306133v621.37837036h621.37837036V201.31081482H201.31081482z" fill="currentColor"></path></svg>', ut = '<svg width="64" height="64" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M38.794 124.791v778.495h946.412V124.791H38.794zm896.678 728.033H89.292v-460.9h846.18v460.9z"/></svg>', ht = '<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="64" height="64"><path d="M738.793 681.382v-48.331l88.242-88.243a298.676 298.676 0 00156.712-83.482 38.836 38.836 0 000-54.923l-366.15-366.15a38.836 38.836 0 00-54.923 0 298.52 298.52 0 00-83.519 156.749l-88.169 88.169h-48.332a411.145 411.145 0 00-292.59 121.232c-15.16 15.159-15.16 39.764 0 54.923L278.906 690.17 86.642 882.436a38.836 38.836 0 1054.922 54.922l192.23-192.229 228.844 228.845a38.836 38.836 0 0054.922 0 411.042 411.042 0 00121.233-292.592zM134.02 435.44a333.473 333.473 0 01208.56-72.571l64.406.037a38.836 38.836 0 0027.461-11.351L544.292 241.71a38.68 38.68 0 0011.351-27.462 180.096 180.096 0 0136.798-89.01L898.8 431.593a180.925 180.925 0 01-89.12 36.835 38.836 38.836 0 00-27.462 11.35L672.373 589.626c-7.287 7.286-11.387 17.173-11.35 27.461l.036 64.406a333.318 333.318 0 01-72.608 208.596L134.021 435.44z"/></svg>', pt = '<svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="64" height="64"><path d="M845.40952426 212.52063539H65.21904746v702.17142826h780.1904768V212.52063539z m-702.17142933 624.1523808V290.53968285h624.1523808v546.13333334H143.23809493z" fill="currentColor"></path><path d="M981.53650809 76.3936505H201.34603129v78.01904746h702.17142933v624.15238187h78.01904747V76.3936505z" fill="currentColor"></path></svg>';
@@ -252,25 +252,25 @@ function re() {
 }
 function Dt(i) {
   const e = i.options.icon;
-  return typeof e == "string" ? g("i", { class: [p.logo, "icon", e] }, null) : X(e) ? e : typeof e == "function" ? e(i) : g("i", { class: p.logo, innerHTML: ut }, null);
+  return typeof e == "string" ? w("i", { class: [p.logo, "icon", e] }, null) : X(e) ? e : typeof e == "function" ? e(i) : w("i", { class: p.logo, innerHTML: ut }, null);
 }
 const G = k({ name: "SimpleWindow", props: { abstractWindow: { type: Object, required: !0 } }, setup(i) {
   const e = i.abstractWindow, t = { header() {
     const n = e.useMenus();
-    return g("div", { class: p.header }, [Dt(e), g("div", { class: p.title }, [e.options.title ?? "新窗口"]), g("div", { class: p.menus, onMousedown: _t }, [n.value.map((s) => Ot(e, s))])]);
+    return w("div", { class: p.header }, [Dt(e), w("div", { class: p.title }, [e.options.title ?? "新窗口"]), w("div", { class: p.menus, onMousedown: _t }, [n.value.map((s) => Ot(e, s))])]);
   }, body() {
     const n = e.options;
-    return g("div", { class: [p.body, I.BODY, n.bodyClassName] }, [g(ct, { body: e.body, abstractWindow: i.abstractWindow, key: e.wid }, null)]);
+    return w("div", { class: [p.body, I.BODY, n.bodyClassName] }, [w(ct, { body: e.body, abstractWindow: i.abstractWindow, key: e.wid }, null)]);
   } };
   return function() {
-    return g(H, { abstractWindow: i.abstractWindow }, typeof (n = t) == "function" || Object.prototype.toString.call(n) === "[object Object]" && !X(n) ? t : { default: () => [t] });
+    return w(H, { abstractWindow: i.abstractWindow }, typeof (n = t) == "function" || Object.prototype.toString.call(n) === "[object Object]" && !X(n) ? t : { default: () => [t] });
     var n;
   };
 } }), ft = Object.freeze({ SIMPLE_WINDOW: G.name, BLANK_WINDOW: H.name });
-function gt(i) {
+function wt(i) {
   return i == H.name ? H : G;
 }
-function wt(i) {
+function gt(i) {
   if (i.key == "Escape")
     return vt({ pressEsc: !0, forced: !1 });
 }
@@ -295,7 +295,7 @@ function vt(i) {
 function Ft(i) {
   const e = Z.create(i);
   return l.isMounted ? (l.ids.value.push(e.id), l.stack.set(e.id, e), e) : (function(t) {
-    const n = document.createDocumentFragment(), s = gt(t.type), a = A(s, { abstractWindow: t });
+    const n = document.createDocumentFragment(), s = wt(t.type), a = A(s, { abstractWindow: t });
     a.appContext = l.appContext, $(a, n), document.body.appendChild(n), t.on("beforeDestroy", () => {
       $(null, n);
     });
@@ -324,7 +324,7 @@ function kt() {
   return l.stack.size;
 }
 function Xt() {
-  l.appContext = null, Tt(), window.removeEventListener("keydown", wt, !0);
+  l.appContext = null, Tt(), window.removeEventListener("keydown", gt, !0);
 }
 function ae() {
   return { closeTopWindow: vt, getTopWindow: At, getTopZIndex: mt, getWindowCount: kt, getZIndex: Et, setFocusedWindow: j, cleanup: Xt };
@@ -546,15 +546,21 @@ const C = class C extends F {
     if (typeof n == "function")
       return await n();
   }
-  confirm() {
-    return this.callHandle("confirm").then((t) => {
-      this.dispatch(this.createEvent("confirm", t)), this.close(!0);
-    });
+  onConfirm() {
+    return this.callHandle("confirm").then((t) => this.confirm(t));
   }
-  cancel(t = !0) {
-    return this.callHandle("cancel").then((n) => {
-      const s = this.close(t);
-      console.log(s), s && this.dispatch(this.createEvent("cancel", n));
+  confirm(t) {
+    this.dispatch(this.createEvent("confirm", t)), this.close(!0);
+  }
+  onCancel() {
+    return this.callHandle("cancel").then((t) => this.cancel(!0, t));
+  }
+  cancel(t = !0, n) {
+    this.close(t) && this.dispatch(this.createEvent("cancel", n));
+  }
+  promise() {
+    return new Promise((t, n) => {
+      this.once("confirm", (s) => t(s.detail)), this.once("cancel", (s) => n(s.detail));
     });
   }
 };
@@ -576,20 +582,20 @@ function Ot(i, e) {
   const t = i.state, n = ((s = i.component) == null ? void 0 : s.useCssClass()) ?? {};
   switch (e) {
     case M.CLOSE:
-      return g("button", { onClick: function() {
+      return w("button", { onClick: function() {
         i.cancel();
       }, type: "button", innerHTML: lt, class: n.closeMenu, title: "关闭" }, null);
     case M.PIN:
     case M.UNPIN:
       const a = t.pinned ? "取消固定" : "固定", d = t.pinned ? n.pinMenu : n.menu;
-      return g("button", { onClick: function() {
+      return w("button", { onClick: function() {
         i.togglePin();
       }, type: "button", innerHTML: ht, class: d, title: a }, null);
     case M.MAXIMIZE:
     case M.RESTORE:
       const T = t.splitMode == o.MAXIMIZE ? pt : dt, E = t.splitMode == o.MAXIMIZE ? "还原" : "最大化";
-      return g("button", { onClick: function(w) {
-        w.preventDefault(), i.toggleMaximize();
+      return w("button", { onClick: function(g) {
+        g.preventDefault(), i.toggleMaximize();
       }, type: "button", innerHTML: T, class: n.menu, title: E }, null);
   }
   return null;
@@ -613,10 +619,10 @@ const jt = "Ycke6mYQ", Ut = "esgrGyhH", Kt = "UkryRM5g", Jt = "U5LZXLJZ", qt = "
         const T = l.topWindow;
         return T ? T.state.zIndex : 1;
       }() + 1, width: e.width ? e.width - 20 + "px" : void 0 };
-      a = g("div", { class: n.value, style: d }, null);
+      a = w("div", { class: n.value, style: d }, null);
     }
-    return g(ot, { to: "body" }, { default: () => {
-      return [g(Nt, { name: "fade" }, (d = a, typeof d == "function" || Object.prototype.toString.call(d) === "[object Object]" && !X(d) ? a : { default: () => [a] }))];
+    return w(ot, { to: "body" }, { default: () => {
+      return [w(Nt, { name: "fade" }, (d = a, typeof d == "function" || Object.prototype.toString.call(d) === "[object Object]" && !X(d) ? a : { default: () => [a] }))];
       var d;
     } });
   }
@@ -627,7 +633,7 @@ const jt = "Ycke6mYQ", Ut = "esgrGyhH", Kt = "UkryRM5g", Jt = "U5LZXLJZ", qt = "
       }(a);
       if (d == null)
         return null;
-      const T = gt(d.type);
+      const T = wt(d.type);
       return A(T, { abstractWindow: d, key: d.wid });
     }), s()];
   };
@@ -671,11 +677,11 @@ function K(i) {
 }
 const pe = Object.freeze({ renderMenu: Ot });
 function ne(i, e) {
-  i.component(G.name, G), i.component(H.name, H), i.component(nt.name, nt), Yt(e), window.addEventListener("keydown", wt, !0), function(t) {
+  i.component(G.name, G), i.component(H.name, H), i.component(nt.name, nt), Yt(e), window.addEventListener("keydown", gt, !0), function(t) {
     l.appContext = t._context;
   }(i);
 }
-const ie = "0.1.4", fe = { install: ne, version: ie };
+const ie = "0.2.0", fe = { install: ne, version: ie };
 export {
   Z as AbstractWindow,
   H as BlankWindow,
