@@ -3,7 +3,6 @@ import { ComponentOptionsMixin } from 'vue';
 import { ComputedRef } from 'vue';
 import { DefineComponent } from 'vue';
 import { ExtractPropTypes } from 'vue';
-import { JSX } from 'vue/jsx-runtime';
 import { PropType } from 'vue';
 import { PublicProps } from 'vue';
 import { RendererElement } from 'vue';
@@ -157,7 +156,9 @@ abstractWindow: {
 type: PropType<AbstractWindow>;
 required: true;
 };
-}, () => JSX.Element, unknown, {}, {}, ComponentOptionsMixin, ComponentOptionsMixin, {}, string, PublicProps, Readonly<ExtractPropTypes<    {
+}, () => VNode<RendererNode, RendererElement, {
+[key: string]: any;
+}>, unknown, {}, {}, ComponentOptionsMixin, ComponentOptionsMixin, {}, string, PublicProps, Readonly<ExtractPropTypes<    {
 abstractWindow: {
 type: PropType<AbstractWindow>;
 required: true;
@@ -265,7 +266,6 @@ declare interface WindowOptions {
     title: string;
     icon?: WindowIcon;
     className?: string;
-    bodyClassName?: string;
     width: string;
     minWidth: number;
     maxWidth?: number;
