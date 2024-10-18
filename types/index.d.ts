@@ -10,14 +10,14 @@ import { RendererNode } from 'vue';
 import { VNode } from 'vue';
 import { VNodeArrayChildren } from 'vue';
 
-export declare class AbstractWindow extends Emitter<AbstractWindow> {
+export declare class AbstractWindow<T extends WindowOptions = WindowOptions> extends Emitter<AbstractWindow> {
     static seed: number;
-    static create(params: AbstractWindow | UseWindowParams): AbstractWindow;
+    static create(params: any): AbstractWindow<any>;
     private CREATE_RESOLVE?;
     private CREATE_REJECT?;
     readonly id: number;
     type: WindowType;
-    options: WindowOptions;
+    options: T;
     body?: WindowBody;
     state?: WindowState;
     created: boolean;
@@ -28,7 +28,7 @@ export declare class AbstractWindow extends Emitter<AbstractWindow> {
     private handles;
     dragstart: any;
     resizestart: any;
-    constructor(params: UseWindowParams);
+    constructor(params: any);
     get wid(): string;
     get isReady(): boolean;
     get allowDrag(): boolean;
@@ -65,12 +65,12 @@ export declare class AbstractWindow extends Emitter<AbstractWindow> {
 
 export declare const BlankWindow: DefineComponent<    {
 abstractWindow: {
-type: PropType<AbstractWindow>;
+type: PropType<AbstractWindow<WindowOptions>>;
 required: true;
 };
 }, () => any, unknown, {}, {}, ComponentOptionsMixin, ComponentOptionsMixin, {}, string, PublicProps, Readonly<ExtractPropTypes<    {
 abstractWindow: {
-type: PropType<AbstractWindow>;
+type: PropType<AbstractWindow<WindowOptions>>;
 required: true;
 };
 }>>, {}, {}>;
@@ -111,7 +111,7 @@ declare interface EventListener_2<T = any> {
 
 declare type EventType = LifeCycleEventType | DragEventType | ResizeEventType | ChangeEventType | UserEventType;
 
-declare function getTopWindow(): AbstractWindow | null | undefined;
+declare function getTopWindow(): AbstractWindow<WindowOptions> | null | undefined;
 
 declare function getTopZIndex(): number;
 
@@ -153,17 +153,22 @@ declare function setFocusedWindow(focused: AbstractWindow | undefined): void;
 
 export declare const SimpleWindow: DefineComponent<    {
 abstractWindow: {
-type: PropType<AbstractWindow>;
+type: PropType<AbstractWindow<SimpleWindowOptions>>;
 required: true;
 };
 }, () => VNode<RendererNode, RendererElement, {
 [key: string]: any;
 }>, unknown, {}, {}, ComponentOptionsMixin, ComponentOptionsMixin, {}, string, PublicProps, Readonly<ExtractPropTypes<    {
 abstractWindow: {
-type: PropType<AbstractWindow>;
+type: PropType<AbstractWindow<SimpleWindowOptions>>;
 required: true;
 };
 }>>, {}, {}>;
+
+declare interface SimpleWindowOptions extends WindowOptions {
+    footer?: boolean;
+    menus?: WindowMenu[];
+}
 
 export declare const SPLIT_MODES: Readonly<{
     NONE: 0;
@@ -176,11 +181,13 @@ export declare const SPLIT_MODES: Readonly<{
     BOTTOM_RIGHT: number;
 }>;
 
-export declare function useBlankWindow(params: UseWindowParams): AbstractWindow;
+export declare function useBlankWindow(params: UseBlankWindowParams): AbstractWindow;
 
 export declare function useBlankWindow(title: string, body: WindowBody): AbstractWindow;
 
-export declare function useBlankWindow(title: string, body: WindowBody, params: UseWindowParams): AbstractWindow;
+export declare function useBlankWindow(title: string, body: WindowBody, params: UseBlankWindowParams): AbstractWindow;
+
+declare type UseBlankWindowParams = UseWindowParams & Partial<WindowOptions>;
 
 export declare function useIcons(): Record<string, string>;
 
@@ -194,17 +201,15 @@ export declare function useSimpleWindow(title: string, body: WindowBody): Abstra
 
 export declare function useSimpleWindow(title: string, body: WindowBody, params: UseSimpleWindowParams): AbstractWindow;
 
-export declare type UseSimpleWindowParams = UseWindowParams & {
-    footer?: boolean;
-};
+export declare type UseSimpleWindowParams = UseWindowParams & SimpleWindowOptions;
 
 export declare function useWindow(title: string, body: WindowBody): AbstractWindow;
 
-export declare function useWindow(title: string, body: WindowBody, params: UseWindowParams): AbstractWindow;
+export declare function useWindow(title: string, body: WindowBody, params: UseBlankWindowParams): AbstractWindow;
 
-export declare function useWindow(params: UseWindowParams): AbstractWindow;
+export declare function useWindow(params: UseSimpleWindowParams): AbstractWindow;
 
-export declare function useWindowApi(): AbstractWindow | undefined;
+export declare function useWindowApi(): AbstractWindow<WindowOptions> | undefined;
 
 export declare function useWindowManager(): {
     closeTopWindow: typeof closeTopWindow;
@@ -216,11 +221,11 @@ export declare function useWindowManager(): {
     cleanup: typeof cleanup;
 };
 
-export declare type UseWindowParams = Partial<WindowOptions> & {
+export declare interface UseWindowParams {
     type?: WindowType;
     body?: WindowBody;
     size?: string;
-};
+}
 
 export declare function useWindowSize(name: string, size: WindowSize): void;
 
@@ -242,7 +247,7 @@ export declare class WindowDragContext {
     prevClientY: number;
     constructor(target: HTMLElement, event: PointerEvent);
     preventDragEvent(event: PointerEvent): boolean;
-    createEvent(type: EventType, instance: AbstractWindow): WindowEvent<AbstractWindow, this>;
+    createEvent(type: EventType, instance: AbstractWindow): WindowEvent<AbstractWindow<WindowOptions>, this>;
 }
 
 declare class WindowEvent<T = any, P = any> {
@@ -261,6 +266,11 @@ export declare type WindowIcon = string | VNode | ((win: AbstractWindow) => VNod
 export declare const WindowManager: DefineComponent<    {}, () => (VNode<RendererNode, RendererElement, {
 [key: string]: any;
 }> | null)[], {}, {}, {}, ComponentOptionsMixin, ComponentOptionsMixin, {}, string, PublicProps, Readonly<ExtractPropTypes<    {}>>, {}, {}>;
+
+declare interface WindowMenu {
+    label?: string;
+    handler: Function;
+}
 
 declare interface WindowOptions {
     title: string;
