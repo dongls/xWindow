@@ -3,6 +3,7 @@ import { ComponentOptionsMixin } from 'vue';
 import { ComputedRef } from 'vue';
 import { DefineComponent } from 'vue';
 import { ExtractPropTypes } from 'vue';
+import { JSX } from 'vue/jsx-runtime';
 import { PropType } from 'vue';
 import { PublicProps } from 'vue';
 import { RendererElement } from 'vue';
@@ -263,9 +264,7 @@ declare class WindowEvent<T = any, P = any> {
 
 export declare type WindowIcon = string | VNode | ((win: AbstractWindow) => VNode);
 
-export declare const WindowManager: DefineComponent<    {}, () => (VNode<RendererNode, RendererElement, {
-[key: string]: any;
-}> | null)[], {}, {}, {}, ComponentOptionsMixin, ComponentOptionsMixin, {}, string, PublicProps, Readonly<ExtractPropTypes<    {}>>, {}, {}>;
+export declare const WindowManager: DefineComponent<    {}, () => JSX.Element, {}, {}, {}, ComponentOptionsMixin, ComponentOptionsMixin, {}, string, PublicProps, Readonly<ExtractPropTypes<    {}>>, {}, {}>;
 
 declare interface WindowMenu {
     label?: string;
