@@ -56,11 +56,11 @@ export declare class AbstractWindow<T extends WindowOptions = WindowOptions> ext
     togglePin(): void;
     useHandle(type: HandlerType, callback: Function): void;
     private callHandle;
-    onConfirm(): Promise<void>;
+    dispatchConfirm(): Promise<void>;
     confirm(data?: any): void;
-    onCancel(): Promise<void>;
+    dispatchCancel(): Promise<void>;
     cancel(forced?: boolean, data?: any): void;
-    promise<T = any>(): Promise<T>;
+    promisify<T = any>(): Promise<T>;
 }
 
 export declare const BlankWindow: DefineComponent<    {
@@ -181,13 +181,13 @@ export declare const SPLIT_MODES: Readonly<{
     BOTTOM_RIGHT: number;
 }>;
 
-export declare function useBlankWindow(params: UseBlankWindowParams): AbstractWindow;
-
 export declare function useBlankWindow(title: string, body: WindowBody): AbstractWindow;
 
-export declare function useBlankWindow(title: string, body: WindowBody, params: UseBlankWindowParams): AbstractWindow;
+export declare function useBlankWindow(title: string, body: WindowBody, params: Partial<UseBlankWindowParams>): AbstractWindow;
 
-declare type UseBlankWindowParams = UseWindowParams & Partial<WindowOptions>;
+export declare function useBlankWindow(params: Partial<UseBlankWindowParams>): AbstractWindow;
+
+export declare type UseBlankWindowParams = UseWindowParams & Partial<WindowOptions>;
 
 export declare function useIcons(): Record<string, string>;
 
@@ -195,19 +195,19 @@ declare function useMenuRender(abstractWindow: AbstractWindow, menu: number): an
 
 declare type UserEventType = 'confirm' | 'cancel';
 
-export declare function useSimpleWindow(params: UseSimpleWindowParams): AbstractWindow;
-
 export declare function useSimpleWindow(title: string, body: WindowBody): AbstractWindow;
 
-export declare function useSimpleWindow(title: string, body: WindowBody, params: UseSimpleWindowParams): AbstractWindow;
+export declare function useSimpleWindow(title: string, body: WindowBody, params: Partial<UseSimpleWindowParams>): AbstractWindow;
+
+export declare function useSimpleWindow(params: Partial<UseSimpleWindowParams>): AbstractWindow;
 
 export declare type UseSimpleWindowParams = UseWindowParams & SimpleWindowOptions;
 
 export declare function useWindow(title: string, body: WindowBody): AbstractWindow;
 
-export declare function useWindow(title: string, body: WindowBody, params: UseBlankWindowParams): AbstractWindow;
+export declare function useWindow(title: string, body: WindowBody, params: Partial<UseBlankWindowParams>): AbstractWindow;
 
-export declare function useWindow(params: UseSimpleWindowParams): AbstractWindow;
+export declare function useWindow(params: Partial<UseSimpleWindowParams>): AbstractWindow;
 
 export declare function useWindowApi(): AbstractWindow<WindowOptions> | undefined;
 
@@ -221,7 +221,7 @@ export declare function useWindowManager(): {
     cleanup: typeof cleanup;
 };
 
-export declare interface UseWindowParams {
+declare interface UseWindowParams {
     type?: WindowType;
     body?: WindowBody;
     size?: string;
@@ -269,7 +269,7 @@ export declare const WindowManager: DefineComponent<    {}, () => (VNode<Rendere
 
 declare interface WindowMenu {
     label?: string;
-    handler: Function;
+    handler: (win: AbstractWindow) => any;
 }
 
 declare interface WindowOptions {

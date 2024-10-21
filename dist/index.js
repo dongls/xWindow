@@ -1,4 +1,4 @@
-/*! @dongls/xWindow v0.2.2 https://github.com/dongls/xWindow
+/*! @dongls/xWindow v0.2.3 https://github.com/dongls/xWindow
 Copyright 2023-present dongls
 Released under the MIT License */
 var Lt = Object.defineProperty;
@@ -533,19 +533,19 @@ const P = class P extends S {
     if (typeof n == "function")
       return await n();
   }
-  onConfirm() {
+  dispatchConfirm() {
     return this.callHandle("confirm").then((t) => this.confirm(t));
   }
   confirm(t) {
     this.dispatch(this.createEvent("confirm", t)), this.close(!0);
   }
-  onCancel() {
+  dispatchCancel() {
     return this.callHandle("cancel").then((t) => this.cancel(!0, t));
   }
   cancel(t = !0, n) {
     this.close(t) && this.dispatch(this.createEvent("cancel", n));
   }
-  promise() {
+  promisify() {
     return new Promise((t, n) => {
       this.once("confirm", (s) => t(s.detail)), this.once("cancel", (s) => n(s.detail));
     });
@@ -668,7 +668,7 @@ function ne(i, e) {
     d.appContext = t._context;
   }(i);
 }
-const ie = "0.2.2", pe = { install: ne, version: ie };
+const ie = "0.2.3", pe = { install: ne, version: ie };
 export {
   G as AbstractWindow,
   W as BlankWindow,
