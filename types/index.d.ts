@@ -4,10 +4,7 @@ import { ComputedRef } from 'vue';
 import { DefineComponent } from 'vue';
 import { ExtractPropTypes } from 'vue';
 import { JSX } from 'vue/jsx-runtime';
-import { PropType } from 'vue';
 import { PublicProps } from 'vue';
-import { RendererElement } from 'vue';
-import { RendererNode } from 'vue';
 import { VNode } from 'vue';
 import { VNodeArrayChildren } from 'vue';
 
@@ -63,18 +60,6 @@ export declare class AbstractWindow<T extends WindowOptions = WindowOptions> ext
     cancel(forced?: boolean, data?: any): void;
     promisify<T = any>(): Promise<T>;
 }
-
-export declare const BlankWindow: DefineComponent<    {
-abstractWindow: {
-type: PropType<AbstractWindow<WindowOptions>>;
-required: true;
-};
-}, () => any, unknown, {}, {}, ComponentOptionsMixin, ComponentOptionsMixin, {}, string, PublicProps, Readonly<ExtractPropTypes<    {
-abstractWindow: {
-type: PropType<AbstractWindow<WindowOptions>>;
-required: true;
-};
-}>>, {}, {}>;
 
 declare type ChangeEventType = 'maximizeChange';
 
@@ -152,19 +137,12 @@ declare type ResizeEventType = 'resizeStart' | 'resizing' | 'resizeEnd';
 
 declare function setFocusedWindow(focused: AbstractWindow | undefined): void;
 
-export declare const SimpleWindow: DefineComponent<    {
-abstractWindow: {
-type: PropType<AbstractWindow<SimpleWindowOptions>>;
-required: true;
-};
-}, () => VNode<RendererNode, RendererElement, {
-[key: string]: any;
-}>, unknown, {}, {}, ComponentOptionsMixin, ComponentOptionsMixin, {}, string, PublicProps, Readonly<ExtractPropTypes<    {
-abstractWindow: {
-type: PropType<AbstractWindow<SimpleWindowOptions>>;
-required: true;
-};
-}>>, {}, {}>;
+declare class SimpleWindow extends AbstractWindow {
+    static create(params: any): SimpleWindow;
+    options: SimpleWindowOptions;
+    constructor(params: any);
+    updateMenus(menus: WindowMenu[]): void;
+}
 
 declare interface SimpleWindowOptions extends WindowOptions {
     footer?: boolean;
@@ -196,13 +174,13 @@ declare function useMenuRender(abstractWindow: AbstractWindow, menu: number): an
 
 declare type UserEventType = 'confirm' | 'cancel';
 
-export declare function useSimpleWindow(title: string, body: WindowBody): AbstractWindow;
+export declare function useSimpleWindow(title: string, body: WindowBody): SimpleWindow;
 
-export declare function useSimpleWindow(title: string, body: WindowBody, params: Partial<UseSimpleWindowParams>): AbstractWindow;
+export declare function useSimpleWindow(title: string, body: WindowBody, params: Partial<UseSimpleWindowParams>): SimpleWindow;
 
-export declare function useSimpleWindow(params: Partial<UseSimpleWindowParams>): AbstractWindow;
+export declare function useSimpleWindow(params: Partial<UseSimpleWindowParams>): SimpleWindow;
 
-export declare type UseSimpleWindowParams = UseWindowParams & SimpleWindowOptions;
+export declare type UseSimpleWindowParams = UseWindowParams & Partial<SimpleWindowOptions>;
 
 export declare function useWindow(title: string, body: WindowBody): AbstractWindow;
 
