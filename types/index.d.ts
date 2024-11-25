@@ -137,7 +137,7 @@ declare type ResizeEventType = 'resizeStart' | 'resizing' | 'resizeEnd';
 
 declare function setFocusedWindow(focused: AbstractWindow | undefined): void;
 
-declare class SimpleWindow extends AbstractWindow {
+export declare class SimpleWindow extends AbstractWindow {
     static create(params: any): SimpleWindow;
     options: SimpleWindowOptions;
     constructor(params: any);

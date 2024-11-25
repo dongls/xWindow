@@ -1,4 +1,4 @@
-/*! @dongls/xWindow v0.2.6 https://github.com/dongls/xWindow
+/*! @dongls/xWindow v0.2.7 https://github.com/dongls/xWindow
 Copyright 2023-present dongls
 Released under the MIT License */
 var zt = Object.defineProperty;
@@ -662,13 +662,14 @@ function Ut(i, e) {
     l.appContext = t._context;
   }(i);
 }
-const Kt = "0.2.6", oe = { install: Ut, version: Kt };
+const Kt = "0.2.7", oe = { install: Ut, version: Kt };
 export {
   D as AbstractWindow,
   L as RENDER_STATES,
   x as RESIZE_MODE,
   se as Render,
   r as SPLIT_MODES,
+  H as SimpleWindow,
   Vt as WindowDragContext,
   tt as WindowManager,
   Xt as cleanup,
