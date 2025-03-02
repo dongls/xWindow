@@ -112,7 +112,7 @@ export declare function install(app: App, options?: PluginOptions): void;
 declare type LifeCycleEventType = 'created' | 'beforeShow' | 'show' | 'beforeClose' | 'close' | 'beforeDestroy';
 
 export declare interface PluginOptions {
-    zIndex?: number;
+    zIndex?: ZIndexManager;
     draggaleHeight?: number;
     size?: Record<string, WindowSize>;
 }
@@ -301,5 +301,11 @@ declare const xWindow: {
 };
 export default xWindow;
 export { xWindow }
+
+declare interface ZIndexManager {
+    getZIndex(): number;
+    setZIndex(value: number): void;
+    getNextZIndex(): number;
+}
 
 export { }

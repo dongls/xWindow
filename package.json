@@ -1,6 +1,6 @@
 {
   "name": "@dongls/xwindow",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "xWindow是仿Windows窗口的组件库。",
   "main": "dist/index.js",
   "type": "module",
