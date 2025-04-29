@@ -107,6 +107,8 @@ declare function getZIndex(): number;
 
 declare type HandlerType = 'confirm' | 'cancel';
 
+export declare function hasOpenWindow(): boolean;
+
 export declare function install(app: App, options?: PluginOptions): void;
 
 declare type LifeCycleEventType = 'created' | 'beforeShow' | 'show' | 'beforeClose' | 'close' | 'beforeDestroy';

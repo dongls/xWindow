@@ -1,11 +1,11 @@
-/*! @dongls/xWindow v0.2.12 https://github.com/dongls/xWindow
+/*! @dongls/xWindow v0.2.13 https://github.com/dongls/xWindow
 Copyright 2023-present dongls
 Released under the MIT License */
-var Rt = Object.defineProperty;
-var zt = (i, e, t) => e in i ? Rt(i, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : i[e] = t;
-var o = (i, e, t) => (zt(i, typeof e != "symbol" ? e + "" : e, t), t);
-import { defineComponent as B, computed as N, h as C, shallowRef as Lt, reactive as X, ref as Z, provide as xt, createVNode as w, Teleport as yt, isVNode as nt, nextTick as Q, render as $, inject as Pt, onBeforeUnmount as Wt, Fragment as Nt } from "vue";
-const it = Symbol(), m = Object.freeze({ WINDOW: "x-window", SIMPLE_WINDOW: "x-simple-window", TRANSITION: "x-window-is-transition", MENU: "x-window-is-menu", FOCUSED: "x-window-is-focused", MAXIMIZE: "x-window-is-maximize", HEADER: "x-window-header", BODY: "x-window-body" }), u = Object.freeze({ NONE: 0, TOP: 1, BOTTOM: 2, LEFT: 4, RIGHT: 8 }), M = Object.freeze({ TOP: u.TOP, BOTTOM: u.BOTTOM, LEFT: u.LEFT, RIGHT: u.RIGHT, TOP_LEFT: u.TOP | u.LEFT, TOP_RIGHT: u.TOP | u.RIGHT, BOTTOM_LEFT: u.BOTTOM | u.LEFT, BOTTOM_RIGHT: u.BOTTOM | u.RIGHT }), r = Object.freeze({ NONE: u.NONE, MAXIMIZE: u.TOP, LEFT: u.LEFT, RIGHT: u.RIGHT, TOP_LEFT: u.TOP | u.LEFT, TOP_RIGHT: u.TOP | u.RIGHT, BOTTOM_LEFT: u.BOTTOM | u.LEFT, BOTTOM_RIGHT: u.BOTTOM | u.RIGHT }), x = Object.freeze({ DISABLED: 0, RESIZE: 1, RESIZE_ONLY: 2 }), z = Object.freeze({ INIT: 0, MOUNTED: 1, UNMOUNTED: 2 }), V = Object.freeze({ SIMPLE_WINDOW: "SimpleWindow", BLANK_WINDOW: "BlankWindow" }), E = Object.freeze({ CLOSE: 0, MAXIMIZE: 1, RESTORE: 2, PIN: 3, UNPIN: 4 });
+var Lt = Object.defineProperty;
+var Rt = (i, e, t) => e in i ? Lt(i, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : i[e] = t;
+var o = (i, e, t) => (Rt(i, typeof e != "symbol" ? e + "" : e, t), t);
+import { defineComponent as B, computed as N, h as C, shallowRef as zt, reactive as X, ref as Z, provide as xt, createVNode as w, Teleport as yt, isVNode as nt, nextTick as Q, render as $, inject as Pt, onBeforeUnmount as Wt, Fragment as Nt } from "vue";
+const it = Symbol(), m = Object.freeze({ WINDOW: "x-window", SIMPLE_WINDOW: "x-simple-window", TRANSITION: "x-window-is-transition", MENU: "x-window-is-menu", FOCUSED: "x-window-is-focused", MAXIMIZE: "x-window-is-maximize", HEADER: "x-window-header", BODY: "x-window-body" }), u = Object.freeze({ NONE: 0, TOP: 1, BOTTOM: 2, LEFT: 4, RIGHT: 8 }), M = Object.freeze({ TOP: u.TOP, BOTTOM: u.BOTTOM, LEFT: u.LEFT, RIGHT: u.RIGHT, TOP_LEFT: u.TOP | u.LEFT, TOP_RIGHT: u.TOP | u.RIGHT, BOTTOM_LEFT: u.BOTTOM | u.LEFT, BOTTOM_RIGHT: u.BOTTOM | u.RIGHT }), r = Object.freeze({ NONE: u.NONE, MAXIMIZE: u.TOP, LEFT: u.LEFT, RIGHT: u.RIGHT, TOP_LEFT: u.TOP | u.LEFT, TOP_RIGHT: u.TOP | u.RIGHT, BOTTOM_LEFT: u.BOTTOM | u.LEFT, BOTTOM_RIGHT: u.BOTTOM | u.RIGHT }), x = Object.freeze({ DISABLED: 0, RESIZE: 1, RESIZE_ONLY: 2 }), R = Object.freeze({ INIT: 0, MOUNTED: 1, UNMOUNTED: 2 }), V = Object.freeze({ SIMPLE_WINDOW: "SimpleWindow", BLANK_WINDOW: "BlankWindow" }), E = Object.freeze({ CLOSE: 0, MAXIMIZE: 1, RESTORE: 2, PIN: 3, UNPIN: 4 });
 class Y {
   constructor(e, t, n) {
     o(this, "type");
@@ -59,7 +59,7 @@ class S {
     this.ALL_EVENTS.clear();
   }
 }
-function L(i, e, t) {
+function z(i, e, t) {
   return e != null && Number.isFinite(e) && i < e ? e : i;
 }
 function tt(i) {
@@ -130,7 +130,7 @@ class A {
   }
   calcWindowState(e) {
     const t = this.context, n = this.window.options, s = typeof n.minWidth == "number" && n.minWidth >= 0 ? n.minWidth : 360, c = typeof n.minHeight == "number" && n.minHeight >= 0 ? n.minHeight : 32, h = this.window.getElement().getBoundingClientRect(), g = {};
-    return t.direction & u.TOP && (g.height = L(h.bottom - L(e.clientY, 0), c), g.top = h.bottom - g.height), t.direction & u.BOTTOM && (g.height = L(e.clientY - h.top, c)), t.direction & u.LEFT && (g.width = L(h.right - L(e.clientX, 0), s), g.left = h.right - g.width), t.direction & u.RIGHT && (g.width = L(e.clientX - h.left, s)), g;
+    return t.direction & u.TOP && (g.height = z(h.bottom - z(e.clientY, 0), c), g.top = h.bottom - g.height), t.direction & u.BOTTOM && (g.height = z(e.clientY - h.top, c)), t.direction & u.LEFT && (g.width = z(h.right - z(e.clientX, 0), s), g.left = h.right - g.width), t.direction & u.RIGHT && (g.width = z(e.clientX - h.left, s)), g;
   }
   patchWindowState(e) {
     const t = this.window.state;
@@ -145,7 +145,7 @@ const p = { window: "_1T2rhwiL", dragging: "yi9w1sZD", resizing: "Ja2o9U31", max
   const e = typeof i.body == "function" ? i.body(i.abstractWindow) : i.body;
   return e == null && console.warn("[xWindow] 请指定窗体内容:", i.abstractWindow.options.title), e;
 } }), Dt = Math.floor(Number.MAX_SAFE_INTEGER / 10) - 1e4, Ht = [[p.resizeTop, M.TOP], [p.resizeBottom, M.BOTTOM], [p.resizeLeft, M.LEFT], [p.resizeRight, M.RIGHT], [p.resizeTopLeft, M.TOP_LEFT], [p.resizeTopRight, M.TOP_RIGHT], [p.resizeBottomLeft, M.BOTTOM_LEFT], [p.resizeBottomRight, M.BOTTOM_RIGHT]], _ = B({ name: "BlankWindow", props: { abstractWindow: { type: Object, required: !0 } }, setup(i, { slots: e }) {
-  const t = Lt(), n = X({ visible: !1, offsetWidth: 0, offsetHeight: 0, offsetTop: 0, offsetLeft: 0, focused: !1, pinned: !1, zIndex: 0, splitMode: r.NONE }), s = Z(z.INIT), c = N(() => {
+  const t = zt(), n = X({ visible: !1, offsetWidth: 0, offsetHeight: 0, offsetTop: 0, offsetLeft: 0, focused: !1, pinned: !1, zIndex: 0, splitMode: r.NONE }), s = Z(R.INIT), c = N(() => {
     const a = i.abstractWindow.options;
     return typeof a.zIndex == "number" && a.zIndex > 0;
   }), h = N(() => {
@@ -154,15 +154,15 @@ const p = { window: "_1T2rhwiL", dragging: "yi9w1sZD", resizing: "Ja2o9U31", max
   }), g = function(a, l, f, v) {
     return N(() => {
       const T = a.options;
-      if (l.value == z.INIT)
+      if (l.value == R.INIT)
         return { width: T.width, height: T.height, left: T.left, top: T.top };
       const I = T.mask ? null : v.value;
-      return { top: f.offsetTop + "px", left: f.offsetLeft + "px", width: f.offsetWidth + "px", height: l.value == z.INIT ? void 0 : f.offsetHeight + "px", zIndex: I };
+      return { top: f.offsetTop + "px", left: f.offsetLeft + "px", width: f.offsetWidth + "px", height: l.value == R.INIT ? void 0 : f.offsetHeight + "px", zIndex: I };
     });
   }(i.abstractWindow, s, n, h), F = N(() => {
     const a = [m.WINDOW, p.window], l = i.abstractWindow;
     var f;
-    return l.type === V.SIMPLE_WINDOW && a.push(m.SIMPLE_WINDOW), s.value == z.INIT && a.push(p.init), n.splitMode == r.MAXIMIZE && a.push(p.maximize, m.MAXIMIZE), n.focused && a.push(p.focused, m.FOCUSED), (f = l.options.className) != null && typeof f == "string" && f.length != 0 && a.push(l.options.className), a;
+    return l.type === V.SIMPLE_WINDOW && a.push(m.SIMPLE_WINDOW), s.value == R.INIT && a.push(p.init), n.splitMode == r.MAXIMIZE && a.push(p.maximize, m.MAXIMIZE), n.focused && a.push(p.focused, m.FOCUSED), (f = l.options.className) != null && typeof f == "string" && f.length != 0 && a.push(l.options.className), a;
   }), k = N(() => {
     const a = [], l = i.abstractWindow.options;
     return l.pinnable && l.mask !== !0 && c.value !== !0 && a.push(n.pinned ? E.PIN : E.UNPIN), l.resizeMode == x.RESIZE && a.push(n.splitMode == r.MAXIMIZE ? E.RESTORE : E.MAXIMIZE), l.closeable && a.push(E.CLOSE), a;
@@ -182,13 +182,13 @@ const p = { window: "_1T2rhwiL", dragging: "yi9w1sZD", resizing: "Ja2o9U31", max
   async function Ot(a) {
     await Q();
     const l = i.abstractWindow, f = l.options, v = a.el, T = v.getBoundingClientRect();
-    if (s.value == z.INIT) {
+    if (s.value == R.INIT) {
       let I = Math.round(T.left), P = Math.round(T.top);
-      tt(f.left) && (I = Math.floor((window.innerWidth - T.width) / 2)), tt(f.top) && (P = Math.floor((window.innerHeight - T.height) / 2)), n.offsetWidth = T.width, n.offsetHeight = T.height, n.offsetLeft = I, n.offsetTop = P, f.maximize && q(), s.value = z.MOUNTED, JSON.parse(JSON.stringify(n)), Q(() => {
+      tt(f.left) && (I = Math.floor((window.innerWidth - T.width) / 2)), tt(f.top) && (P = Math.floor((window.innerHeight - T.height) / 2)), n.offsetWidth = T.width, n.offsetHeight = T.height, n.offsetLeft = I, n.offsetTop = P, f.maximize && q(), s.value = R.MOUNTED, JSON.parse(JSON.stringify(n)), Q(() => {
         const O = l.createEvent("show");
         l.dispatch(O), function(W) {
-          const R = Array.from(W.querySelectorAll("[autofocus]"));
-          for (const G of R)
+          const L = Array.from(W.querySelectorAll("[autofocus]"));
+          for (const G of L)
             if (G instanceof HTMLElement && G.autofocus)
               return G.focus();
         }(v);
@@ -221,12 +221,12 @@ const p = { window: "_1T2rhwiL", dragging: "yi9w1sZD", resizing: "Ja2o9U31", max
     const a = i.abstractWindow, l = a.options;
     if (n.visible !== !0)
       return null;
-    const f = w("div", { class: p.main, onDblclick: It }, [typeof e.default == "function" ? e.default(J) : bt()]), v = { ref: t, id: a.wid, onVnodeMounted: Ot, onPointerdown: Mt, class: F.value, style: g.value }, T = (I = l.resizeMode, P = a.resizestart, I == x.DISABLED ? null : Ht.map((R) => C("div", { ["." + A.PROP]: R[1], className: R[0], onPointerdown: P })));
+    const f = w("div", { class: p.main, onDblclick: It }, [typeof e.default == "function" ? e.default(J) : bt()]), v = { ref: t, id: a.wid, onVnodeMounted: Ot, onPointerdown: Mt, class: F.value, style: g.value }, T = (I = l.resizeMode, P = a.resizestart, I == x.DISABLED ? null : Ht.map((L) => C("div", { ["." + A.PROP]: L[1], className: L[0], onPointerdown: P })));
     var I, P;
     let O = C("div", v, [f, T]);
     if (l.mask === !0) {
-      const R = { zIndex: h.value };
-      O = w("div", { class: p.mask, style: R }, [O]);
+      const L = { zIndex: h.value };
+      O = w("div", { class: p.mask, style: L }, [O]);
     }
     return l.teleport === !1 ? O : w(yt, { to: l.teleport }, typeof (W = O) == "function" || Object.prototype.toString.call(W) === "[object Object]" && !nt(W) ? O : { default: () => [O] });
     var W;
@@ -313,6 +313,12 @@ function Xt() {
   d.appContext = null, ft(), window.removeEventListener("keydown", pt, !0);
 }
 function Qt() {
+  return Array.from(d.stack.values()).some((i) => {
+    var e;
+    return ((e = i.state) == null ? void 0 : e.visible) === !0;
+  });
+}
+function $t() {
   return { closeTopWindow: Tt, getTopWindow: At, getTopZIndex: wt, getWindowCount: Gt, getZIndex: gt, setFocusedWindow: j, cleanup: Xt };
 }
 class Zt {
@@ -575,10 +581,10 @@ let U = function() {
     return i.value++, i.value;
   } };
 }();
-function $t(i, e) {
+function te(i, e) {
   b.size == null && (b.size = {}), b.size[i] = e;
 }
-function te() {
+function ee() {
   return Pt(it);
 }
 function Et(i, e) {
@@ -645,10 +651,10 @@ function mt(i) {
   }(i) ?? {}, t = typeof e.size == "string" ? Reflect.get(b.size, e.size) : null;
   return t != null && (e.width = t.width, e.height = t.height, e.top = t.top, e.left = t.left), e;
 }
-function ee(...i) {
+function ne(...i) {
   return Yt(i);
 }
-function ne(...i) {
+function ie(...i) {
   const e = mt(i) ?? {};
   return e.type = ut.BLANK_WINDOW, vt(e);
 }
@@ -662,7 +668,7 @@ function vt(i) {
     i.displayAfterCreate !== !1 && e.show();
   }), e;
 }
-const ie = Object.freeze({ renderMenu: Et });
+const se = Object.freeze({ renderMenu: Et });
 function jt(i, e) {
   i.component(et.name, et), function(t) {
     b.draggaleHeight = (t == null ? void 0 : t.draggaleHeight) ?? 32, b.size = (t == null ? void 0 : t.size) ?? {}, t != null && t.zIndex && (U = t.zIndex);
@@ -670,26 +676,27 @@ function jt(i, e) {
     d.appContext = t._context;
   }(i);
 }
-const Ut = "0.2.12", se = { install: jt, version: Ut };
+const Ut = "0.2.13", oe = { install: jt, version: Ut };
 export {
   D as AbstractWindow,
-  z as RENDER_STATES,
+  R as RENDER_STATES,
   x as RESIZE_MODE,
-  ie as Render,
+  se as Render,
   r as SPLIT_MODES,
   H as SimpleWindow,
   Zt as WindowDragContext,
   et as WindowManager,
   Xt as cleanup,
-  se as default,
+  oe as default,
+  Qt as hasOpenWindow,
   jt as install,
-  ne as useBlankWindow,
+  ie as useBlankWindow,
   qt as useIcons,
   Yt as useSimpleWindow,
-  ee as useWindow,
-  te as useWindowApi,
-  Qt as useWindowManager,
-  $t as useWindowSize,
+  ne as useWindow,
+  ee as useWindowApi,
+  $t as useWindowManager,
+  te as useWindowSize,
   Ut as version,
-  se as xWindow
+  oe as xWindow
 };
