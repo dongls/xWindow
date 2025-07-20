@@ -106,7 +106,7 @@ export function createSingleWindow<T extends (...args: any) => Promise<any>>(fn:
       Reflect.deleteProperty(fn, '__XWINDOW_VALUE__')
     })
 
-    Reflect.defineProperty(fn, '__XWINDOW_VALUE__', { configurable: true, enumerable: false, writable: false, value })
+    Reflect.defineProperty(fn, '__XWINDOW_VALUE__', { configurable: true, enumerable: false, writable: false, value: promise })
     return promise as any
   }
 }

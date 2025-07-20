@@ -1,10 +1,10 @@
 {
   "name": "@dongls/xwindow",
-  "version": "0.2.13",
+  "version": "0.3.5",
   "description": "基于Vue的函数式弹窗组件库",
   "type": "module",
   "main": "dist/index.js",
-  "style": "dist/style.css",
+  "style": "dist/index.css",
   "types": "dist/index.d.ts",
   "homepage": "https://github.com/dongls/xWindow",
   "keywords": [
@@ -20,19 +20,21 @@
     "email": "173110115@qq.com"
   },
   "exports": {
-    "require": "./dist/index.umd.cjs",
-    "default": "./dist/index.js"
+    ".": {
+      "require": "./dist/index.umd.cjs",
+      "default": "./dist/index.js"
+    },
+    "./*": "./*"
   },
   "repository": {
     "type": "git",
-    "url": "git+https@github.com:dongls/xWindow.git"
+    "url": "git+ssh://git@github.com/dongls/xWindow.git"
   },
   "scripts": {
     "dev": "vite --mode document",
     "build": "vue-tsc && vite build",
     "build:document": "vue-tsc && vite build --mode document",
-    "preview": "vite preview",
-    "publish": "node ./script/publish.js",
+    "release:code": "node ./script/publish.js",
     "release:document": "node ./script/release.js"
   },
   "peerDependencies": {
@@ -57,7 +59,7 @@
     "dist"
   ],
   "publishConfig": {
-    "registry": "https: //registry.npmjs.org",
+    "registry": "https://registry.npmjs.org",
     "access": "public"
   }
 }

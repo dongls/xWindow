@@ -28,4 +28,4 @@ export { WindowMenus } from './components/WindowMenus'
 export { WindowManager } from './components/WindowManger'
 export { install, version, xWindow as default, xWindow }
 
-export type { WindowBody, WindowIcon, PluginOptions, UseSimpleWindowParams, UseBlankWindowParams, WindowSize, WindowZIndexManager } from './model/Common'
+export type { WindowBody, WindowIcon, PluginOptions, UseSimpleWindowParams, UseBlankWindowParams, WindowSize, WindowZIndexManager, WindowPreset } from './model/Common'

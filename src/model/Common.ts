@@ -15,7 +15,7 @@ export type HandlerType = 'confirm' | 'cancel'
 
 export type WindowIcon = string | VNode | ((win: BlankWindow) => VNode)
 export type WindowBody = string | number | VNode | VNodeArrayChildren | ((win: BlankWindow) => any)
-export type WindowPreset = Partial<Omit<WindowOptions, 'title'>>
+export type WindowPreset = Partial<Omit<SimpleWindowOptions, 'title'>>
 
 export interface WindowSize {
   width: string

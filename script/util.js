@@ -1,13 +1,17 @@
 import path from 'path'
+import url from 'url'
+import PackageJson from '../package.json' with { type: 'json' }
 
 import { build } from 'vite'
 import { execaCommandSync, execaSync } from 'execa'
+
+const DIR_PATH = url.fileURLToPath(path.dirname(import.meta.url))
 
 /** 构建代码 */
 export async function buildCode() {
   await build({
     mode: 'releaseCode',
-    build: { outDir: '../dist' },
+    build: { outDir: './dist' },
   })
 
   console.log('➜ 已构建代码\n')
@@ -17,7 +21,7 @@ export async function buildCode() {
 export async function buildDoc() {
   await build({
     mode: 'releaseDoc',
-    build: { outDir: '../docs' },
+    build: { outDir: './docs' },
   })
   console.log('➜ 已构建文档\n')
 }
@@ -29,7 +33,7 @@ export async function buildAll() {
 
 /** 发布包 */
 export function publish() {
-  const cwd = path.resolve(__dirname, '..')
+  const cwd = path.resolve(DIR_PATH, '..')
 
   // 提交代码
   execaCommandSync('git add .', { stdio: 'inherit', cwd })
@@ -44,7 +48,7 @@ export function publish() {
 
 /** 发布文档到仓库 */
 export function release() {
-  const cwd = path.resolve(__dirname, '..')
+  const cwd = path.resolve(DIR_PATH, '..')
 
   // 提交代码
   execaCommandSync('git add .', { stdio: 'inherit', cwd })

@@ -37,6 +37,11 @@ function useWindowApi(): BlankWindow | undefined
 - **默认值**：`SimpleWindow`
 - **描述**：窗口的类型。根据传入的类型，创建不同类型的窗口，仅在`useWindow`函数中有效。
 
+### preset
+
+- **类型**： `string`
+- **描述**：窗口预设，用于指定窗口的样式。
+
 ### title
 
 - **类型**：`string`
