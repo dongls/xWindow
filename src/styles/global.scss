@@ -1,0 +1,50 @@
+:root {
+  --xwindow-color-primary: #ebeef0;
+  --xwindow-color-danger: #e81123;
+  --xwindow-border-radius: 6px;
+  --xwindow-logo-width: 38px;
+
+  --xwindow-header-bg-color: var(--xwindow-color-primary);
+  --xwindow-header-color: #333;
+  --xwindow-header-height: 31px;
+
+  --xwindow-body-bg-color: #fff;
+  --xwindow-border-color: var(--xwindow-color-primary);
+  --xwindow-border-highlight-color: var(--xwindow-color-primary);
+
+  --xiwndow-box-shadow: 1px 1px 18px rgba(0, 0, 0, 0.2);
+  --xwindow-mask-bg-color: rgba(0, 0, 0, 0.15);
+}
+
+.x-window-text-menu{  
+  position: relative;
+  border: none;
+  margin: 0;
+  background-color: transparent;
+  outline: none;
+  min-width: 52px;
+  height: var(--xwindow-header-height);
+  text-align: center;
+  border-radius: 0px;
+  transition: color ease 0.15s, background-color ease 0.15s;
+  padding: 0 12px;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #fff;
+    opacity: 0;
+    z-index: 1;
+    transition: all ease 0.15s;
+  }
+
+  &:hover::after {
+    background-color: #000;
+    opacity: 0.1;
+  }
+}
+

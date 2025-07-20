@@ -1,0 +1,63 @@
+{
+  "name": "@dongls/xwindow",
+  "version": "0.2.13",
+  "description": "基于Vue的函数式弹窗组件库",
+  "type": "module",
+  "main": "dist/index.js",
+  "style": "dist/style.css",
+  "types": "dist/index.d.ts",
+  "homepage": "https://github.com/dongls/xWindow",
+  "keywords": [
+    "xWindow",
+    "vue",
+    "window",
+    "dialog",
+    "modal"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "dongls",
+    "email": "173110115@qq.com"
+  },
+  "exports": {
+    "require": "./dist/index.umd.cjs",
+    "default": "./dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https@github.com:dongls/xWindow.git"
+  },
+  "scripts": {
+    "dev": "vite --mode document",
+    "build": "vue-tsc && vite build",
+    "build:document": "vue-tsc && vite build --mode document",
+    "preview": "vite preview",
+    "publish": "node ./script/publish.js",
+    "release:document": "node ./script/release.js"
+  },
+  "peerDependencies": {
+    "vue": "^3.4.24"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.14",
+    "@vitejs/plugin-vue": "^6.0.0",
+    "@vitejs/plugin-vue-jsx": "^5.0.1",
+    "execa": "^9.6.0",
+    "highlight.js": "^11.9.0",
+    "markdown-it": "^14.1.0",
+    "prettier": "^3.6.2",
+    "sass": "^1.89.2",
+    "typescript": "^5.8.3",
+    "vite": "^7.0.4",
+    "vite-plugin-banner": "^0.8.1",
+    "vite-plugin-dts": "^4.5.4",
+    "vue-tsc": "^3.0.1"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "registry": "https: //registry.npmjs.org",
+    "access": "public"
+  }
+}
