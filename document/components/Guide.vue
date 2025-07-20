@@ -35,8 +35,18 @@ function init() {
 }
 
 function jump(node: GuideNode) {
-  console.log(node)
+  const guide = guideRef.value
+  if (guide == null) return
+
+  const parent = guide.parentElement
+  if (parent == null) return
+
+  const target = parent.querySelector(':scope > article h2#' + node.name)
+  if (target == null) return
+
+  target.scrollIntoView({ behavior: 'smooth' })
 }
+
 onMounted(init)
 </script>
 

@@ -346,6 +346,7 @@ export class BlankWindow extends Emitter<BlankWindow> {
     if (r) this.dispatch(this.createEvent('cancel', data))
   }
 
+  /** 将处理confirm和cancel钩子的逻辑通过Promise对象封装*/
   promisify<T = any>(): Promise<T> {
     return new Promise((resolve, reject) => {
       this.once('confirm', event => resolve(event.detail))

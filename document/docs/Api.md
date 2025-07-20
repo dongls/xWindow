@@ -22,7 +22,7 @@ function useSimpleWindow(params: Partial<UseSimpleWindowParams>): SimpleWindow
 function useWindowApi(): BlankWindow | undefined
 ```
 
-`UseWindowParams`的类型参照**窗口参数**，`BlankWindow`的类型参照**窗口实例**。
+`UseWindowParams`和`UseBlankWindowParams`的类型参照**窗口参数**，`BlankWindow`的类型参照**窗口实例**。
 
 ## 窗口参数
 
@@ -39,7 +39,7 @@ function useWindowApi(): BlankWindow | undefined
 
 ### preset
 
-- **类型**： `string`
+- **类型**：`string`
 - **描述**：窗口预设，用于指定窗口的样式。
 
 ### title
@@ -309,9 +309,9 @@ interface ComponentApi {
   /** 获取组件当前渲染状态 */
   getRenderState(): number
   /** 获取组件样式 */
-  useCssClass(): Record<string, string>
+  useCssModule(): Record<string, string>
   /** 获取窗口菜单 */
-  useMenus(): ComputedRef<number[]>
+  useMenus(): number[]
 }
 
 class Emitter<T = any> {
@@ -355,6 +355,10 @@ class BlankWindow extends Emitter<BlankWindow> {
   get allowDragArea(): number
   /** 窗口是否已最大化 */
   get isMaximize(): boolean
+  /** 是否为固定层级的窗口 */
+  get isFixedZIndex(): boolean
+  /** 窗口的层级 */
+  get zIndex(): number
 
   /** 创建一个事件对象 */
   createEvent(type: EventType): WindowEvent<this, any>
@@ -372,7 +376,9 @@ class BlankWindow extends Emitter<BlankWindow> {
   /** 获取窗口根元素 */
   getElement(): HTMLElement | undefined
   /** 获取窗口菜单，返回菜单类型数组 */
-  useMenus(): ComputedRef<number[]>
+  useMenus(): number[]
+  /** 获取组件的样式 */
+  useCssModule(): Record<string, string>
   /** 窗口聚焦 */
   focus(): void
   /** 切换窗口最大化 */

@@ -19,7 +19,7 @@ onMounted(() => {
   instance = useBlankWindow({
     closeable: false,
     zIndex: 999,
-    width: '1280px',
+    width: '1300px',
     height: '900px',
     minWidth: 1102,
     minHeight: 480,

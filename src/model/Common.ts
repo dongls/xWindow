@@ -129,8 +129,6 @@ export interface WindowOptions {
 }
 
 export interface SimpleWindowOptions extends WindowOptions {
-  /** 是否包含窗尾，默认为`true` */
-  footer?: boolean
   /** 窗口菜单 */
   menus?: WindowMenu[]
 }
