@@ -23,6 +23,9 @@
     "isolatedModules": true,
     "allowJs": true,
     "paths": {
+      "@document/*": [
+        "document/*"
+      ],
       "@dongls/xwindow": [
         "src/main"
       ],

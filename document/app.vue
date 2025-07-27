@@ -35,6 +35,10 @@ body {
   overflow: hidden;
 }
 
+.xwindow-doc {
+  background-color: #fff;
+}
+
 .xwindow-doc .x-window-body {
   border: 1px solid var(--xwindow-color-primary);
 }

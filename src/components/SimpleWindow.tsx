@@ -1,6 +1,6 @@
 import classes from '../styles/window.module.scss'
 
-import type { WindowMenu } from '../model/Common'
+import type { SimpleWindowMenu } from '../model/Common'
 import type { BlankWindow } from '../model/Windows'
 
 import { defineComponent, isVNode, h } from 'vue'
@@ -33,12 +33,12 @@ export const SimpleWindowComponent = defineComponent({
   setup(props) {
     const instance = props.instance
 
-    function callMenuHandler(menu: WindowMenu, event: MouseEvent) {
+    function callMenuHandler(menu: SimpleWindowMenu, event: MouseEvent) {
       event.stopPropagation()
       if (typeof menu.handler == 'function') menu.handler(instance)
     }
 
-    function createMenu(menu: WindowMenu) {
+    function createMenu(menu: SimpleWindowMenu) {
       return (
         <button type="button" class="x-window-text-menu" onClick={callMenuHandler.bind(null, menu)}>
           {menu.label}

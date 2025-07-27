@@ -1,8 +1,6 @@
 # xWindow
 
-基于[Vue@3.3+][vue]的函数式弹窗组件库。
-
-> `xWindow`使用了诸如`expose`、`.prop`之类的api, **请确保你的`Vue`版本不低于3.2.0**。
+基于[Vue][vue]的函数式弹窗组件库。
 
 ## 安装
 
@@ -18,7 +16,8 @@ pnpm i @dongls/xwindow
 
 ## 兼容性
 
-`xWindow`使用了诸如`Proxy`、`Reflect`之类的新特性，因此需要浏览器至少实现了`ES2015`标准。需要注意的是，`xWindow`**不支持IE浏览器，也没有相关的支持计划**。
+- 浏览器至少实现了`ES2015`标准
+- `Vue`版本高于3.3
 
 ## License
 

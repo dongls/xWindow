@@ -1,17 +1,61 @@
+:root {
+  --doc-color-primary: rgb(0, 123, 255);
+
+  --doc-text-color-regular: #191b1f;
+  --doc-text-color-secondary: #555;
+  --doc-text-color-bold: rgb(0, 0, 0);
+  --doc-text-color-gray: #808080;
+  --doc-code-color: #c6303e;
+
+  --doc-head-text-color: rgb(33, 36, 51);
+
+  --doc-link-color: rgb(0, 123, 255);
+  --doc-link-hover-bg-color: rgba(0, 76, 252, 0.1);
+
+  --doc-main-width: 1180px;
+  --doc-background-color: #fafafa;
+  --doc-border-color: #dcdfe6;
+}
+
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(220, 220, 220, 1);
+  border-radius: 5px;
+  background-clip: content-box;
+  border: 1px solid transparent;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(130, 130, 130);
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
 html {
   -webkit-text-size-adjust: 100%;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  -webkit-font-smoothing: antialiased;
 }
 
 body {
   margin: 0;
+  font-size: 14px;
+  line-height: 24px;
+  color: var(--doc-text-color-regular);
   font-family:
     -apple-system,
     BlinkMacSystemFont,
@@ -27,10 +71,6 @@ body {
     Apple Color Emoji,
     Segoe UI Emoji,
     Segoe UI Symbol;
-  font-size: 14px;
-  line-height: 1.5;
-  color: var(--doc-text-color-regular);
-  -webkit-tap-highlight-color: rgba(26, 26, 26, 0);
 }
 
 [hidden] {
@@ -38,9 +78,9 @@ body {
 }
 
 p {
-  margin-top: 10px;
-  margin-bottom: 10px;
-  line-height: 1.5;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  line-height: 24px;
 }
 
 pre {
@@ -53,16 +93,14 @@ h3,
 h4,
 h5,
 h6 {
-  margin: 10px 0;
+  margin: 16px 0;
   color: var(--doc-head-text-color);
   font-weight: 600;
+  line-height: 1.5;
 }
 
 h1 {
-  padding: 0;
-  line-height: 24px;
   font-size: 24px;
-  margin: 0 0 20px 0;
 }
 
 h2 {
@@ -70,64 +108,49 @@ h2 {
 }
 
 h3 {
-  font-size: 16px;
-  font-family: 'Microsoft YaHei', Arial, Helvetica, sans-serif;
-  margin-top: 36px;
+  font-size: 14px;
 }
 
 ul {
-  margin: 0 0 15px 0;
-  padding-left: 24px;
-}
-
-ul.doc-ul {
+  margin: 0 0 16px 0;
+  padding-left: 16px;
   list-style: none;
 }
 
-ul.doc-ul > li {
+ul li {
   position: relative;
 }
 
-ul.doc-ul > li + li,
-ul.doc-ul > li > ul {
-  margin-top: 5px;
+ul > li + li {
+  margin-top: 4px;
 }
 
-ul.doc-ul > li::before {
+ul > li::before {
   content: '';
   position: absolute;
-  top: 9px;
-  left: -12px;
+  top: 10px;
+  left: -16px;
   width: 4px;
   height: 4px;
-  background-color: #191f2f;
+  background-color: #333;
   border-radius: 50%;
   transition: background-color ease 0.3s;
 }
 
-code:not(.hljs-code) {
-  padding: 3px 5px;
-  border-radius: 4px;
-  color: #d63200;
-  background-color: #f8f8f8;
-  font-family: Menlo, Monaco, Consolas, 'Microsoft YaHei', monospace;
-  margin: 0 2px;
-  font-weight: 400;
-  font-size: 14px;
+ol {
+  margin: 0 0 16px 0;
+  padding-left: 24px;
 }
 
-em {
-  color: #e45649;
-  font-family:
-    Cascadia Code,
-    Menlo,
-    Monaco,
-    Consolas,
-    'Microsoft YaHei',
-    monospace;
+ol > li + li {
+  margin-top: 4px;
+}
+
+code:not(.hljs-code) {
+  font-family: Consolas, monospace;
   margin: 0 2px;
-  font-weight: 400;
-  font-style: normal;
+  font-size: 14px;
+  color: var(--doc-code-color);
 }
 
 iframe {
@@ -153,17 +176,22 @@ table th {
 }
 
 table thead {
-  background-color: #f0f0f0;
+  /* background-color: var(--doc-background-color); */
 }
 
 table tbody tr + tr {
-  border-top: 1px dashed #e5e5e6;
+  border-top: 1px solid var(--doc-border-color);
+}
+
+table thead tr,
+table tbody tr:last-child {
+  border-bottom: 1px solid var(--doc-border-color);
 }
 
 table td,
 table th {
-  padding: 8px;
-  line-height: 20px;
+  padding: 6px 4px;
+  line-height: 24px;
 }
 
 table tbody tr {
@@ -171,19 +199,15 @@ table tbody tr {
 }
 
 table tbody tr:hover {
-  background-color: rgba(180, 180, 180, 0.1);
-}
-
-table tbody tr:last-child {
-  border-bottom: 1px dashed #e5e5e6;
+  background-color: rgba(212, 212, 212, 0.1);
 }
 
 blockquote {
-  color: #999;
-  border-left: 4px solid #dfe2e5;
-  margin: 1rem 0;
-  padding: 8px 10px 8px 20px;
-  margin: 15px 0;
+  color: var(--doc-text-color-secondary);
+  padding: 12px;
+  margin: 16px 0;
+  background-color: var(--doc-background-color);
+  border-radius: 8px;
 }
 
 blockquote > p {
@@ -195,5 +219,18 @@ img {
 }
 
 strong {
+  font-weight: 700;
+}
+
+em {
   color: var(--doc-text-color-bold);
+  font-style: normal;
+  font-weight: 400;
+}
+
+sup {
+  font-weight: 400;
+  font-size: 12px;
+  user-select: none;
+  color: var(--doc-code-color);
 }

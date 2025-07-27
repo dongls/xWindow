@@ -1,4 +1,4 @@
-import type { WindowBody, WindowState, WindowOptions, ComponentApi, EventType, WindowType, HandlerType, SimpleWindowOptions, WindowMenu } from './Common'
+import type { WindowBody, WindowState, WindowOptions, ComponentApi, EventType, WindowType, HandlerType, SimpleWindowOptions, SimpleWindowMenu } from './Common'
 
 import { reactive } from 'vue'
 import { Emitter, WindowEvent } from './Emitter'
@@ -164,7 +164,7 @@ export class BlankWindow extends Emitter<BlankWindow> {
   }
 
   /** 等待窗口组件创建完成 */
-  ready() {
+  ready(): Promise<void> {
     if (this.created === true) return Promise.resolve()
 
     return new Promise((resolve, reject) => {
@@ -288,7 +288,7 @@ export class BlankWindow extends Emitter<BlankWindow> {
     state.windowMode === WINDOW_MODES.MAXIMIZE ? this.exitMaximize() : this.requestMaximize()
   }
 
-  /** 固定窗口 */
+  /** 将窗口置于顶层 */
   pin() {
     const state = this.state
     if (state == null) return
@@ -368,7 +368,7 @@ export class SimpleWindow extends BlankWindow {
     super(params)
   }
 
-  updateMenus(menus: WindowMenu[]) {
+  updateMenus(menus: SimpleWindowMenu[]) {
     this.options.menus = menus
   }
 }

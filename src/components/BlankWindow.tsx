@@ -1,15 +1,26 @@
 import classes from '../styles/window.module.scss'
 
-import type { ComponentApi } from '../model/Common'
+import type { ComponentApi, WindowState } from '../model/Common'
 import type { VNode } from 'vue'
 
 import { Teleport, computed, defineComponent, nextTick, reactive, ref, provide, h, onRenderTriggered, shallowRef } from 'vue'
-import { INJECTION_WINDOW_API, RESIZE_MODE, WINDOW_MODES, RENDER_STATES, CLASS, MENU_TYPE, WINDOW_TYPE } from '../model/Constant'
+import { INJECTION_WINDOW_API, RESIZE_MODE, WINDOW_MODES, RENDER_STATES, CLASS, MENU_TYPE, WINDOW_TYPE, RESIZE_PROPS } from '../model/Constant'
 import { WindowBody } from './WindowBody'
 import { isEmptyStr, notEmptyStr, LOG } from '../util'
-import { useWindowState, useWindowStyle, createResizeNodes } from './useWindow'
 import { BlankWindow } from '../model/Windows'
 import { registerWindow } from '../api/manager'
+import { Resizable } from '../model/Resizable'
+
+const RESIZE_NODES = [
+  [classes.resizeTop, RESIZE_PROPS.TOP],
+  [classes.resizeBottom, RESIZE_PROPS.BOTTOM],
+  [classes.resizeLeft, RESIZE_PROPS.LEFT],
+  [classes.resizeRight, RESIZE_PROPS.RIGHT],
+  [classes.resizeTopLeft, RESIZE_PROPS.TOP_LEFT],
+  [classes.resizeTopRight, RESIZE_PROPS.TOP_RIGHT],
+  [classes.resizeBottomLeft, RESIZE_PROPS.BOTTOM_LEFT],
+  [classes.resizeBottomRight, RESIZE_PROPS.BOTTOM_RIGHT],
+]
 
 export const BlankWindowComponent = defineComponent({
   name: WINDOW_TYPE.BLANK_WINDOW,
@@ -20,11 +31,41 @@ export const BlankWindowComponent = defineComponent({
     },
   },
   setup(props, { slots }) {
-    const elementRef = shallowRef<HTMLElement>()
-    const winState = reactive(useWindowState())
     const renderState = ref<number>(RENDER_STATES.INIT)
+    const elementRef = shallowRef<HTMLElement>()
+    const winState: WindowState = reactive({
+      visible: false,
+      offsetWidth: 0,
+      offsetHeight: 0,
+      offsetTop: 0,
+      offsetLeft: 0,
+      focused: false,
+      pinned: false,
+      zIndex: 0,
+      windowMode: WINDOW_MODES.NONE,
+    })
 
-    const windowStyle = useWindowStyle(props.instance, renderState, winState)
+    const windowStyle = computed(() => {
+      const options = props.instance.options
+
+      if (renderState.value == RENDER_STATES.INIT) {
+        return {
+          width: options.width,
+          height: options.height,
+          left: options.left,
+          top: options.top,
+        }
+      }
+
+      return {
+        top: winState.offsetTop + 'px',
+        left: winState.offsetLeft + 'px',
+        width: winState.offsetWidth + 'px',
+        height: renderState.value == RENDER_STATES.INIT ? undefined : winState.offsetHeight + 'px',
+        zIndex: options.mask ? undefined : props.instance.zIndex,
+      }
+    })
+
     const windowClass = computed(() => {
       const className = [CLASS.WINDOW, classes.window]
       const instance = props.instance
@@ -164,6 +205,18 @@ export const BlankWindowComponent = defineComponent({
     function createBody() {
       const instance = props.instance
       return <WindowBody body={instance.body} key={instance.wid} />
+    }
+
+    function createResizeNodes(mode: number, resizeStart: any) {
+      if (mode == RESIZE_MODE.DISABLED) return null
+
+      return RESIZE_NODES.map(n => {
+        return h('div', {
+          ['.' + Resizable.PROP]: n[1],
+          className: n[0],
+          onPointerdown: resizeStart,
+        })
+      })
     }
 
     provide(INJECTION_WINDOW_API, props.instance)

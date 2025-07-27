@@ -1,12 +1,11 @@
-import type { UseBlankWindowParams, UseSimpleWindowParams, WindowBody } from '../model/Common'
+import type { UseBlankWindowOptions, UseWindowOptions, WindowBody, UseSimpleWindowOptions } from '../model/Common'
 
 import { WINDOW_TYPE } from '../model/Constant'
 import { BlankWindow, SimpleWindow } from '../model/Windows'
 import { createWindow } from './manager'
 import { PLUGIN_OPTIONS } from './store'
-import { isEmptyStr, merge } from '../util'
 
-function normalizeParams(args: any[]): any {
+function normalizeOptions(args: any[]): any {
   // useWindow({ title: 'xxxx', body: <div>body</div> })
   if (args.length == 1) {
     const p = args[0]
@@ -26,16 +25,16 @@ function normalizeParams(args: any[]): any {
 
   // useWindow('title', <div>body</div>, {})
   if (args.length == 3) {
-    const [title, body, params] = args
+    const [title, body, options] = args
     if (typeof title == 'string' && body != null) {
-      return { ...params, title, body }
+      return { ...options, title, body }
     }
   }
 
   return null
 }
 
-function mergeWindowParams(current: any, target: any) {
+function mergeWindowOptions(current: any, target: any) {
   if (target == null) return
 
   for (const key in target) {
@@ -48,49 +47,49 @@ function mergeWindowParams(current: any, target: any) {
   }
 }
 
-function parseWindowParams(args: any[]) {
-  const params = normalizeParams(args) ?? {}
+function parseWindowOptions(args: any[]) {
+  const options = normalizeOptions(args) ?? {}
 
   const defaultPreset = Reflect.get(PLUGIN_OPTIONS.presets, 'default')
-  const targetPreset = typeof params.preset === 'string' && params.preset != 'default' ? Reflect.get(PLUGIN_OPTIONS.presets, params.preset) : undefined
-  mergeWindowParams(params, targetPreset)
-  mergeWindowParams(params, defaultPreset)
+  const targetPreset = typeof options.preset === 'string' && options.preset != 'default' ? Reflect.get(PLUGIN_OPTIONS.presets, options.preset) : undefined
+  mergeWindowOptions(options, targetPreset)
+  mergeWindowOptions(options, defaultPreset)
 
-  return params
+  return options
 }
 
-export function useWindow(title: string, body: WindowBody): SimpleWindow
-export function useWindow(title: string, body: WindowBody, params: Partial<UseBlankWindowParams>): SimpleWindow
-export function useWindow(params: Partial<UseSimpleWindowParams>): SimpleWindow
-export function useWindow(...args: any): SimpleWindow {
-  const params: any = parseWindowParams(args) ?? {}
-  params.type = WINDOW_TYPE.SIMPLE_WINDOW
-  return useWindowImpl(params) as any
+export function useWindow(title: string, body: WindowBody): BlankWindow
+export function useWindow(title: string, body: WindowBody, options: Partial<UseWindowOptions>): BlankWindow
+export function useWindow(options: Partial<UseWindowOptions>): BlankWindow
+export function useWindow(...args: any): BlankWindow {
+  const o: any = parseWindowOptions(args) ?? {}
+  o.type = o.type ?? WINDOW_TYPE.SIMPLE_WINDOW
+  return useWindowImpl(o) as any
 }
 
 export function useBlankWindow(title: string, body: WindowBody): BlankWindow
-export function useBlankWindow(title: string, body: WindowBody, params: Partial<UseBlankWindowParams>): BlankWindow
-export function useBlankWindow(params: Partial<UseBlankWindowParams>): BlankWindow
+export function useBlankWindow(title: string, body: WindowBody, options: Partial<UseBlankWindowOptions>): BlankWindow
+export function useBlankWindow(options: Partial<UseBlankWindowOptions>): BlankWindow
 export function useBlankWindow(...args: any[]): BlankWindow {
-  const params: any = parseWindowParams(args) ?? {}
-  params.type = WINDOW_TYPE.BLANK_WINDOW
-  return useWindowImpl(params)
+  const o: any = parseWindowOptions(args) ?? {}
+  o.type = WINDOW_TYPE.BLANK_WINDOW
+  return useWindowImpl(o)
 }
 
 export function useSimpleWindow(title: string, body: WindowBody): SimpleWindow
-export function useSimpleWindow(title: string, body: WindowBody, params: Partial<UseSimpleWindowParams>): SimpleWindow
-export function useSimpleWindow(params: Partial<UseSimpleWindowParams>): SimpleWindow
+export function useSimpleWindow(title: string, body: WindowBody, options: Partial<UseSimpleWindowOptions>): SimpleWindow
+export function useSimpleWindow(options: Partial<UseSimpleWindowOptions>): SimpleWindow
 export function useSimpleWindow(...args: any[]): SimpleWindow {
-  const params: any = parseWindowParams(args) ?? {}
-  params.type = WINDOW_TYPE.SIMPLE_WINDOW
-  return useWindowImpl(params) as any
+  const o: any = parseWindowOptions(args) ?? {}
+  o.type = WINDOW_TYPE.SIMPLE_WINDOW
+  return useWindowImpl(o) as any
 }
 
-function useWindowImpl(params: any) {
-  const instance = createWindow(params)
+function useWindowImpl(options: any) {
+  const instance = createWindow(options)
 
   instance.ready().then(() => {
-    if (params.displayAfterCreate !== false) instance.show()
+    if (options.displayAfterCreate !== false) instance.show()
   })
 
   return instance
@@ -102,7 +101,10 @@ export function createSingleWindow<T extends (...args: any) => Promise<any>>(fn:
     const value = Reflect.get(fn, '__XWINDOW_VALUE__')
     if (value) return value as any
 
-    const promise = fn(...args).finally(() => {
+    let result = fn(...args)
+    if (result instanceof BlankWindow) result = result.promisify()
+
+    const promise = result.finally(() => {
       Reflect.deleteProperty(fn, '__XWINDOW_VALUE__')
     })
 

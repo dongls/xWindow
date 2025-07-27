@@ -56,7 +56,7 @@ function isDev(configEnv: ConfigEnv) {
 
 function buildAlias(configEnv: ConfigEnv) {
   if (isDev(configEnv) || isBuildDocument(configEnv)) {
-    return { vue: 'vue/dist/vue.esm-bundler.js', '@dongls/xwindow': path.resolve('src/main') }
+    return { vue: 'vue/dist/vue.esm-bundler.js', '@dongls/xwindow': path.resolve('src/main'), '@document': path.resolve('document') }
   }
 
   return undefined

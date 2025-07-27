@@ -8,46 +8,49 @@
         </h3>
       </div>
       <nav :class="classes.navs" class="is-scroll">
-        <div v-for="doc in docs" @click="showContent(doc)" :class="[classes.nav, doc.id == current.id ? classes.activeNav : null]">{{ doc.name }}</div>
+        <div v-for="doc in docs" @click="navigate(doc)" :class="[classes.nav, doc.path == path ? classes.activeNav : null]">{{ doc.name }}</div>
       </nav>
       <div :class="classes.copyright">
         <span>Copyright © 2023-present dongls</span>
       </div>
     </aside>
-    <main :class="classes.main">
+    <main :class="{ [classes.main]: true, [classes.withGuide]: showGuide }" @jump.native.stop="onFooterJump">
       <div :class="classes.rightHeader"><Menus /></div>
-      <div :class="classes.scroll" ref="scroll" @click.stop="copy">
-        <Guide :key="current.id" v-if="current.guide !== false" />
-        <Content :class="{ [classes.content]: true, [classes.withGuide]: current.guide !== false }" />
+      <div :class="classes.scroll" ref="scroll" @click.native.stop="onClick" @scroll="handleScroll">
+        <Content :path="path" :hash="hash" :key="path" ref="contentApi" />
       </div>
+      <Guide :key="path" :top="top" v-if="showGuide" />
     </main>
   </div>
 </template>
 
 <script setup lang="tsx">
-import Example from './example/index'
-import Events from './components/Events.vue'
-import UseExample from './components/UseExample.vue'
-import UseModal from './components/UseModal.vue'
-
 import Theme from './components/Theme.vue'
 import Guide from './components/Guide.vue'
 import docs from './docs/index'
+import Content, { type ContentApi } from './docs/Content.vue'
 
-import { nextTick, ref, h, useCssModule } from 'vue'
+import { ref, useCssModule, computed } from 'vue'
 import { useWindowApi, useIcons, WindowMenus } from '@dongls/xwindow'
 import { IconGithub } from './svg'
+import { throttle } from './utils/lang'
 
 const className = useCssModule('classes')
 const timestamp = __TIMESTAMP__
 const version = __VERSION__
+const defaultNav = __IS_DEV__ ? 0 : 0
+const scroll = ref<HTMLElement>()
+const contentApi = ref<ContentApi>()
 
-const defaultNav = __IS_DEV__ ? 3 : 0
 const winApi = useWindowApi()
 const icons = useIcons()
-const current = ref(docs[defaultNav])
-const scroll = ref<HTMLElement>()
-const components = { Events, UseExample, UseModal, ...Example }
+const top = ref(0)
+const path = ref(docs[defaultNav].path)
+const hash = ref<string>()
+
+const showGuide = computed(() => path.value !== '/example')
+
+const handleScroll = throttle(() => (top.value = scroll.value?.scrollTop ?? 0))
 
 function stopPropagation(event: Event) {
   event.stopPropagation()
@@ -70,35 +73,54 @@ function toGitHub() {
   window.open('https://github.com/dongls/xWindow')
 }
 
-function Content() {
-  const template = current.value.content
-  return h('article', { class: 'article', key: current.value.id }, h({ template, components }))
+function navigate(doc: any) {
+  path.value = doc.path
+  hash.value = undefined
 }
 
-async function showContent(doc: any) {
-  current.value = doc
+function onClick(event: MouseEvent) {
+  const target = event.target as HTMLElement
+  if (target == null) return
 
-  await nextTick()
-  if (scroll.value) scroll.value.scrollTop = 0
+  // 导航
+  if (target instanceof HTMLAnchorElement) {
+    const href = target.getAttribute('href')
+    if (href == null || href.startsWith('http')) return
+
+    event.preventDefault()
+    jump(target.pathname, target.hash)
+    return
+  }
+
+  // 复制
+  if (target instanceof HTMLButtonElement) {
+    const pre = (event.target as HTMLElement).closest('pre.hljs')
+    if (pre == null) return
+
+    const code = pre.querySelector(':scope > code.hljs-code')
+    if (code == null) return
+
+    const text = code.textContent
+    if (text == null) return
+
+    return navigator.clipboard.writeText(text).then(() => {
+      target.classList.add('doc-copy-btn-active')
+      setTimeout(() => target.classList.remove('doc-copy-btn-active'), 1000)
+    })
+  }
 }
 
-function copy(event: MouseEvent) {
-  const button = (event.target as HTMLElement).closest('button')
-  if (button == null) return
+function onFooterJump(event: CustomEvent) {
+  const path = event.detail
+  jump(path, '')
+}
 
-  const pre = (event.target as HTMLElement).closest('pre.hljs')
-  if (pre == null) return
+function jump(p: string, h: string) {
+  path.value = p
+  hash.value = decodeURIComponent(h)
 
-  const code = pre.querySelector(':scope > code.hljs-code')
-  if (code == null) return
-
-  const text = code.textContent
-  if (text == null) return
-
-  navigator.clipboard.writeText(text).then(() => {
-    button.classList.add('doc-copy-btn-active')
-    setTimeout(() => button.classList.remove('doc-copy-btn-active'), 1000)
-  })
+  if (h) contentApi.value?.scrollTo(hash.value)
+  else contentApi.value?.scrollTop()
 }
 </script>
 
@@ -196,42 +218,20 @@ function copy(event: MouseEvent) {
   flex-flow: column nowrap;
 }
 
-.content {
-  padding: 0 20px 20px 20px;
+.withGuide .scroll {
+  padding-right: 190px;
 }
 
-.content ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-.content ::-webkit-scrollbar-thumb {
-  background-color: rgba(220, 220, 220, 1);
-  border-radius: 5px;
-  background-clip: content-box;
-  border: 1px solid transparent;
-}
-
-.content ::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(255, 255, 255, 1);
-}
-
-.content ::-webkit-scrollbar-track {
-  background-color: transparent;
-}
-
-.content ::-webkit-scrollbar-corner {
-  background-color: transparent;
-}
-
-.withGuide {
-  margin-right: 180px;
+.withGuide :global(.article) {
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .scroll {
   flex: 1;
   height: 0;
   overflow: auto;
+  position: relative;
 }
 
 .copyright {
@@ -263,5 +263,11 @@ function copy(event: MouseEvent) {
     font-weight: 400;
     color: var(--nav-text-secondary-color);
   }
+}
+
+.other {
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
 }
 </style>

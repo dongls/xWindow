@@ -67,7 +67,7 @@ export interface WindowState {
   windowMode: number
 }
 
-export interface WindowMenu {
+export interface SimpleWindowMenu {
   label?: string
   // icon?: string
   handler: (win: BlankWindow) => any
@@ -110,16 +110,16 @@ export interface WindowOptions {
   maximize: boolean
   /** 窗口插入的位置,默认为`body`,值为`false`禁用此行为 */
   teleport: string | false
-  /** 是否可拖拽, 默认为`true`, 如果值为数字, 则用于指定`header`的高度 */
-  draggable: boolean | number
   /** 窗口调整模式,默认为`RESIZE_MODE.REISZE` */
   resizeMode: number
+  /** 是否可拖拽, 默认为`true`, 如果值为数字, 则用于指定`header`的高度 */
+  draggable: boolean | number
   /** 是否可关闭窗口,默认为`true` */
   closeable: boolean
-  /** 是否包含遮罩层,默认为`false` */
-  mask: boolean
   /** 是否允许固定窗口,默认为`true` */
   pinnable: boolean
+  /** 是否包含遮罩层,默认为`false` */
+  mask: boolean
   /** 创建后立即显示窗口，默认为`true` */
   displayAfterCreate: boolean
   /** 关闭后销毁窗口，默认为`true` */
@@ -130,10 +130,10 @@ export interface WindowOptions {
 
 export interface SimpleWindowOptions extends WindowOptions {
   /** 窗口菜单 */
-  menus?: WindowMenu[]
+  menus?: SimpleWindowMenu[]
 }
 
-export interface UseWindowParams {
+export interface UseWindowCommonOptions {
   /** 窗口类型 */
   type?: WindowType
   /** 窗口的内容，可以是`VNode`或者一个返回`VNode`的函数 */
@@ -142,9 +142,9 @@ export interface UseWindowParams {
   preset?: string
 }
 
-export type UseBlankWindowParams = UseWindowParams & Partial<WindowOptions>
-
-export type UseSimpleWindowParams = UseWindowParams & Partial<SimpleWindowOptions>
+export type UseWindowOptions = UseWindowCommonOptions & Partial<WindowOptions> & Record<string, any>
+export type UseBlankWindowOptions = UseWindowCommonOptions & Partial<WindowOptions>
+export type UseSimpleWindowOptions = UseWindowCommonOptions & Partial<SimpleWindowOptions>
 
 export interface ComponentApi {
   /** 获取窗口顶层DOM对象 */
@@ -167,3 +167,10 @@ export interface WindowZIndexManager {
   setZIndex(value: number): void
   getNextZIndex(): number
 }
+
+/** @deprecated */
+export type UseWindowParams = UseWindowOptions
+/** @deprecated */
+export type UseSimpleWindowParams = UseSimpleWindowOptions
+/** @deprecated */
+export type UseBlankWindowParams = UseBlankWindowOptions

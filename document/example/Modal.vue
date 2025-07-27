@@ -2,7 +2,7 @@
   <div class="example-modal" v-if="win">
     <div class="example-modal-header">
       <div class="example-modal-title">{{ win.options.title }}</div>
-      <div class="example-modal-menus"><slot name="menus" :instance="win" /></div>
+      <div class="example-modal-menus"><WindowMenus :instance="win" /></div>
     </div>
     <div class="example-modal-body"><slot :instance="win" /></div>
     <div class="example-modal-footer">
@@ -13,7 +13,7 @@
 </template>
 
 <script lang="tsx" setup>
-import { useWindowApi } from '@dongls/xwindow'
+import { useWindowApi, WindowMenus } from '@dongls/xwindow'
 
 const win = useWindowApi()
 

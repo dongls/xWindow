@@ -6,6 +6,6 @@
 import { useModal } from './utils'
 
 function showModal() {
-  useModal('窗口1', <div>内容</div>)
+  useModal('标题', <div>内容</div>)
 }
 </script>

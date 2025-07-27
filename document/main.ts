@@ -19,12 +19,6 @@ const zIndexManager: WindowZIndexManager = {
   },
 }
 
-app.use(xWindow, {
-  zIndex: zIndexManager,
-  presets: {
-    default: {},
-    small: {},
-    large: {},
-  },
-})
+app.use(xWindow, { zIndex: zIndexManager })
+
 app.mount('#app')

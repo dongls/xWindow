@@ -1,59 +1,273 @@
-## 函数式API
+## 概览
 
----
+<div class="api-summary">
+
+|#|名称|描述|
+|-|-|-|
+|1|[useWindow](/api#useWindow)|创建一个窗口，如不指定窗口类型则默认为`SimpleWindow`|
+|2|[useBlankWindow](/api#useBlankWindow)|创建一个空白窗口|
+|3|[useSimpleWindow](/api#useSimpleWindow)|创建一个带标题的简单窗口|
+|4|[useWindowApi](/api#useWindowApi)|在窗体组件中注入当前窗口实例|
+|5|[useWindowManager](/api#useWindowManager)|获取窗口管理器|
+|6|[createSingleWindow](/api#createSingleWindow)|创建一个单例窗口|
+|7|[hasOpenWindow](/api#hasOpenWindow)|判断当前是否有打开的窗口|
+|8|[registerPreset](/api#registerPreset)|注册窗口预设|
+|9|[registerZIndexManager](/api#registerZIndexManager)|注册层级管理器|
+
+</div>
+
+### useWindow
+
+最基础的窗口创建函数。使用时如果不指定窗口类型[type](/api#type), 默认为`SimpleWindow`。
+
+- 类型
+  ```typescript
+  function useWindow(title: string, body: WindowBody): BlankWindow
+  function useWindow(title: string, body: WindowBody, options: Partial<UseWindowOptions>): BlankWindow
+  function useWindow(options: Partial<UseWindowOptions>): BlankWindow
+  ```
+- 参数
+  - `title`: 窗口标题
+  - `body`: 窗口内容，类型参照[WindowBody](/api#body)
+  - `options`: 参照[窗口选项](/api#窗口选项)
+- 示例
+  ```typescript
+  import { useWindow } from '@dongls/xwindow'
+
+  useWindow('标题', <div>窗体</div>)
+  useWindow('标题', <div>窗体</div>, {/** 窗口选项 */})
+  useWindow({title: '标题', body: <div>窗体</div>, /** 其他选项 */})
+  ```
+
+### useBlankWindow
+
+该方法用于创建一个空白窗口，可用于创建自定义窗口。
+
+- 类型
+  ```typescript
+  function useBlankWindow(title: string, body: WindowBody): BlankWindow
+  function useBlankWindow(title: string, body: WindowBody, options: Partial<UseBlankWindowOptions>): BlankWindow
+  function useBlankWindow(options: Partial<UseBlankWindowOptions>): BlankWindow
+  ```
+- 参数
+  - `title`: 窗口标题
+  - `body`: 窗口内容，类型参照[WindowBody](/api#body)
+  - `options`: 参照[窗口选项](/api#窗口选项)
+- 示例
+  ```typescript
+  import { useBlankWindow } from '@dongls/xwindow'
+
+  useBlankWindow('标题', <div>窗体</div>)
+  useBlankWindow('标题', <div>窗体</div>, {/** 窗口选项 */})
+  useBlankWindow({title: '标题', body: <div>窗体</div>, /** 其他选项 */})
+  ```
+
+### useSimpleWindow
+
+该方法用于创建一个带标题的简单窗口，可以满足大部分场景的需求。
+
+- 类型
+  ```typescript
+  function useSimpleWindow(title: string, body: WindowBody): SimpleWindow
+  function useSimpleWindow(title: string, body: WindowBody, options: Partial<UseSimpleWindowOptions>): SimpleWindow
+  function useSimpleWindow(options: Partial<UseSimpleWindowOptions>): SimpleWindow
+  ```
+- 参数
+  - `title`: 窗口标题
+  - `body`: 窗口内容，类型参照[WindowBody](/api#body)
+  - `options`: 参照[窗口选项](/api#窗口选项)
+- 示例
+  ```typescript
+  import { useSimpleWindow } from '@dongls/xwindow'
+
+  useSimpleWindow('标题', <div>窗体</div>)
+  useSimpleWindow('标题', <div>窗体</div>, {/** 窗口选项 */})
+  useSimpleWindow({title: '标题', body: <div>窗体</div>, /** 其他选项 */})
+  ```
+
+### useWindowApi
+
+该方法用于在组件中注入当前窗口实例。
+
+- 类型
+  ```typescript
+  function useWindowApi(): BlankWindow | undefined
+  ```
+- 示例
+  ```vue
+  <template>
+    <div><!-- 组件的代码 --></div>
+  </temlate>
+
+  <script setup lang="ts">
+    import { useWindowApi } from '@dongls/xwindow'
+    const instance = useWindowApi()
+  </script>
+  ```
+
+### useWindowManager
+
+该方法用于获取窗口管理对象，类型定义如下:
 
 ```typescript
-// 最基础的窗口创建函数，与useSimpleWindow行为一致
-function useWindow(title: string, body: WindowBody): SimpleWindow
-function useWindow(title: string, body: WindowBody, params: Partial<UseBlankWindowParams>): SimpleWindow
-function useWindow(params: Partial<UseSimpleWindowParams>): SimpleWindow
+interface CloseTopOptions {
+  /** 是否为按下Esc键关闭窗口 */
+  pressEsc?: boolean
+  /** 是否强制关闭 */
+  forced?: boolean
+}
 
-// 用于创建一个空白窗口
-function useBlankWindow(title: string, body: WindowBody): BlankWindow
-function useBlankWindow(title: string, body: WindowBody, params: Partial<UseBlankWindowParams>): BlankWindow
-function useBlankWindow(params: Partial<UseBlankWindowParams>): BlankWindow
-
-// 用于创建一个带标题的简单窗口
-function useSimpleWindow(title: string, body: WindowBody): SimpleWindow
-function useSimpleWindow(title: string, body: WindowBody, params: Partial<UseSimpleWindowParams>): SimpleWindow
-function useSimpleWindow(params: Partial<UseSimpleWindowParams>): SimpleWindow
-
-// 用于在窗体组件中注入当前窗口实例
-function useWindowApi(): BlankWindow | undefined
+interface WindowManager {
+  /** 卸载插件后，调用此函数清理缓存的数据 */
+  cleanup(): void
+  /** 关闭最上层窗口 */
+  closeTopWindow(options?: CloseTopOptions): void
+  /** 聚焦最上层窗口 */
+  focusTopWindow(): void
+  /** 聚焦指定窗口, 参数为窗口实例的id */
+  focusWindow(id: number): void
+  /** 获取最上层窗口实例 */
+  getTopWindow(): BlankWindow | null | undefined
+  /** 获取最上层窗口的z-index */
+  getTopZIndex(): number
+  /** 获取指定窗口实例, 参数为窗口实例的id*/
+  getWindow(id: number): BlankWindow | null | undefined
+  /** 获取窗口实例的数量 */
+  getWindowCount(): number
+  /** 判断是否有打开的窗口 */
+  hasOpenWindow(): boolean
+}
 ```
 
-`UseWindowParams`和`UseBlankWindowParams`的类型参照**窗口参数**，`BlankWindow`的类型参照**窗口实例**。
+### createSingleWindow
 
-## 窗口参数
+该方法用于创建一个单例窗口。有时需要避免重复打开相同类型的窗口，通常会根据是否存在窗口实例来判断，该方法就提供了一种实现来解决该问题。
 
----
+```typescript
+import { useSimpleWindow, createSingleWindow } from '@dongls/xwindow'
+
+// 接受与传入函数相同的参数
+// 返回一个Promise对象,兑现后，返回窗口的值
+const useSingleWindow = createSingleWindow(function (title: string) {
+  return useSimpleWindow(title, <div>单例窗口</div>, { /* 窗口选项 */ })
+    .promisify<string>()
+    .catch(err => {
+      console.log(err)
+      return null
+    })
+})
+
+
+// 第一次调用会正常创建窗口
+const instance1 = useSingleWindow('标题')
+// 因为已创建了窗口，会直接返回已创建的窗口
+const instance2 = useSingleWindow('标题')
+
+// 这里返回的两个窗口实际上都是第一次调用时创建的窗口
+// 只有当已创建的窗口被关闭后，才会创建新的窗口
+console.log(instance1 === instance2) // true
+```
+
+<div class="doc-example"><SingleWindow/></div>
+
+### hasOpenWindow
+
+该方法用于检测是否有打开的窗口。如果存在打开的窗口，返回`true`，否则返回`false`。
+
+```typescript
+import { hasOpenWindow } from '@dongls/xwindow'
+
+const result = hasOpenWindow()
+```
+
+### registerPreset
+
+该方法用于注册窗口预设。也可接在使用插件时注册，请参照[窗口预设](/quickstart#窗口预设)一节。
+
+- 类型
+  ```typescript
+  function registerPreset(name: string, preset: WindowPreset): void
+  ```
+- 参数
+  - `name`: 窗口预设的名称
+  - `preset`: 类型参照[窗口选项](/api#窗口选项)，但是不包含`title`属性
+- 示例
+  ```typescript
+  import { registerPreset, useSimpleWindow } from '@dongls/xwindow'
+
+  registerPreset('small', {
+    width: '800px',
+    height: '600px',
+    // 其他的选项
+  })
+
+  // 可以在创建窗口时使用
+  // 这里就可以创建一个800px*600px的窗口
+  useSimpleWindow('标题', <YourComponent />, { preset: 'small' })
+  ```
+
+### registerZIndexManager
+
+该方法用于注册一个层级管理器。如果你的系统需要统一管理页面上各种不同弹层的`z-index`，请使用此方法。也可以在使用插件时注册，请参照[层级管理](/quickstart#层级管理)一节。
+
+- 类型
+  ```typescript
+  interface WindowZIndexManager {
+    /** 获取当前层级 */
+    getZIndex(): number
+    /** 设置当前层级 */
+    setZIndex(value: number): void
+    /** 获取下一个层级 */
+    getNextZIndex(): number
+  }
+
+  function registerZIndexManager(manager: WindowZIndexManager): void
+  ```
+
+- 示例
+  ```typescript
+  import { ref } from 'vue'
+  import { registerZIndexManager, type WindowZIndexManager } from '@dongls/xwindow'
+
+  // 层级管理的一个简单实现
+  const zIndex = ref(2000)
+  const zIndexManager: WindowZIndexManager = {
+    getNextZIndex() {
+      zIndex.value++
+      return zIndex.value
+    },
+    getZIndex() {
+      return zIndex.value
+    },
+    setZIndex(v) {
+      zIndex.value = v
+    },
+  }
+
+  // 注册层级管理
+  registerZIndexManager(zIndexManager)
+  ```
+
+## 窗口选项
+
+通过[useWindow](/api#useWindow)、[useBlankWindow](/api#useBlankWindow)、[useSimpleWindow](/api#useSimpleWindow)创建窗口时可以传入以下参数：
 
 ### type
 
-- **类型**：`WindowType`
+- 类型：`WindowType`
   ```typescript
   type WindowType = 'SimpleWindow' | 'BlankWindow'
   ```
-- **默认值**：`SimpleWindow`
-- **描述**：窗口的类型。根据传入的类型，创建不同类型的窗口，仅在`useWindow`函数中有效。
-
-### preset
-
-- **类型**：`string`
-- **描述**：窗口预设，用于指定窗口的样式。
-
-### title
-
-- **类型**：`string`
-- **描述**：窗口标题
+- 默认值：`SimpleWindow`
+- 描述：窗口的类型。根据传入的类型，创建不同类型的窗口，仅在`useWindow`函数中有效。
 
 ### body
 
-- **类型**：`WindowBody`
+- 类型：`WindowBody`
   ```typescript
   type WindowBody = string | number | VNode | VNodeArrayChildren | ((win: any) => any)
   ```
-- **描述**：窗体，有关`VNode`的信息请参照Vue相关文档
+- 描述：窗体，有关`VNode`的信息请参照**Vu**e相关文档
 
   ```typescript
     import { useSimpleWindow } from '@dongls/xwindow'
@@ -63,6 +277,16 @@ function useWindowApi(): BlankWindow | undefined
     // 传入VNode作为窗体
     useSimpleWindow('标题', <div>窗体</div>)
   ```
+
+### preset
+
+- 类型：`string`
+- 描述：窗口预设，用于指定窗口的样式。
+
+### title
+
+- 类型：`string`
+- 描述：窗口标题
 
 ### icon
 
@@ -96,7 +320,7 @@ function useWindowApi(): BlankWindow | undefined
 
 - 类型：`string`
 - 默认值：`640px`
-- 描述：窗口的初始宽度，参照`CSS`中`width`语法
+- 描述：窗口的初始宽度，请参照`CSS`中[width](https://developer.mozilla.org/zh-CN/docs/Web/CSS/width)
 
 ### minWidth
 
@@ -107,8 +331,7 @@ function useWindowApi(): BlankWindow | undefined
 ### height
 
 - 类型：`string`
-- 默认值：`640px`
-- 描述：窗口的初始高度，参照`CSS`中`height`语法
+- 描述：窗口的初始高度，请参照`CSS`中[height](https://developer.mozilla.org/zh-CN/docs/Web/CSS/height)
 
 ### minHeight
 
@@ -119,48 +342,56 @@ function useWindowApi(): BlankWindow | undefined
 ### top
 
 - 类型：`string`
-- 描述：窗口相对浏览器窗口顶部的初始位置，参照`CSS`的`top`语法
+- 描述：窗口相对浏览器窗口顶部的初始位置，请参照`CSS`的[top](https://developer.mozilla.org/zh-CN/docs/Web/CSS/top)
 
 ### left
 
 - 类型：`string`
-- 描述：窗口相对浏览器窗口左侧的初始位置，参照`CSS`的`left`语法
+- 描述：窗口相对浏览器窗口左侧的初始位置，请参照`CSS`的[left](https://developer.mozilla.org/zh-CN/docs/Web/CSS/left)
+
+### zIndex
+
+- 类型：`number`
+- 描述：窗口的层级，请参照`CSS`的[z-index](https://developer.mozilla.org/zh-CN/docs/Web/CSS/z-index)
 
 ### maximize
 
 - 类型：`boolean`
 - 默认值：`false`
-- 描述：窗口最大化状态。如果需要禁止窗口最大化，参照`resizeMode`说明
+- 描述：窗口最大化状态。如果需要禁止窗口最大化，参照[resizeMode](/api#resizeMode)说明
+
+### teleport
+
+- 类型：`string | false`
+- 默认值：`body`
+- 描述：窗口插入的位置，值为`false`禁用此行为。该参数的用法，请参照[Teleport](https://cn.vuejs.org/guide/built-ins/teleport.html)组件的`to`属性。
 
 ### resizeMode
 
 - 类型：`number`
-
-```typescript
-const RESIZE_MODE = {
-  /** 禁止调整窗口大小 */
-  DISABLED: 0,
-  /** 允许调整窗口大小，允许最大化（默认）*/
-  RESIZE: 1,
-  /** 只允许调整窗口大小 */
-  RESIZE_ONLY: 2,
-}
-```
-
+  ```typescript
+  const RESIZE_MODE = {
+    /** 禁止调整窗口大小 */
+    DISABLED: 0,
+    /** 允许调整窗口大小，允许最大化（默认）*/
+    RESIZE: 1,
+    /** 只允许调整窗口大小 */
+    RESIZE_ONLY: 2,
+  }
+  ```
 - 默认值：`RESIZE_MODE.REISZE`
 - 描述：窗口调整模式。如果需要禁止窗口最大化，请将该参数设置为`RESIZE_MODE.RESIZE_ONLY`
+  ```typescript
+  import { useSimpleWindow, RESIZE_MODE } from '@dongls/xwindow'
 
-```typescript
-import { useSimpleWindow, RESIZE_MODE } from '@dongls/xwindow'
-
-useSimpleWindow('标题', <div>窗体</div>, { resizeMode: RESIZE_MODE.RESIZE_ONLY })
-```
+  useSimpleWindow('标题', <div>窗体</div>, { resizeMode: RESIZE_MODE.RESIZE_ONLY })
+  ```
 
 ### draggable
 
 - 类型：`false | number`
 - 默认值：`32`
-- 描述：窗口是否可拖拽。
+- 描述：窗口是否可拖拽
   - 如果值为数字, 则用于指定可拖动区域的高度，单位为`px`
   - 如果值为`false`则禁止窗口拖动
 
@@ -174,19 +405,13 @@ useSimpleWindow('标题', <div>窗体</div>, { resizeMode: RESIZE_MODE.RESIZE_ON
 
 - 类型：`boolean`
 - 默认值：`true`
-- 描述：是否允许固定窗口
+- 描述：是否允许将窗口置于顶层
 
 ### mask
 
 - 类型：`boolean`
 - 默认值：`false`
 - 描述：是否包含遮罩层
-
-### teleport
-
-- 类型：`string | false`
-- 默认值：`body`
-- 描述：窗口插入的位置，值为`false`禁用此行为。该参数的用法，请参照[Teleport][Teleport]组件的`to`属性。
 
 ### displayAfterCreate
 
@@ -206,202 +431,28 @@ useSimpleWindow('标题', <div>窗体</div>, { resizeMode: RESIZE_MODE.RESIZE_ON
 - 默认值：`true`
 - 描述：按`Esc`键关闭窗口
 
-## 窗口事件
-
----
-
-可在窗口实例上监听事件，例如：
-
+### menus
+- 类型：`Array<SimpleWindowMenu>`
+```typescript
+interface SimpleWindowMenu {
+  label?: string
+  handler: (win: BlankWindow) => any
+}
+```
+- 描述：自定义的菜单列表，仅适用于[useSimpleWindow](/api#useSimpleWindow)
 ```typescript
 import { useSimpleWindow } from '@dongls/xwindow'
 
-const instance = useSimpleWindow('标题', <div>窗体</div>)
-
-// 所有事件的类型都为WindowEvent
-instance.on('created', event => console.log(event))
-instance.on('close', event => console.log(event))
-
-// 事件对象
-class WindowEvent<T = BlankWindow, P = any> {
-  /** 事件类型 */
-  type: EventType;
-  /** 事件是否被阻止继续执行 */
-  stopped: boolean;
-  /** 是否已取消默认行为 */
-  defaultPrevented: boolean;
-  /** 事件触发窗口实例 */
-  instance: T;
-  /** 事件的参数 */
-  detail?: P;
-  /** 阻止事件继续执行 */
-  stop(): void;
-  /** 阻止事件默认行为 */
-  preventDefault(): void;
-}
-```
-
-所有窗口事件请参照以下表格。 如果需要取消事件默认行为，请调用传入事件的对象`event.preventDefault()`方法实现。
-
-<Events/>
-
-## 窗口状态
-
----
-
-窗口的状态信息，该对象为响应式对象，请谨慎修改。
-
-```typescript
-interface WindowState {
-  /** 是否显示窗口 */
-  visible: boolean
-  /** 窗口实际宽度 */
-  offsetWidth: number
-  /** 窗口实际高度 */
-  offsetHeight: number
-  /** 窗口距容器顶部距离 */
-  offsetTop: number
-  /** 窗口距容器左侧距离 */
-  offsetLeft: number
-  /** 窗口是否聚焦 */
-  focused: boolean
-  /** 窗口是否被固定 */
-  pinned: boolean
-  /** 窗口层级 */
-  zIndex: number
-  /** 窗口模式 */
-  windowMode: number
-}
-```
-
-## 窗口实例
-
----
-
-窗口实例都是`BlankWindow`对象，你可以通过窗口实例操作窗口行为。可以通过以下几种方式获取到窗口实例：
-
-```typescript
-import { defineComponent } from 'vue'
-import { useSimpleWindow, useWindowApi } from '@dongls/xwindow'
-
-// 函数式API的返回值就是一个窗口实例
-const instance = useSimpleWindow('标题', <div>窗体</div>)
-
-// 可以在窗体组件中获取窗口实例
-const WindowBody = defineComponent({
-  setup(){
-    const instance = useWindowApi()
-    return {}
-  }
-})
-
-// 可以通过函数返回窗体，窗口实例会作为参数传入
-useSimpleWindow('标题', (instance) => {
-  return <div>窗体</div>
+useSimpleWindow('标题', <div>内容</div>, {
+  menus: [
+    {
+      label: '自定义菜单',
+      handler: () => alert('点击事件'),
+    }
+  ]
 })
 ```
 
-有关`BlankWindow`的说明，请参照以下类型定义：
+<div class="doc-example"><SimpleWindowMenu/></div>
 
-```typescript
-interface ComponentApi {
-  /** 获取窗口顶层DOM对象 */
-  getElement(): HTMLElement | undefined
-  /** 获取组件当前渲染状态 */
-  getRenderState(): number
-  /** 获取组件样式 */
-  useCssModule(): Record<string, string>
-  /** 获取窗口菜单 */
-  useMenus(): number[]
-}
-
-class Emitter<T = any> {
-  /** 监听事件 */
-  on(type: EventType, listener: EventListener<T>): this
-  /** 监听事件，仅生效一次 */
-  once(type: EventType, listener: EventListener<T>): this
-  /** 取消事件监听 */
-  off(type: EventType, listener: EventListener<T>, delay?: boolean): this
-  /** 触发一个事件 */
-  dispatch(event: WindowEvent): WindowEvent<any, any>
-  /** 清空所有事件监听函数 */
-  cleanup(): void
-}
-
-class BlankWindow extends Emitter<BlankWindow> {
-  /** 窗口id，自动生成 */
-  readonly id: number
-  /** 窗口类型 */
-  type: WindowType
-  /** 窗口选项 */
-  options: WindowOptions
-  /** 窗体内容 */
-  body?: WindowBody
-  /** 窗口状态，组件挂载后可用 */
-  state: WindowState | null
-  /** 是否创建窗口 */
-  created: boolean
-  /** 窗口是否被销毁 */
-  destroyed: boolean
-  /** 组件API, 组件挂载后可用 */
-  component: ComponentApi | null | undefined
-
-  /** 窗口组件根元素的id */
-  get wid(): string
-  /** 窗口组件是否已创建 */
-  get isReady(): boolean
-  /** 是否允许窗口拖拽 */
-  get allowDrag(): boolean
-  /** 顶部可拖拽区域，默认只有顶部32px以内可以拖动 */
-  get allowDragArea(): number
-  /** 窗口是否已最大化 */
-  get isMaximize(): boolean
-  /** 是否为固定层级的窗口 */
-  get isFixedZIndex(): boolean
-  /** 窗口的层级 */
-  get zIndex(): number
-
-  /** 创建一个事件对象 */
-  createEvent(type: EventType): WindowEvent<this, any>
-  /** 等待窗口组件创建完成 */
-  ready(): Promise<unknown>
-  /** 显示窗口 */
-  show(): void
-  /**
-   * 关闭窗口
-   * @param {boolean} forced - 是否强制关闭窗口
-   */
-  close(forced?: boolean): boolean
-  /** 销毁窗口 */
-  destroy(): void
-  /** 获取窗口根元素 */
-  getElement(): HTMLElement | undefined
-  /** 获取窗口菜单，返回菜单类型数组 */
-  useMenus(): number[]
-  /** 获取组件的样式 */
-  useCssModule(): Record<string, string>
-  /** 窗口聚焦 */
-  focus(): void
-  /** 切换窗口最大化 */
-  toggleMaximize(): void
-  /** 固定窗口 */
-  pin(): void
-  /** 取消窗口固定 */
-  unpin(): void
-  /** 切换窗口的固定状态 */
-  togglePin(): void
-  /** 注册事件处理函数, 用于窗口和组件之间的交互 */
-  useHandle(type: HandlerType, callback: Function): void
-  /** 调用注册的confirm钩子并关闭窗口 */
-  dispatchConfirm(): Promise<void>
-  /** 确认并关闭窗口 */
-  confirm(data?: any): void
-  /**  调用注册的cancel钩子并关闭窗口 */
-  dispatchCancel(): Promise<void>
-  /** 取消并关闭窗口 */
-  cancel(forced?: boolean, data?: any): void
-  /** 将处理confirm和cancel钩子的逻辑通过Promise对象封装*/
-  promisify()
-}
-```
-
-[Teleport]: https://cn.vuejs.org/guide/built-ins/teleport.html
+<Footer path="/api"/>

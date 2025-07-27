@@ -1,4 +1,4 @@
-import type { CloseTopOptions, UseWindowParams } from '../model/Common'
+import type { CloseTopOptions, UseWindowOptions } from '../model/Common'
 
 import { render, h, type App } from 'vue'
 import { WINDOW_TYPE } from '../model/Constant'
@@ -90,8 +90,8 @@ function createIsolateWindow(instance: BlankWindow) {
   })
 }
 
-export function createWindow(newOption: UseWindowParams) {
-  const instance = newOption.type === WINDOW_TYPE.SIMPLE_WINDOW ? SimpleWindow.create(newOption) : BlankWindow.create(newOption)
+export function createWindow(options: UseWindowOptions) {
+  const instance = options.type === WINDOW_TYPE.SIMPLE_WINDOW ? SimpleWindow.create(options) : BlankWindow.create(options)
 
   // 已注册`WindowManager`组件
   if (WINDOW_CONTEXT.isMounted) {
@@ -189,12 +189,14 @@ export function hasOpenWindow() {
 
 export function useWindowManager() {
   return {
+    cleanup,
     closeTopWindow,
+    focusTopWindow,
+    focusWindow,
     getTopWindow,
     getTopZIndex,
+    getWindow,
     getWindowCount,
-    getZIndex,
-    setFocusedWindow,
-    cleanup,
+    hasOpenWindow,
   }
 }

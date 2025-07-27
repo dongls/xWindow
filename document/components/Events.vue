@@ -1,18 +1,21 @@
 <template>
   <table>
     <colgroup>
-      <col width="160" />
-      <col width="150" />
+      <col width="30" />
+      <col width="130" />
+      <col width="140" />
     </colgroup>
     <thead>
       <tr>
+        <th>#</th>
         <th>事件</th>
         <th>默认行为</th>
         <th>说明</th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="row in events" :key="row.prop">
+      <tr v-for="(row, index) in events" :key="row.prop">
+        <td>{{ index + 1 }}</td>
         <td>{{ row.type }}</td>
         <td>{{ row.prevent ?? '--' }}</td>
         <td>{{ row.desc }}</td>

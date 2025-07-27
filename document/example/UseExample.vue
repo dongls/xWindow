@@ -1,10 +1,8 @@
 <template>
   <button type="button" class="btn btn-small" @click="showModal">审批</button>
-  <div class="approval-output">
-    <template v-if="result">
-      <strong>操作结果：</strong>
-      <pre>{{ result }}</pre>
-    </template>
+  <div :class="classes.output" v-if="result">
+    <strong>操作结果：</strong>
+    <pre>{{ result }}</pre>
   </div>
 </template>
 
@@ -28,3 +26,17 @@ async function showModal() {
   result.value = value
 }
 </script>
+<style module="classes">
+.output {
+  margin-top: 4px;
+  display: flex;
+}
+
+.output pre {
+  margin: 0;
+  flex: 1;
+  width: 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+</style>
