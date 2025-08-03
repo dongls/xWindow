@@ -14,7 +14,7 @@
         <span>Copyright © 2023-present dongls</span>
       </div>
     </aside>
-    <main :class="{ [classes.main]: true, [classes.withGuide]: showGuide }" @jump.native.stop="onFooterJump">
+    <main :class="{ [classes.main]: true, [classes.withGuide]: showGuide }">
       <div :class="classes.rightHeader"><Menus /></div>
       <div :class="classes.scroll" ref="scroll" @click.native.stop="onClick" @scroll="handleScroll">
         <Content :path="path" :hash="hash" :key="path" ref="contentApi" />
@@ -30,7 +30,7 @@ import Guide from './components/Guide.vue'
 import docs from './docs/index'
 import Content, { type ContentApi } from './docs/Content.vue'
 
-import { ref, useCssModule, computed } from 'vue'
+import { ref, useCssModule, computed, nextTick } from 'vue'
 import { useWindowApi, useIcons, WindowMenus } from '@dongls/xwindow'
 import { IconGithub } from './svg'
 import { throttle } from './utils/lang'
@@ -110,14 +110,11 @@ function onClick(event: MouseEvent) {
   }
 }
 
-function onFooterJump(event: CustomEvent) {
-  const path = event.detail
-  jump(path, '')
-}
-
-function jump(p: string, h: string) {
+async function jump(p: string, h: string) {
   path.value = p
   hash.value = decodeURIComponent(h)
+
+  await nextTick()
 
   if (h) contentApi.value?.scrollTo(hash.value)
   else contentApi.value?.scrollTop()

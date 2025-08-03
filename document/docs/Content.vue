@@ -29,18 +29,19 @@ export default defineComponent({
     const root = ref<HTMLElement>()
 
     async function scrollTo(hash: string) {
-      await nextTick()
-
       const element = document.querySelector(hash)
       if (element == null) return scrollTop()
 
       element.scrollIntoView({ behavior: 'smooth' })
     }
+
     async function scrollTop() {
-      await nextTick()
       if (root.value == null) return
 
-      root.value.scrollTop = 0
+      const scroll = root.value.parentElement
+      if (scroll == null) return
+
+      scroll.scrollTop = 0
     }
 
     expose({ scrollTo, scrollTop })

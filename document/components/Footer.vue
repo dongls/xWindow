@@ -4,11 +4,11 @@
       <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 0 24 24">
         <path d="M15,19c-0.3,0-0.5-0.1-0.7-0.3l-6-6c-0.4-0.4-0.4-1,0-1.4l6-6c0.4-0.4,1-0.4,1.4,0s0.4,1,0,1.4L10.4,12l5.3,5.3c0.4,0.4,0.4,1,0,1.4C15.5,18.9,15.3,19,15,19z"></path>
       </svg>
-      <a :href="prev.path" @click.prevent="jump($event, prev)">{{ prev.name }}</a>
+      <a :href="prev.path">{{ prev.name }}</a>
     </div>
     <div :class="classes.space" />
     <div v-if="next" :class="classes.next">
-      <a :href="next.path" @click.prevent="jump($event, next)">{{ next.name }}</a>
+      <a :href="next.path">{{ next.name }}</a>
       <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 0 24 24">
         <path d="M9,19c-0.3,0-0.5-0.1-0.7-0.3c-0.4-0.4-0.4-1,0-1.4l5.3-5.3L8.3,6.7c-0.4-0.4-0.4-1,0-1.4s1-0.4,1.4,0l6,6c0.4,0.4,0.4,1,0,1.4l-6,6C9.5,18.9,9.3,19,9,19z"></path>
       </svg>
@@ -40,13 +40,6 @@ const next = computed(() => {
 
   return docs[index + 1]
 })
-
-function jump(event: MouseEvent, doc: any) {
-  const target = event.target as HTMLElement
-  if (target == null) return
-
-  target.dispatchEvent(new CustomEvent('jump', { detail: doc.path, bubbles: true }))
-}
 </script>
 
 <style module="classes">
