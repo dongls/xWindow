@@ -37,6 +37,7 @@ export default defineComponent({
       element.scrollIntoView({ behavior: 'smooth' })
     }
     async function scrollTop() {
+      await nextTick()
       if (root.value == null) return
 
       root.value.scrollTop = 0
