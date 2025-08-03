@@ -1,6 +1,6 @@
 # xWindow
 
-基于[Vue][vue]的函数式弹窗组件库。
+xWindow是一个简单易用的弹窗组件库
 
 ## 安装
 
@@ -17,7 +17,7 @@ pnpm i @dongls/xwindow
 ## 兼容性
 
 - 浏览器至少实现了`ES2015`标准
-- `Vue`版本高于3.3
+- [Vue][vue]版本高于3.3
 
 ## License
 

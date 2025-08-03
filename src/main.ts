@@ -6,8 +6,6 @@ import type { PluginOptions } from './model/Common'
 import { VERSION } from './model/Constant'
 import { useConfig, registerPreset, registerZIndexManager } from './api/store'
 import { useAppContext, useEscEvent } from './api/manager'
-import { BlankWindowComponent } from './components/BlankWindow'
-import { SimpleWindowComponent } from './components/SimpleWindow'
 import { WindowMenus } from './components/WindowMenus'
 import { WindowManager } from './components/WindowManger'
 
@@ -18,7 +16,7 @@ function install(app: App, options?: PluginOptions) {
 }
 
 const version = VERSION
-const xWindow = { install, version, registerPreset, registerZIndexManager, BlankWindow: BlankWindowComponent, SimpleWindow: SimpleWindowComponent, WindowManager, WindowMenus }
+const xWindow = { install, version, registerPreset, registerZIndexManager }
 
 export { RENDER_STATES, RESIZE_MODE, WINDOW_MODES } from './model/Constant'
 export { BlankWindow, SimpleWindow } from './model/Windows'
