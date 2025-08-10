@@ -143,10 +143,11 @@ const ExampleBody = defineComponent({
 
 function getTimestamp() {
   const now = new Date()
+  const hour = now.getHours().toString().padStart(2, '0')
   const minus = now.getMinutes().toString().padStart(2, '0')
   const seconds = now.getSeconds().toString().padStart(2, '0')
   const msec = now.getMilliseconds().toString().padStart(4, '0')
-  return `${minus}:${seconds}.${msec}`
+  return `${hour}:${minus}:${seconds}.${msec}`
 }
 
 function createWindow() {
