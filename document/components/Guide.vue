@@ -160,6 +160,8 @@ watch(() => props.top, updateCurrent)
   flex-shrink: 0;
   font-size: 12px;
   margin-right: 10px;
+  max-height: calc(100% - 32px);
+  overflow: hidden;
 }
 
 .header {
@@ -180,10 +182,6 @@ watch(() => props.top, updateCurrent)
   white-space: nowrap;
   color: rgba(60, 60, 60, 0.8);
   position: relative;
-}
-
-.anchor + .anchor {
-  margin-top: 2px;
 }
 
 .active {

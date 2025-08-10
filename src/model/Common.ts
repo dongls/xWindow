@@ -155,6 +155,10 @@ export interface ComponentApi {
   useCssModule(): Record<string, string>
   /** 获取窗口菜单 */
   useMenus(): number[]
+  /** 显示加载提示 */
+  showLoading(text?: string): void
+  /** 隐藏加载提示 */
+  hideLoading(): void
 }
 
 export interface CloseTopOptions {
@@ -168,9 +172,9 @@ export interface WindowZIndexManager {
   getNextZIndex(): number
 }
 
-/** @deprecated */
+/** @deprecated use `UseWindowOptions` instead */
 export type UseWindowParams = UseWindowOptions
-/** @deprecated */
+/** @deprecated use `UseSimpleWindowOptions` instead */
 export type UseSimpleWindowParams = UseSimpleWindowOptions
-/** @deprecated */
+/** @deprecated use `UseBlankWindowOptions` instead */
 export type UseBlankWindowParams = UseBlankWindowOptions

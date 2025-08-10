@@ -1,5 +1,3 @@
-import './styles/global.scss'
-
 import type { App } from 'vue'
 import type { PluginOptions } from './model/Common'
 

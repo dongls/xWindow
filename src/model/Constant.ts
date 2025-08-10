@@ -4,14 +4,15 @@ export const INJECTION_WINDOW_API = Symbol()
 export const PINNED_ZINDEX = Math.floor(Number.MAX_SAFE_INTEGER / 10) - 10000
 
 export const CLASS = Object.freeze({
-  WINDOW: 'x-window',
-  SIMPLE_WINDOW: 'x-simple-window',
-  TRANSITION: 'x-window-is-transition',
-  MENU: 'x-window-is-menu',
-  FOCUSED: 'x-window-is-focused',
-  MAXIMIZE: 'x-window-is-maximize',
-  HEADER: 'x-window-header',
-  BODY: 'x-window-body',
+  WINDOW: 'xwindow',
+  SIMPLE_WINDOW: 'xindow-is-simplewindow',
+  TRANSITION: 'xwindow-is-transition',
+  MENU: 'xwindow-is-menu',
+  SIMPLE_WINDOW_MENU:'xwindow-is-simplewindow-menu',
+  FOCUSED: 'xwindow-is-focused',
+  MAXIMIZE: 'xwindow-is-maximize',
+  HEADER: 'xwindow-header',
+  BODY: 'xwindow-body',
 })
 
 export const POSITION_FLAGS = Object.freeze({

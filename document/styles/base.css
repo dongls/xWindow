@@ -3,13 +3,13 @@
 
   --doc-text-color-regular: #191b1f;
   --doc-text-color-secondary: #555;
-  --doc-text-color-bold: rgb(0, 0, 0);
+  --doc-text-color-bold: #000;
   --doc-text-color-gray: #808080;
   --doc-code-color: #c6303e;
 
-  --doc-head-text-color: rgb(33, 36, 51);
+  --doc-head-text-color: #212433;
 
-  --doc-link-color: rgb(0, 123, 255);
+  --doc-link-color: #007bff;
   --doc-link-hover-bg-color: rgba(0, 76, 252, 0.1);
 
   --doc-main-width: 1180px;
@@ -56,21 +56,8 @@ body {
   font-size: 14px;
   line-height: 24px;
   color: var(--doc-text-color-regular);
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    Helvetica Neue,
-    PingFang SC,
-    Hiragino Sans GB,
-    Cascadia Code,
-    Menlo,
-    Monaco,
-    Consolas,
-    Microsoft YaHei,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji,
-    Segoe UI Symbol;
+  /* prettier-ignore */
+  font-family: -apple-system,BlinkMacSystemFont,"Helvetica Neue","PingFang SC","Microsoft YaHei","Source Han Sans SC","Noto Sans CJK SC","WenQuanYi Micro Hei","MiSans L3",sans-serif;
 }
 
 [hidden] {
@@ -80,11 +67,10 @@ body {
 p {
   margin-top: 8px;
   margin-bottom: 8px;
-  line-height: 24px;
 }
 
 pre {
-  margin: 10px 0;
+  margin: 8px 0;
 }
 
 h1,
@@ -104,11 +90,11 @@ h1 {
 }
 
 h2 {
-  font-size: 18px;
+  font-size: 20px;
 }
 
 h3 {
-  font-size: 14px;
+  font-size: 16px;
 }
 
 ul {
@@ -132,7 +118,7 @@ ul > li::before {
   left: -16px;
   width: 4px;
   height: 4px;
-  background-color: #333;
+  background-color: #666;
   border-radius: 50%;
   transition: background-color ease 0.3s;
 }
@@ -144,6 +130,10 @@ ol {
 
 ol > li + li {
   margin-top: 4px;
+}
+
+ol li::marker {
+  color: #666;
 }
 
 code:not(.hljs-code) {
@@ -171,14 +161,6 @@ table {
   border-collapse: collapse;
 }
 
-table th {
-  text-align: left;
-}
-
-table thead {
-  /* background-color: var(--doc-background-color); */
-}
-
 table tbody tr + tr {
   border-top: 1px solid var(--doc-border-color);
 }
@@ -190,8 +172,8 @@ table tbody tr:last-child {
 
 table td,
 table th {
+  text-align: left;
   padding: 6px 4px;
-  line-height: 24px;
 }
 
 table tbody tr {

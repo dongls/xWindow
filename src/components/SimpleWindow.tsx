@@ -1,4 +1,4 @@
-import classes from '../styles/window.module.scss'
+import classes from '../styles/window.module.css'
 
 import type { SimpleWindowMenu } from '../model/Common'
 import type { BlankWindow } from '../model/Windows'
@@ -39,8 +39,9 @@ export const SimpleWindowComponent = defineComponent({
     }
 
     function createMenu(menu: SimpleWindowMenu) {
+      const className = [classes.simpleWindowHeaderMenu, CLASS.SIMPLE_WINDOW_MENU]
       return (
-        <button type="button" class="x-window-text-menu" onClick={callMenuHandler.bind(null, menu)}>
+        <button type="button" class={className} onClick={callMenuHandler.bind(null, menu)}>
           {menu.label}
         </button>
       )
@@ -51,14 +52,14 @@ export const SimpleWindowComponent = defineComponent({
         const external = instance.options.menus ?? []
         return (
           <div class={classes.simpleWindow}>
-            <div class={[classes.header, CLASS.HEADER]}>
+            <header class={[classes.header, CLASS.HEADER]}>
               {createIcon(instance)}
               <div class={classes.title}>{instance.options.title ?? '新窗口'}</div>
               <div class={classes.menus} onMousedown={stopPropagation}>
                 {external.map(menu => createMenu(menu))}
                 <WindowMenus instance={instance} />
               </div>
-            </div>
+            </header>
             <div class={[classes.body, CLASS.BODY]}>
               <WindowBody body={instance.body} key={instance.wid} />
             </div>

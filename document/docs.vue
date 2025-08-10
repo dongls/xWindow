@@ -73,9 +73,11 @@ function toGitHub() {
   window.open('https://github.com/dongls/xWindow')
 }
 
-function navigate(doc: any) {
+async function navigate(doc: any) {
   path.value = doc.path
   hash.value = undefined
+  await nextTick()
+  contentApi.value?.scrollTop()
 }
 
 function onClick(event: MouseEvent) {

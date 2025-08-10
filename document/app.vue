@@ -39,11 +39,11 @@ body {
   background-color: #fff;
 }
 
-.xwindow-doc .x-window-body {
+.xwindow-doc .xwindow-body {
   border: 1px solid var(--xwindow-color-primary);
 }
 
-.xwindow-doc .x-window-body::after {
+.xwindow-doc .xwindow-body::after {
   position: absolute;
   top: 0;
   right: 0;

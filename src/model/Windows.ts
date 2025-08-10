@@ -41,6 +41,7 @@ export class BlankWindow extends Emitter<BlankWindow> {
   private draggable!: Draggable
   private resizable!: Resizable
   private handles: Partial<Record<HandlerType, Function>> = {}
+  private readyPromis?: Promise<any>
 
   dragstart: any
   resizestart: any
@@ -160,17 +161,21 @@ export class BlankWindow extends Emitter<BlankWindow> {
       if (typeof this.CREATE_RESOLVE == 'function') this.CREATE_RESOLVE()
       delete this.CREATE_REJECT
       delete this.CREATE_RESOLVE
+      delete this.readyPromis
     })
   }
 
   /** 等待窗口组件创建完成 */
   ready(): Promise<void> {
     if (this.created === true) return Promise.resolve()
+    if (this.readyPromis) return this.readyPromis
 
-    return new Promise((resolve, reject) => {
+    this.readyPromis = new Promise((resolve, reject) => {
       this.CREATE_RESOLVE = resolve
       this.CREATE_REJECT = reject
     })
+
+    return this.readyPromis
   }
 
   /** 显示窗口 */
@@ -352,6 +357,16 @@ export class BlankWindow extends Emitter<BlankWindow> {
       this.once('confirm', event => resolve(event.detail))
       this.once('cancel', event => reject(event.detail))
     })
+  }
+
+  /** 显示加载动画 */
+  showLoading(text?: string) {
+    this.component?.showLoading(text)
+  }
+
+  /** 隐藏加载动画 */
+  hideLoading() {
+    this.component?.hideLoading()
   }
 }
 

@@ -1,12 +1,29 @@
+:root {
+  --xwindow-color-primary: #ebeef0;
+  --xwindow-color-danger: #e81123;
+  --xwindow-border-radius: 6px;
+  --xwindow-logo-width: 38px;
+
+  --xwindow-header-bg-color: var(--xwindow-color-primary);
+  --xwindow-header-color: #333;
+  --xwindow-header-height: 31px;
+
+  --xwindow-body-bg-color: #fff;
+  --xwindow-border-color: var(--xwindow-color-primary);
+  --xwindow-border-highlight-color: var(--xwindow-color-primary);
+
+  --xwindow-box-shadow: 1px 1px 18px rgba(0, 0, 0, 0.2);
+  --xwindow-mask-bg-color: rgba(0, 0, 0, 0.15);
+}
+
 .window {
   box-sizing: border-box;
   position: fixed;
-  font-size: 14px;
-  box-shadow: var(--xiwndow-box-shadow);
+  box-shadow: var(--xwindow-box-shadow);
   border-radius: var(--xwindow-border-radius);
 }
 
-:global(.x-window-is-transition) .window{
+:global(.xwindow-is-transition) .window {
   transition-property: top, left, width, height;
   transition-duration: 0.15s;
   transition-timing-function: ease-in-out;
@@ -44,7 +61,7 @@
 
 .main {
   position: relative;
-  z-index: 8;  
+  z-index: 8;
   height: 100%;
 }
 
@@ -66,7 +83,7 @@
   align-items: center;
   border: 1px solid var(--xwindow-border-color);
   border-bottom: none;
-  border-radius:  var(--xwindow-border-radius) var(--xwindow-border-radius) 0 0;
+  border-radius: var(--xwindow-border-radius) var(--xwindow-border-radius) 0 0;
 }
 
 .title {
@@ -97,7 +114,7 @@
   border-top: none;
 }
 
-:global(.x-simple-window) .body{
+:global(.xwidow-is-simplewindow) .body {
   border-radius: 0 0 var(--xwindow-border-radius) var(--xwindow-border-radius);
 }
 
@@ -109,8 +126,8 @@
 }
 
 .menu {
-  composes: global(x-window-is-menu);
-  
+  composes: global(xwindow-is-menu);
+
   position: relative;
   border: none;
   padding: 0;
@@ -121,7 +138,9 @@
   height: var(--xwindow-header-height);
   text-align: center;
   border-radius: 0px;
-  transition: color ease 0.15s, background-color ease 0.15s;
+  transition:
+    color ease 0.15s,
+    background-color ease 0.15s;
 
   &::after {
     content: '';
@@ -141,7 +160,7 @@
     opacity: 0.1;
   }
 
-  &:last-child:hover::after{
+  &:last-child:hover::after {
     border-radius: 0 var(--xwindow-border-radius) 0 0;
   }
 
@@ -160,18 +179,18 @@
   }
 }
 
-.maximize .menu:last-child:hover::after{
+.maximize .menu:last-child:hover::after {
   border-radius: 0 !important;
 }
 
-.maximize .header{
+.maximize .header {
   border-radius: 0 !important;
   border-top: none !important;
   border-left: none !important;
   border-right: none !important;
 }
 
-.maximize .body{
+.maximize .body {
   border-radius: 0 !important;
   border-bottom: none !important;
   border-left: none !important;
@@ -294,8 +313,80 @@
   background-color: var(--xwindow-mask-bg-color);
 }
 
-.simpleWindow{
+.simpleWindow {
   height: 100%;
   display: flex;
   flex-flow: column nowrap;
+}
+
+.simpleWindow .body {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.simpleWindowHeaderMenu {
+  position: relative;
+  border: none;
+  margin: 0;
+  background-color: transparent;
+  outline: none;
+  min-width: 52px;
+  height: var(--xwindow-header-height);
+  text-align: center;
+  border-radius: 0px;
+  padding: 0 12px;
+  transition:
+    color ease 0.15s,
+    background-color ease 0.15s;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #fff;
+    opacity: 0;
+    z-index: 1;
+    transition: all ease 0.15s;
+  }
+
+  &:hover::after {
+    background-color: #000;
+    opacity: 0.1;
+  }
+}
+
+.loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+  background-color: #fff;
+
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader {
+  width: fit-content;
+  font-size: 24px;
+  padding-bottom: 8px;
+  background: linear-gradient(currentColor 0 0) 0 100%/0% 2px no-repeat;
+  animation: loaderAnimation 2s linear infinite;
+}
+
+.loader:before {
+  content: attr(data-text);
+}
+
+@keyframes loaderAnimation {
+  to {
+    background-size: 100% 2px;
+  }
 }

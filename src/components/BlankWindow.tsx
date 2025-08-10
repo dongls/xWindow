@@ -1,4 +1,4 @@
-import classes from '../styles/window.module.scss'
+import classes from '../styles/window.module.css'
 
 import type { ComponentApi, WindowState } from '../model/Common'
 import type { VNode } from 'vue'
@@ -45,6 +45,8 @@ export const BlankWindowComponent = defineComponent({
       windowMode: WINDOW_MODES.NONE,
     })
 
+    const loading: { show: boolean; text?: string } = reactive({ show: false })
+
     const windowStyle = computed(() => {
       const options = props.instance.options
 
@@ -61,7 +63,7 @@ export const BlankWindowComponent = defineComponent({
         top: winState.offsetTop + 'px',
         left: winState.offsetLeft + 'px',
         width: winState.offsetWidth + 'px',
-        height: renderState.value == RENDER_STATES.INIT ? undefined : winState.offsetHeight + 'px',
+        height: winState.offsetHeight + 'px',
         zIndex: options.mask ? undefined : props.instance.zIndex,
       }
     })
@@ -71,7 +73,6 @@ export const BlankWindowComponent = defineComponent({
       const instance = props.instance
 
       if (instance.type === WINDOW_TYPE.SIMPLE_WINDOW) className.push(CLASS.SIMPLE_WINDOW)
-
       if (renderState.value == RENDER_STATES.INIT) className.push(classes.init)
       if (winState.windowMode == WINDOW_MODES.MAXIMIZE) className.push(classes.maximize, CLASS.MAXIMIZE)
       if (winState.focused) className.push(classes.focused, CLASS.FOCUSED)
@@ -105,6 +106,8 @@ export const BlankWindowComponent = defineComponent({
       getRenderState,
       useCssModule: useCssClass,
       useMenus,
+      showLoading,
+      hideLoading,
     }
 
     function getElement() {
@@ -202,11 +205,6 @@ export const BlankWindowComponent = defineComponent({
       instance.dispatch(event)
     }
 
-    function createBody() {
-      const instance = props.instance
-      return <WindowBody body={instance.body} key={instance.wid} />
-    }
-
     function createResizeNodes(mode: number, resizeStart: any) {
       if (mode == RESIZE_MODE.DISABLED) return null
 
@@ -217,6 +215,26 @@ export const BlankWindowComponent = defineComponent({
           onPointerdown: resizeStart,
         })
       })
+    }
+
+    function showLoading(text = 'Loading...') {
+      loading.show = true
+      loading.text = text
+    }
+
+    function hideLoading() {
+      loading.show = false
+      loading.text = undefined
+    }
+
+    function createLoading() {
+      if (loading.show !== true) return null
+
+      return (
+        <div class={classes.loading}>
+          <div data-text={loading.text} class={classes.loader}/>
+        </div>
+      )
     }
 
     provide(INJECTION_WINDOW_API, props.instance)
@@ -233,7 +251,7 @@ export const BlankWindowComponent = defineComponent({
 
       const main = (
         <div class={classes.main} onDblclick={onClickHeader}>
-          {typeof slots.default == 'function' ? slots.default(componentApi) : createBody()}
+          {typeof slots.default == 'function' ? slots.default(componentApi) : <WindowBody body={instance.body} key={instance.wid} />}
         </div>
       )
 
@@ -247,7 +265,7 @@ export const BlankWindowComponent = defineComponent({
       }
 
       const resize = createResizeNodes(options.resizeMode, instance.resizestart)
-      let component = h('div', data, [main, resize])
+      let component = h('div', data, [main, resize, createLoading()])
       if (options.mask === true) {
         const style = { zIndex: instance.zIndex }
         // prettier-ignore

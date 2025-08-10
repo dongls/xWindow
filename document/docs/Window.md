@@ -107,6 +107,10 @@
     useCssModule(): Record<string, string>
     /** 获取窗口菜单 */
     useMenus(): number[]
+    /** 显示加载遮罩层 */
+    showLoading(text?: string): void
+    /** 隐藏加载遮罩层 */
+    hideLoading(): void
   }
   ```
 - 描述：窗口组件对外暴露的`api`，组件创建后可以用。需要注意的是，`getElement()`方法需要组件挂载后才能获取到DOM元素。
@@ -314,6 +318,20 @@ function promisify<T = any>(): Promise<T>
 
 - 描述: 将处理`confirm`和`cancel`钩子的逻辑通过`Promise`对象封装。
 
+### showLoading()
+- 类型: `function`
+```typescript
+function showLoading(text?:string): void
+```
+- 描述: 显示加载提示。此方法直接调用`ComponentApi.showLoading()`，需要等待组件创建完成。
+
+### hideLoading()
+- 类型: `function`
+```typescript
+function hideLoading(): void
+```
+- 描述: 隐藏加载提示。此方法直接调用`ComponentApi.hideLoading()`。
+
 ## SimpleWindow
 `SimpleWindow`继承自[BlankWindow](/window#BlankWindow)，用于创建一个带标题的窗口。
 
@@ -323,6 +341,7 @@ function promisify<T = any>(): Promise<T>
 function updateMenus(menus: SimpleWindowMenu[]): void
 ```
 - 描述: 更新窗口菜单。
+
 
 ## 窗口实例
 

@@ -1,5 +1,4 @@
 /*
-
 Atom One Light by Daniel Gamage
 Original One Light Syntax theme from https://github.com/atom/one-light-syntax
 
@@ -15,7 +14,6 @@ hue-5:   #e45649
 hue-5-2: #c91243
 hue-6:   #986801
 hue-6-2: #c18401
-
 */
 
 pre.hljs {
@@ -36,6 +34,7 @@ pre.hljs {
   padding: 8px 12px;
   display: block;
   font-size: 14px;
+  line-height: 20px;
   font-family: Consolas, monospace;
 }
 
