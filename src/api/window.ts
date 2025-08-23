@@ -1,7 +1,7 @@
-import type { UseBlankWindowOptions, UseWindowOptions, WindowBody, UseSimpleWindowOptions } from '../model/Common'
+import type { UseBlankWindowOptions, UseWindowOptions, WindowBody, UseSimpleWindowOptions, UseTabsWindowOptions, TabsWindowBody } from '../model/Common'
 
 import { WINDOW_TYPE } from '../model/Constant'
-import { BlankWindow, SimpleWindow } from '../model/Windows'
+import { BlankWindow, SimpleWindow, TabsWindow } from '../model/Windows'
 import { createWindow } from './manager'
 import { PLUGIN_OPTIONS } from './store'
 
@@ -82,6 +82,15 @@ export function useSimpleWindow(options: Partial<UseSimpleWindowOptions>): Simpl
 export function useSimpleWindow(...args: any[]): SimpleWindow {
   const o: any = parseWindowOptions(args) ?? {}
   o.type = WINDOW_TYPE.SIMPLE_WINDOW
+  return useWindowImpl(o) as any
+}
+
+export function useTabsWindow(title: string, body: TabsWindowBody): TabsWindow
+export function useTabsWindow(title: string, body: TabsWindowBody, options: UseTabsWindowOptions): TabsWindow
+export function useTabsWindow(options: UseTabsWindowOptions): TabsWindow
+export function useTabsWindow(...args: any[]): TabsWindow {
+  const o: any = parseWindowOptions(args) ?? {}
+  o.type = WINDOW_TYPE.TABS_WINDOW
   return useWindowImpl(o) as any
 }
 

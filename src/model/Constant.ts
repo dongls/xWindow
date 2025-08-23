@@ -63,6 +63,7 @@ export const RENDER_STATES = Object.freeze({
 export const WINDOW_TYPE = Object.freeze({
   SIMPLE_WINDOW: 'SimpleWindow',
   BLANK_WINDOW: 'BlankWindow',
+  TABS_WINDOW: 'TabsWindow',
 })
 
 export const MENU_TYPE = Object.freeze({

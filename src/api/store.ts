@@ -1,5 +1,5 @@
 import type { PluginOptions, WindowContext, WindowPreset, WindowZIndexManager } from '../model/Common'
-import type { BlankWindow, SimpleWindow } from '../model/Windows'
+import type { BlankWindow, SimpleWindow, TabsWindow } from '../model/Windows'
 
 import { inject, ref } from 'vue'
 import { INJECTION_WINDOW_API } from '../model/Constant'
@@ -43,6 +43,10 @@ export function useWindowApi() {
 
 export function useSimpleWindowApi() {
   return inject<SimpleWindow>(INJECTION_WINDOW_API)
+}
+
+export function useTabsWindowApi() {
+  return inject<TabsWindow>(INJECTION_WINDOW_API)
 }
 
 function useWindowContext(): WindowContext {

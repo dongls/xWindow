@@ -17,10 +17,10 @@ const version = VERSION
 const xWindow = { install, version, registerPreset, registerZIndexManager }
 
 export { RENDER_STATES, RESIZE_MODE, WINDOW_MODES } from './model/Constant'
-export { BlankWindow, SimpleWindow } from './model/Windows'
+export { BlankWindow, SimpleWindow, TabsWindow } from './model/Windows'
 
-export { useWindowApi, registerPreset, registerZIndexManager } from './api/store'
-export { useWindow, useBlankWindow, useSimpleWindow, createSingleWindow } from './api/window'
+export { useWindowApi, registerPreset, registerZIndexManager, useSimpleWindowApi, useTabsWindowApi } from './api/store'
+export { useWindow, useBlankWindow, useSimpleWindow, createSingleWindow, useTabsWindow } from './api/window'
 export { useWindowManager, cleanup, hasOpenWindow } from './api/manager'
 export { useIcons } from './svg/index'
 

@@ -45,11 +45,13 @@
     </div>
   </section>
   <button @click="createWindow" class="btn">创建窗口</button>
+  <!-- <button @click="createTabs" class="btn">创建多页签窗口</button> -->
 </template>
 
 <script lang="tsx" setup>
+// import TabsExample from './TabsExample.vue'
 import { defineComponent, reactive, useCssModule, ref, type Ref } from 'vue'
-import { useWindowApi, useWindowManager, RESIZE_MODE, useSimpleWindow } from '@dongls/xwindow'
+import { useWindowApi, useWindowManager, RESIZE_MODE, useSimpleWindow, useTabsWindow } from '@dongls/xwindow'
 
 const PROP_EVENTS = '__WIN_EVENTS__'
 const classes = useCssModule('classes')
@@ -214,6 +216,15 @@ function changeSize(width: number, height: number) {
   winState.width = width + 'px'
   winState.height = height + 'px'
 }
+
+// function createTabs() {
+//   useTabsWindow('测试', (instance, active) => <TabsExample active={active} />, {
+//     tabs: [
+//       { label: '标签1', name: 'tab1' },
+//       { label: '标签2', name: 'tab2' },
+//     ],
+//   })
+// }
 </script>
 
 <style lang="scss" module="classes">

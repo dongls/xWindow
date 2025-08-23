@@ -1,4 +1,16 @@
-import type { WindowBody, WindowState, WindowOptions, ComponentApi, EventType, WindowType, HandlerType, SimpleWindowOptions, SimpleWindowMenu } from './Common'
+import type {
+  WindowBody,
+  WindowState,
+  WindowOptions,
+  ComponentApi,
+  EventType,
+  WindowType,
+  HandlerType,
+  SimpleWindowOptions,
+  SimpleWindowMenu,
+  TabsWindowOptions,
+  WindowTab,
+} from './Common'
 
 import { reactive } from 'vue'
 import { Emitter, WindowEvent } from './Emitter'
@@ -385,5 +397,63 @@ export class SimpleWindow extends BlankWindow {
 
   updateMenus(menus: SimpleWindowMenu[]) {
     this.options.menus = menus
+  }
+}
+
+export class TabsWindow extends BlankWindow {
+  static create(params: any) {
+    if (params instanceof TabsWindow) return params
+
+    return new TabsWindow(params)
+  }
+
+  declare options: TabsWindowOptions
+  constructor(params: any) {
+    super(params)
+
+    if (!Array.isArray(this.options.tabs)) this.options.tabs = []
+  }
+
+  addTab(tab: WindowTab, index?: number) {
+    const tabs = this.options.tabs
+    if (typeof index == 'number' && index >= 0) {
+      tabs.splice(index, 0, tab)
+      return
+    }
+
+    tabs.push(tab)
+  }
+
+  removeTab(name: string) {
+    this.options.tabs = this.options.tabs.filter(item => item.name !== name)
+  }
+
+  switchTab(name: string) {
+    const tabs = this.options.tabs
+    const tab = tabs.find(item => item.name === name)
+    if (tab == null || tab.disabled === true) return
+
+    for (const tab of this.options.tabs) {
+      if (tab.disabled === true) {
+        tab.active = false
+        continue
+      }
+
+      tab.active = tab.name === name
+    }
+  }
+
+  disableTab(name: string) {
+    const tab = this.options.tabs.find(item => item.name === name)
+    if (tab == null) return
+
+    tab.disabled = true
+  }
+
+  enableTab(name: string) {
+    const tab = this.options.tabs.find(item => item.name === name)
+    if (tab == null) return
+
+    tab.disabled = false
   }
 }

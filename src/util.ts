@@ -49,3 +49,15 @@ export function merge(target: Record<string, any>, props: Record<string, any> | 
 
   return target
 }
+
+/**
+ * 统一浏览器之间wheel事件的差异
+ * @see https://github.com/basilfx/normalize-wheel
+ * @param event - 事件对象
+ */
+export function normalizeWheel(event: WheelEvent) {
+  const { deltaX, deltaY } = event
+  const unit = event.deltaMode == 0 ? 1 : event.deltaMode == 1 ? 40 : 800
+
+  return { pixelX: deltaX * unit, pixelY: deltaY * unit }
+}

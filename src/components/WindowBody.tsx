@@ -12,6 +12,12 @@ export const WindowBody = defineComponent({
       type: [Object, Function, String, Number] as PropType<Body>,
       default: null,
     },
+    params: {
+      type: Array<any>,
+      default() {
+        return []
+      },
+    },
   },
   setup(props) {
     const instance = useWindowApi()
@@ -22,7 +28,7 @@ export const WindowBody = defineComponent({
         return null
       }
 
-      const vnode = typeof props.body == 'function' ? props.body(instance) : props.body
+      const vnode = typeof props.body == 'function' ? props.body(instance, ...props.params) : props.body
       if (vnode == null) LOG.WARN('请指定窗体内容:', instance.options.title)
       return vnode
     }

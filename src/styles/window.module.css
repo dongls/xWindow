@@ -10,6 +10,7 @@
 
   --xwindow-body-bg-color: #fff;
   --xwindow-border-color: var(--xwindow-color-primary);
+  --xwindow-tabs-border-color: #dadada;
   --xwindow-border-highlight-color: var(--xwindow-color-primary);
 
   --xwindow-box-shadow: 1px 1px 18px rgba(0, 0, 0, 0.2);
@@ -45,7 +46,8 @@
 .focused {
   border-color: var(--xwindow-border-highlight-color);
 
-  .header {
+  .header,
+  .tabsHeader {
     background-color: var(--xwindow-header-bg-color);
     color: var(--xwindow-header-color);
   }
@@ -389,4 +391,107 @@
   to {
     background-size: 100% 2px;
   }
+}
+
+.tabsWindow {
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.tabsTitle {
+  margin: 0 16px 0 4px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
+  flex-shrink: 0;
+}
+
+.tabsHeader {
+  background-color: #fff;
+  line-height: 20px;
+  cursor: default;
+
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: flex-end;
+  border: 1px solid var(--xwindow-border-color);
+  border-bottom-color: var(--xwindow-tabs-border-color);
+  border-radius: var(--xwindow-border-radius) var(--xwindow-border-radius) 0 0;
+}
+
+.tabsMain {
+  padding-top: 4px;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+
+  flex: 1;
+  flex-shrink: 0;
+  margin-right: 8px;
+}
+
+.tabs {
+  display: flex;
+  flex-flow: row nowrap;
+
+  height: 28px;
+  user-select: none;
+
+  flex: 1;
+  width: 0;
+  overflow: hidden;
+  margin-bottom: -1px;
+}
+
+.tab {
+  position: relative;
+  min-width: 72px;
+  height: 28px;
+  border-radius: 4px 4px 0 0;
+  text-align: center;
+  line-height: 27px;
+  border: 1px solid transparent;
+  transition: all ease 0.12s;
+  box-sizing: border-box;
+  padding: 0 8px;
+  transition: background-color ease 0.15s;
+}
+
+.tab:not(.disabled):hover {
+  background-color: #fff;
+  border-top-color: var(--xwindow-tabs-border-color);
+  border-left-color: var(--xwindow-tabs-border-color);
+  border-right-color: var(--xwindow-tabs-border-color);
+}
+
+.tab + .tab {
+  margin-left: 1px;
+}
+
+.tab:first-child::before {
+  content: '';
+  position: absolute;
+  left: -1px;
+  top: 4px;
+  bottom: 4px;
+  border-left: 1px solid var(--xwindow-tabs-border-color);
+}
+
+.tab.active {
+  background-color: #fff;
+  border-top-color: var(--xwindow-tabs-border-color);
+  border-left-color: var(--xwindow-tabs-border-color);
+  border-right-color: var(--xwindow-tabs-border-color);
+  border-bottom-color: #fff;
+}
+
+.tab.disabled {
+  cursor: not-allowed;
+  opacity: 0.75;
+}
+
+.tabsWindow .body {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }

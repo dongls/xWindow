@@ -1,26 +1,15 @@
 import classes from '../styles/window.module.css'
 
 import type { SimpleWindowMenu } from '../model/Common'
-import type { BlankWindow } from '../model/Windows'
 
-import { defineComponent, isVNode, h } from 'vue'
+import { defineComponent, h } from 'vue'
 import { CLASS, WINDOW_TYPE } from '../model/Constant'
 import { BlankWindowComponent } from './BlankWindow'
 import { stopPropagation } from '../util'
-import { IconWindow } from '../svg/index'
 import { WindowBody } from './WindowBody'
 import { WindowMenus } from './WindowMenus'
 import { SimpleWindow } from '../model/Windows'
-
-function createIcon(win: BlankWindow): any {
-  const icon = win.options.icon
-
-  if (typeof icon == 'string') return <i class={[classes.logo, 'icon', icon]} />
-  if (isVNode(icon)) return icon
-  if (typeof icon == 'function') return icon(win)
-
-  return <i class={classes.logo} innerHTML={IconWindow} />
-}
+import { createIcon } from './utils'
 
 export const SimpleWindowComponent = defineComponent({
   name: WINDOW_TYPE.SIMPLE_WINDOW,

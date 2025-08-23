@@ -2,7 +2,7 @@ import type { CloseTopOptions, UseWindowOptions } from '../model/Common'
 
 import { render, h, type App } from 'vue'
 import { WINDOW_TYPE } from '../model/Constant'
-import { BlankWindow, SimpleWindow } from '../model/Windows'
+import { BlankWindow, SimpleWindow, TabsWindow } from '../model/Windows'
 import { getComponent } from '../components/index'
 import { WINDOW_CONTEXT, getCurrentZIndex, getNextZIndex } from './store'
 import { LOG } from '../util'
@@ -90,8 +90,19 @@ function createIsolateWindow(instance: BlankWindow) {
   })
 }
 
+export function createWindowInstance(options: UseWindowOptions) {
+  switch (options.type) {
+    case WINDOW_TYPE.SIMPLE_WINDOW:
+      return SimpleWindow.create(options)
+    case WINDOW_TYPE.TABS_WINDOW:
+      return TabsWindow.create(options)
+    default:
+      return BlankWindow.create(options)
+  }
+}
+
 export function createWindow(options: UseWindowOptions) {
-  const instance = options.type === WINDOW_TYPE.SIMPLE_WINDOW ? SimpleWindow.create(options) : BlankWindow.create(options)
+  const instance = createWindowInstance(options)
 
   // 已注册`WindowManager`组件
   if (WINDOW_CONTEXT.isMounted) {

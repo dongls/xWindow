@@ -1,5 +1,5 @@
 import type { VNode, VNodeArrayChildren, AppContext, Ref } from 'vue'
-import type { BlankWindow } from './Windows'
+import type { BlankWindow, TabsWindow } from './Windows'
 
 export type InferValue<T> = T[keyof T]
 
@@ -10,12 +10,14 @@ export type ChangeEventType = 'maximizeChange'
 export type UserEventType = 'confirm' | 'cancel'
 export type EventType = LifeCycleEventType | DragEventType | ResizeEventType | ChangeEventType | UserEventType
 
-export type WindowType = 'SimpleWindow' | 'BlankWindow'
+export type WindowType = 'SimpleWindow' | 'BlankWindow' | 'TabsWindow'
 export type HandlerType = 'confirm' | 'cancel'
 
 export type WindowIcon = string | VNode | ((win: BlankWindow) => VNode)
-export type WindowBody = string | number | VNode | VNodeArrayChildren | ((win: BlankWindow) => any)
+export type WindowBody = string | number | VNode | VNodeArrayChildren | ((win: BlankWindow, ...params: any) => any)
 export type WindowPreset = Partial<Omit<SimpleWindowOptions, 'title'>>
+
+export type TabsWindowBody = (win: TabsWindow, active: string) => any
 
 export interface WindowSize {
   width: string
@@ -133,6 +135,18 @@ export interface SimpleWindowOptions extends WindowOptions {
   menus?: SimpleWindowMenu[]
 }
 
+export interface WindowTab {
+  label: string
+  name: string
+  disabled?: boolean
+  active?: boolean
+}
+
+export interface TabsWindowOptions extends WindowOptions {
+  /** 窗口的标签 */
+  tabs: WindowTab[]
+}
+
 export interface UseWindowCommonOptions {
   /** 窗口类型 */
   type?: WindowType
@@ -144,7 +158,8 @@ export interface UseWindowCommonOptions {
 
 export type UseWindowOptions = UseWindowCommonOptions & Partial<WindowOptions> & Record<string, any>
 export type UseBlankWindowOptions = UseWindowCommonOptions & Partial<WindowOptions>
-export type UseSimpleWindowOptions = UseWindowCommonOptions & Partial<SimpleWindowOptions>
+export type UseTabsWindowOptions = UseWindowCommonOptions & Partial<TabsWindowOptions>
+export type UseSimpleWindowOptions = Omit<UseWindowCommonOptions, 'body'> & Partial<SimpleWindowOptions> & { body?: TabsWindowBody }
 
 export interface ComponentApi {
   /** 获取窗口顶层DOM对象 */
