@@ -45,7 +45,7 @@
     </div>
   </section>
   <button @click="createWindow" class="btn">创建窗口</button>
-  <button @click="createTabs" class="btn">创建多页签窗口</button>
+  <!-- <button @click="createTabs" class="btn">创建多页签窗口</button> -->
 </template>
 
 <script lang="tsx" setup>
