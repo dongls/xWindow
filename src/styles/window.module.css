@@ -7,14 +7,17 @@
   --xwindow-header-bg-color: var(--xwindow-color-primary);
   --xwindow-header-color: #333;
   --xwindow-header-height: 31px;
+  --xwindow-header-font-size: 14px;
 
   --xwindow-body-bg-color: #fff;
   --xwindow-border-color: var(--xwindow-color-primary);
-  --xwindow-tabs-border-color: #dadada;
   --xwindow-border-highlight-color: var(--xwindow-color-primary);
 
   --xwindow-box-shadow: 1px 1px 18px rgba(0, 0, 0, 0.2);
   --xwindow-mask-bg-color: rgba(0, 0, 0, 0.15);
+
+  --xwindow-tabs-border-color: #dadada;
+  --xwindow-tabs-font-size: 13px;
 }
 
 .window {
@@ -86,6 +89,7 @@
   border: 1px solid var(--xwindow-border-color);
   border-bottom: none;
   border-radius: var(--xwindow-border-radius) var(--xwindow-border-radius) 0 0;
+  font-size: var(--xwindow-header-font-size);
 }
 
 .title {
@@ -401,7 +405,6 @@
 
 .tabsTitle {
   margin: 0 16px 0 4px;
-  font-size: 14px;
   font-weight: 700;
   line-height: 20px;
   flex-shrink: 0;
@@ -422,6 +425,7 @@
 
 .tabsMain {
   padding-top: 4px;
+  padding-left: 10px;
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -456,6 +460,7 @@
   box-sizing: border-box;
   padding: 0 8px;
   transition: background-color ease 0.15s;
+  font-size: var(--xwindow-tabs-font-size);
 }
 
 .tab:not(.disabled):hover {
