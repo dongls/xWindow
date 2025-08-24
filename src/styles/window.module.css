@@ -408,6 +408,7 @@
   font-weight: 700;
   line-height: 20px;
   flex-shrink: 0;
+  font-size: var(--xwindow-header-font-size);
 }
 
 .tabsHeader {
