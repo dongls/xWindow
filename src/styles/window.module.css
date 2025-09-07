@@ -18,6 +18,8 @@
 
   --xwindow-tabs-border-color: #dadada;
   --xwindow-tabs-font-size: 13px;
+  --xwindow-tabs-min-width: 72px;
+  --xwindow-tabs-border-radius: 4px 4px 0 0;
 }
 
 .window {
@@ -451,9 +453,9 @@
 
 .tab {
   position: relative;
-  min-width: 72px;
+  min-width: var(--xwindow-tabs-min-width);
   height: 28px;
-  border-radius: 4px 4px 0 0;
+  border-radius: var(--xwindow-tabs-border-radius);
   text-align: center;
   line-height: 27px;
   border: 1px solid transparent;
