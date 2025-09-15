@@ -56,6 +56,8 @@ export const BlankWindowComponent = defineComponent({
           height: options.height,
           left: options.left,
           top: options.top,
+          minWidth: options.minWidth ? options.minWidth + 'px' : undefined,
+          minHeight: options.minHeight ? options.minHeight + 'px' : undefined,
         }
       }
 
@@ -64,6 +66,8 @@ export const BlankWindowComponent = defineComponent({
         left: winState.offsetLeft + 'px',
         width: winState.offsetWidth + 'px',
         height: winState.offsetHeight + 'px',
+        minWidth: options.minWidth ? options.minWidth + 'px' : undefined,
+        minHeight: options.minHeight ? options.minHeight + 'px' : undefined,
         zIndex: options.mask ? undefined : props.instance.zIndex,
       }
     })
@@ -232,7 +236,7 @@ export const BlankWindowComponent = defineComponent({
 
       return (
         <div class={classes.loading}>
-          <div data-text={loading.text} class={classes.loader}/>
+          <div data-text={loading.text} class={classes.loader} />
         </div>
       )
     }
