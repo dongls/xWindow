@@ -1,6 +1,6 @@
 {
   "name": "@dongls/xwindow",
-  "version": "0.3.12",
+  "version": "0.3.13",
   "description": "xWindow是一个简单易用的弹窗组件库",
   "type": "module",
   "main": "dist/index.js",
