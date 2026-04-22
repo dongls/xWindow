@@ -2,7 +2,7 @@ import classes from '../styles/window.module.css'
 
 import type { SimpleWindowMenu } from '../model/Common'
 
-import { defineComponent, h } from 'vue'
+import { defineComponent, h, shallowRef } from 'vue'
 import { CLASS, WINDOW_TYPE } from '../model/Constant'
 import { BlankWindowComponent } from './BlankWindow'
 import { stopPropagation } from '../util'
@@ -21,10 +21,13 @@ export const SimpleWindowComponent = defineComponent({
   },
   setup(props) {
     const instance = props.instance
+    const bodyRef = shallowRef()
 
     function callMenuHandler(menu: SimpleWindowMenu, event: MouseEvent) {
       event.stopPropagation()
-      if (typeof menu.handler == 'function') menu.handler(instance)
+      if (typeof menu.handler == 'function') {
+        menu.handler(instance, typeof bodyRef.value?.getComponentExposed == 'function' ? bodyRef.value.getComponentExposed() : undefined)
+      }
     }
 
     function createMenu(menu: SimpleWindowMenu) {
@@ -50,7 +53,7 @@ export const SimpleWindowComponent = defineComponent({
               </div>
             </header>
             <div class={[classes.body, CLASS.BODY]}>
-              <WindowBody body={instance.body} key={instance.wid} />
+              <WindowBody body={instance.body} key={instance.wid} ref={bodyRef} />
             </div>
           </div>
         )

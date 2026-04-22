@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
     "noEmit": true,
     "module": "ESNext",
     "moduleResolution": "bundler",
@@ -15,20 +14,12 @@
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
     "target": "ESNext",
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ESNext"
-    ],
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "isolatedModules": true,
     "allowJs": true,
     "paths": {
-      "@document/*": [
-        "document/*"
-      ],
-      "@dongls/xwindow": [
-        "src/main"
-      ],
+      "@document/*": ["./document/*"],
+      "@dongls/xwindow": ["./src/main"]
     }
   },
   "include": [

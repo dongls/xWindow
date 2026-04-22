@@ -72,7 +72,7 @@ export interface WindowState {
 export interface SimpleWindowMenu {
   label?: string
   // icon?: string
-  handler: (win: BlankWindow) => any
+  handler: (win: BlankWindow, exposed?: Record<string, any>) => any
 }
 
 export interface WindowOptions {

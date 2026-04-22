@@ -198,6 +198,10 @@ export function hasOpenWindow() {
   return Array.from(WINDOW_CONTEXT.stack.values()).some(win => win.state?.visible === true)
 }
 
+export function hasWindow(id: number) {
+  return WINDOW_CONTEXT.stack.has(id)
+}
+
 export function useWindowManager() {
   return {
     cleanup,
